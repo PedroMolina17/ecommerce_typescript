@@ -1,6 +1,6 @@
 const NavBar = () => {
   return (
-    <div className="flex mx-28 my-4">
+    <div className="flex mx-28 my-4 max-md:hidden">
       <ul className="flex gap-4 font-semibold ">
         <li>Home</li>
         <li>Electronics</li>
