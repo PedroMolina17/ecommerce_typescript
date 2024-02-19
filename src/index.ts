@@ -1,24 +1,34 @@
-import express from "express";
+// Importaciones
+import express, { Request,Response,NextFunction } from "express";
 import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes";
 import morgan from "morgan";
-
-const development = dotenv.config({
-  path: path.resolve(__dirname, "../environments/.env.development"),
-}).parsed;
-const production = dotenv.config({
-  path: path.resolve(__dirname, "../environments/.env.production"),
-}).parsed;
+import { sendErrorResponse } from "./utils/sendErrorResponse.util";
+export const ENV =
+  process.env.NODE_ENV === "DEVELOPMENT"
+    ? dotenv.config({
+        path: path.resolve(__dirname, "../environments/.env.development"),
+      }).parsed
+    : dotenv.config({
+        path: path.resolve(__dirname, "../environments/.env.production"),
+      }).parsed;
 
 const app = express();
-app.use(morgan("dev"));
-app.use(cors());
-app.use("/", router);
 
-const ENV = process.env.NODE_ENV === "DEVELOPMENT" ? development : production;
+app.use(express.json()); 
+app.use(morgan("dev")); 
+app.use(cors()); 
+
+app.use("/api", router);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const { statusCode, message } = err;
+  console.log("--->", err);
+  sendErrorResponse(res, statusCode, message);
+});
 
 app.listen(ENV?.NODE_PORT, () =>
-  console.log(`Server running on port ${ENV?.NODE_PORT}`)
+  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );
