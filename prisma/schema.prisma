@@ -6,6 +6,76 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+
+enum typeRoleEnum {
+  user
+  admin
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  userName String
+  email    String  @unique
+  password String?
+  address  String?
+  phone    String?
+  googleId String?
+  role     typeRoleEnum @default(user)
+  tokens   Token[]
+  comment  Comment[]
+}
+
+
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  token     String
+  createAt  DateTime @default(now())
+  expiredAt DateTime
+}
+
+model Products {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  description          String
+  thecnicalDescription Json
+  price                Int
+  stock                Int
+  status               Boolean  @default(true)
+  image                String
+  promotion            Boolean
+  promotionPrice       Float
+  promotionDescription String?
+  categoryId           Int
+  brandId              Int
+  comment              Comment[]
+  category             Category @relation(fields: [categoryId], references: [id])
+  brand                Brand    @relation(fields: [brandId], references: [id])
+}
+
+model Category {
+  id       Int        @id @default(autoincrement())
+  name     String
+  products Products[]
+}
+
+model Brand {
+  id       Int        @id @default(autoincrement())
+  name     String
+  products Products[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  productId Int
+  product   Products @relation(fields: [productId], references: [id])
+  comment   String
 }
