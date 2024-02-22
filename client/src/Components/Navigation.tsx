@@ -6,9 +6,11 @@ import NavBar from "./NavBar";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
 import axios, { AxiosError } from "axios";
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>("Home");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -104,7 +106,7 @@ const Navigation = () => {
         </div>
         {/* User Open*/}
         {menuOpen === "user" && (
-          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center">
+          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
             <label className="flex flex-col justify-center items-center gap-2">
               <p className="text-[#139dba] font-bold">Ingrese su Usuario</p>
               <input
@@ -149,7 +151,7 @@ const Navigation = () => {
         )}
         {/* Likes Open*/}
         {menuOpen === "likes" && (
-          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center">
+          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
             <label className="flex flex-col justify-center items-center gap-2">
               <p className="text-[#139dba] font-bold">Likes</p>
             </label>
@@ -163,7 +165,7 @@ const Navigation = () => {
         )}
         {/* Shop Open*/}
         {menuOpen === "shop" && (
-          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center">
+          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
             <label className="flex flex-col justify-center items-center gap-2">
               <p className="text-[#139dba] font-bold">Comprar</p>
             </label>
@@ -194,7 +196,10 @@ const Navigation = () => {
           </div>
         </div>
       </div>
-      <NavBar></NavBar>
+      <NavBar
+        selectedMenuItem={selectedMenuItem}
+        setSelectedMenuItem={setSelectedMenuItem}
+      />
     </>
   );
 };
