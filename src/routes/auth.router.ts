@@ -1,6 +1,7 @@
 import { Router } from "express";
+import { register,login } from "../controllers/auth.ctrl";
+import { validateFieldLogin, validateFieldRegister } from "../validators";
 const router = Router()
-router.get("/login", (req, res) => {
-    res.send("login")
-})
+router.post("/register",validateFieldRegister, register)
+router.post("/login",validateFieldLogin, login)
 export default router
