@@ -6,6 +6,7 @@ import { sendResponse } from "../../utils/sendResponse.util";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 
 
+
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   // Logic to get all products
 };
@@ -17,6 +18,17 @@ const getProductById = async (req: Request, res: Response, next: NextFunction) =
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const product = req.body as IProductCreate
+    req.file?.path && (product.image = req.file.path)
+   /*  product.brandId = Number(product.brandId)
+    product.categoryId= Number(product.categoryId)
+    product.stock = Number(product.stock)
+    product.price = Number(product.price)
+    product.status = Boolean(product.status)
+    product.promotion = Boolean(product.promotion)
+    product.promotionPrice = Number(product.promotionPrice)
+    product.technicalDescription= JSON.parse(product.technicalDescription) */
+
+    console.log(product)
     const data = await ProductsService.createProduct(product)
     sendResponse(res, HTTP_STATUS.OK, data)
   } catch (error) {
