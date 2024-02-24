@@ -4,6 +4,12 @@ import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
 const prisma = new PrismaClient();
 export class categoryService {
+
+static async getCategory(){
+
+  const categories = await prisma.category.findMany();
+  return  {data:categories}
+}
   static async createCategory(category: Icategory) {
 
     const categoryExists = await prisma.category.findUnique({

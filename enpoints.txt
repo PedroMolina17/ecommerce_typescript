@@ -1,0 +1,17 @@
+http://localhost:3500/api/brand/brands  //obtener brands methodo get
+http://localhost:3500/api/brand/delete-brand 
+http://localhost:3500/api/brand/update-brand
+http://localhost:3500/api/brand/create-brand
+
+catgories
+
+http://localhost:3500/api/category/update-category
+http://localhost:3500/api/category/create-category
+http://localhost:3500/api/category/delete-category
+http://localhost:3500/api/category/categories
+
+products
+
+http://localhost:3500/api/product/create-product
+http://localhost:3500/api/product/update-product
+http://localhost:3500/api/product/delete-product
