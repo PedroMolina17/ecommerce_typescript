@@ -17,7 +17,7 @@ const getProductById = async (req: Request, res: Response, next: NextFunction) =
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const product = req.body as IProductCreate
+    const product:IProductCreate= req.body 
     req.file?.path && (product.image = req.file.path)
    /*  product.brandId = Number(product.brandId)
     product.categoryId= Number(product.categoryId)
