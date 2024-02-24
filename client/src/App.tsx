@@ -9,6 +9,7 @@ import Deals from "./Components/Deals";
 import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Admin from "./Components/Admin";
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/deals" element={<Deals />} />
           <Route path="/electronics" element={<Electronic />} />
           <Route path="/cellphones" element={<Cellphones />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </>
     </Router>
