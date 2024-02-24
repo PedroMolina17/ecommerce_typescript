@@ -42,10 +42,10 @@ model Token {
 
 model Products {
   id                   Int      @id @default(autoincrement())
-  name                 String
+  name                 String @unique
   description          String
-  thecnicalDescription Json
-  price                Int
+  technicalDescription Json
+  price                Float
   stock                Int
   status               Boolean  @default(true)
   image                String
@@ -61,13 +61,13 @@ model Products {
 
 model Category {
   id       Int        @id @default(autoincrement())
-  name     String
+  name     String @unique
   products Products[]
 }
 
 model Brand {
   id       Int        @id @default(autoincrement())
-  name     String
+  name     String     @unique
   products Products[]
 }
 

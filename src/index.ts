@@ -29,6 +29,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   sendErrorResponse(res, statusCode, message);
 });
 
+
 app.listen(ENV?.NODE_PORT, () =>
   console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );
