@@ -1,51 +1,78 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import axios from "axios";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface FormularioProductoProps {}
 
+interface TechnicalDescriptionItem {
+  key: string;
+  value: string;
+}
+
 interface FormularioProductoState {
   name: string;
-  price: string;
+  categoryId: number;
+  price: number;
   category: string;
-  image: File | null;
-  categories: string[];
+  image: string | null;
+  categories: { id: number; name: string }[];
   description: string;
-  technicalDescription: string;
-  stock: string;
+  technicalDescription: TechnicalDescriptionItem[];
+  stock: number;
   status: boolean;
   promotion: boolean;
-  promotionPrice: string;
+  promotionPrice: number;
   promotionDescription?: string;
-  brandId: string;
-  brands: { id: string; name: string }[];
+  brandId: number;
+  brands: { id: number; name: string }[];
 }
 
 const FormularioProducto: React.FC<FormularioProductoProps> = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormularioProductoState>();
+
+  const watchTechnicalDescription = watch("technicalDescription", []);
+
   const [state, setState] = useState<FormularioProductoState>({
     name: "",
-    price: "",
+    categoryId: 0,
+    price: 0,
     category: "",
     image: null,
     categories: [],
     description: "",
-    technicalDescription: "",
-    stock: "",
+    technicalDescription: [],
+    stock: 0,
     status: false,
     promotion: false,
-    promotionPrice: "",
+    promotionPrice: 0,
     promotionDescription: "",
-    brandId: "",
-    brands: [], // Nuevo arreglo para almacenar las marcas
+    brandId: 0,
+    brands: [],
   });
 
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {
-        const response = await axios.get("http://localhost:3500/categorias");
-        setState((prevState) => ({
-          ...prevState,
-          categories: response.data,
-        }));
+        const response = await axios.get(
+          "http://localhost:3500/api/category/categories"
+        );
+
+        if (response.data && Array.isArray(response.data.data)) {
+          setState((prevState) => ({
+            ...prevState,
+            categories: response.data.data,
+          }));
+        } else {
+          console.error(
+            "La respuesta del servidor no es un array:",
+            response.data
+          );
+        }
       } catch (error) {
         console.error("Error al obtener las categorías:", error);
       }
@@ -53,11 +80,21 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
 
     const obtenerMarcas = async () => {
       try {
-        const response = await axios.get("http://localhost:3500/marcas");
-        setState((prevState) => ({
-          ...prevState,
-          brands: response.data,
-        }));
+        const response = await axios.get(
+          "http://localhost:3500/api/brand/brands"
+        );
+
+        if (response.data && Array.isArray(response.data.data)) {
+          setState((prevState) => ({
+            ...prevState,
+            brands: response.data.data,
+          }));
+        } else {
+          console.error(
+            "La respuesta del servidor no es un array:",
+            response.data
+          );
+        }
       } catch (error) {
         console.error("Error al obtener las marcas:", error);
       }
@@ -67,66 +104,37 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
     obtenerMarcas();
   }, []);
 
-  const handleInputChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-    inputType: string
-  ) => {
-    const { name, value } = event.target;
+  const onSubmit: SubmitHandler<FormularioProductoState> = async (data) => {
+    JSON.stringify(data.technicalDescription);
 
-    setState((prevState) => ({
-      ...prevState,
-      [name]:
-        inputType === "file"
-          ? (event.target as HTMLInputElement).files?.[0]
-          : value,
-    }));
+    data.image =
+      typeof data.image === "object" &&
+      data.image !== null &&
+      "name" in data.image
+        ? (data.image as File).name
+        : typeof data.image === "string"
+        ? data.image
+        : null;
+    try {
+      const response = await axios.post(
+        "http://localhost:3500/api/product/create-product",
+        data
+      );
+
+      console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+    }
   };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
-    const {
-      name,
-      price,
-      category,
-      image,
-      description,
-      technicalDescription,
-      stock,
-      status,
-      promotion,
-      promotionPrice,
-      promotionDescription,
-      brandId,
-    } = state;
-
-    // Resto del código de manejo de la subida del producto
-    console.log("Datos del producto:", {
-      name,
-      price,
-      category,
-      image,
-      description,
-      technicalDescription,
-      stock,
-      status,
-      promotion,
-      promotionPrice,
-      promotionDescription,
-      brandId,
-    });
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {" "}
       <div className="flex flex-col bg-[#f7f7f7] p-5 gap-6">
         <label>
           Nombre del Producto:
           <input
             type="text"
-            name="name"
-            value={state.name}
-            onChange={(e) => handleInputChange(e, "text")}
+            {...register("name", { required: "Campo obligatorio" })}
             className="border border-[#139dba] mx-4 rounded-md"
           />
         </label>
@@ -134,9 +142,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
           Descripción:
           <input
             type="text"
-            name="description"
-            value={state.description}
-            onChange={(e) => handleInputChange(e, "text")}
+            {...register("description", { required: "Campo obligatorio" })}
             className="border border-[#139dba] mx-4 rounded-md"
           />
         </label>
@@ -144,35 +150,16 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
           Precio:
           <input
             type="number"
-            name="price"
-            value={state.price}
-            onChange={(e) => handleInputChange(e, "text")}
+            {...register("price", { required: "Campo obligatorio" })}
             className="border border-[#139dba] mx-4 rounded-md"
           />
         </label>
         <label>
-          Categoría:
-          <select
-            name="category"
-            value={state.category}
-            onChange={(e) => handleInputChange(e, "text")}
-            className="border border-[#139dba] mx-4 rounded-md"
-          >
-            <option value="">Seleccione una categoría</option>
-            {state.categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
           Descripción Técnica:
-          <input
-            type="text"
-            name="technicalDescription"
-            value={state.technicalDescription}
-            onChange={(e) => handleInputChange(e, "text")}
+          <textarea
+            {...register("technicalDescription", {
+              required: "Campo obligatorio",
+            })}
             className="border border-[#139dba] mx-4 rounded-md"
           />
         </label>
@@ -180,43 +167,27 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
           Stock:
           <input
             type="number"
-            name="stock"
-            value={state.stock}
-            onChange={(e) => handleInputChange(e, "text")}
+            {...register("stock", { required: "Campo obligatorio" })}
             className="border border-[#139dba] mx-4 rounded-md"
           />
         </label>
         <label>
           Estado:
-          <input
-            type="checkbox"
-            name="status"
-            checked={state.status}
-            onChange={(e) => setState({ ...state, status: e.target.checked })}
-            className="mx-4"
-          />
+          <input type="checkbox" {...register("status")} className="mx-4" />
         </label>
         <label>
           Promoción:
-          <input
-            type="checkbox"
-            name="promotion"
-            checked={state.promotion}
-            onChange={(e) =>
-              setState({ ...state, promotion: e.target.checked })
-            }
-            className="mx-4"
-          />
+          <input type="checkbox" {...register("promotion")} className="mx-4" />
         </label>
-        {state.promotion && (
+        {watch("promotion") && (
           <div>
             <label>
               Precio en Promoción:
               <input
                 type="number"
-                name="promotionPrice"
-                value={state.promotionPrice}
-                onChange={(e) => handleInputChange(e, "text")}
+                {...register("promotionPrice", {
+                  required: "Campo obligatorio",
+                })}
                 className="border border-[#139dba] mx-4 rounded-md"
               />
             </label>
@@ -224,26 +195,44 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
               Descripción de la Promoción:
               <input
                 type="text"
-                name="promotionDescription"
-                value={state.promotionDescription}
-                onChange={(e) => handleInputChange(e, "text")}
+                {...register("promotionDescription")}
                 className="border border-[#139dba] mx-4 rounded-md"
               />
             </label>
           </div>
         )}
         <label>
+          Imagen:
+          <input
+            type="file"
+            {...register("image")}
+            className="border border-[#139dba] mx-4 rounded-md"
+          />
+        </label>
+        <label>
           Marca ID:
           <select
-            name="brandId"
-            value={state.brandId}
-            onChange={(e) => handleInputChange(e, "text")}
+            {...register("brandId", { required: "Campo obligatorio" })}
             className="border border-[#139dba] mx-4 rounded-md"
           >
             <option value="">Seleccione una marca</option>
             {state.brands.map((brand) => (
               <option key={brand.id} value={brand.id}>
                 {brand.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Categoría ID:
+          <select
+            {...register("categoryId", { required: "Campo obligatorio" })}
+            className="border border-[#139dba] mx-4 rounded-md"
+          >
+            <option value="">Seleccione una categoría</option>
+            {state.categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
               </option>
             ))}
           </select>
