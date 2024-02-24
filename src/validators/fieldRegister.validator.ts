@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { check } from "express-validator";
 import { validateResult } from "../middlewares/validateResult.mdl";
 export const validateFieldRegister = [
-  check("name").not().isEmpty().withMessage("name is required"),
+  check("userName").not().isEmpty().withMessage("name is required"),
   check("email")
     .not()
     .isEmpty()

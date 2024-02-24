@@ -45,7 +45,7 @@ model Products {
   name                 String @unique
   description          String
   technicalDescription Json
-  price                Int
+  price                Float
   stock                Int
   status               Boolean  @default(true)
   image                String
