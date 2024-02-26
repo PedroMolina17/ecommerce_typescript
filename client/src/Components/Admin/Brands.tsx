@@ -25,7 +25,7 @@ const Brands: React.FC = () => {
     }
   };
   return (
-    <div>
+    <div className="m-8">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col p-5 gap-6">
           <label>
