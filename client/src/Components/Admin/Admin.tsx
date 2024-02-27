@@ -28,14 +28,7 @@ interface FormularioProductoState {
 }
 
 const FormularioProducto: React.FC<FormularioProductoProps> = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormularioProductoState>();
-
-  const watchTechnicalDescription = watch("technicalDescription", []);
+  const { register, handleSubmit } = useForm<FormularioProductoState>();
 
   const [state, setState] = useState<FormularioProductoState>({
     name: "",
@@ -179,28 +172,27 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
           Promoción:
           <input type="checkbox" {...register("promotion")} className="mx-4" />
         </label>
-        {watch("promotion") && (
-          <div>
-            <label>
-              Precio en Promoción:
-              <input
-                type="number"
-                {...register("promotionPrice", {
-                  required: "Campo obligatorio",
-                })}
-                className="border border-[#139dba] mx-4 rounded-md"
-              />
-            </label>
-            <label>
-              Descripción de la Promoción:
-              <input
-                type="text"
-                {...register("promotionDescription")}
-                className="border border-[#139dba] mx-4 rounded-md"
-              />
-            </label>
-          </div>
-        )}
+        <div>
+          <label>
+            Precio en Promoción:
+            <input
+              type="number"
+              {...register("promotionPrice", {
+                required: "Campo obligatorio",
+              })}
+              className="border border-[#139dba] mx-4 rounded-md"
+            />
+          </label>
+          <label>
+            Descripción de la Promoción:
+            <input
+              type="text"
+              {...register("promotionDescription")}
+              className="border border-[#139dba] mx-4 rounded-md"
+            />
+          </label>
+        </div>
+
         <label>
           Imagen:
           <input
