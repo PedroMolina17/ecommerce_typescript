@@ -5,6 +5,10 @@ import ClientError from "../errors/clientError.error";
 const prisma = new PrismaClient()
 
 export class BrandService {
+    static async getBrands() {
+        const brands = await prisma.brand.findMany();
+        return {data:brands} 
+    }
     static async createBrand(brand: ICreateBrand) {
         const brandExists = await prisma.brand.findUnique({
             where: { ...brand },

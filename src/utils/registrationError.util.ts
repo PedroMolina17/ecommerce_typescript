@@ -19,7 +19,7 @@ const registrationError = (
     return next(error);
   }
 
-  console.error("Error desconocido:", error.message);
+  console.error("Error desconocido:", error);
   return res.status(500).json({ error: "Error al procesar la solicitud." });
 };
 export default registrationError;
