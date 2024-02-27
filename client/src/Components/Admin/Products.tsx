@@ -130,7 +130,7 @@ const Products = () => {
             <input
               type="text"
               {...register("name", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             />
           </label>
           <label>
@@ -138,7 +138,7 @@ const Products = () => {
             <input
               type="text"
               {...register("description", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             />
           </label>
           <label>
@@ -146,7 +146,7 @@ const Products = () => {
             <input
               type="number"
               {...register("price", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             />
           </label>
 
@@ -155,7 +155,7 @@ const Products = () => {
             <input
               type="number"
               {...register("stock", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             />
           </label>
           <label>
@@ -179,7 +179,7 @@ const Products = () => {
                 {...register("promotionPrice", {
                   required: "Campo obligatorio",
                 })}
-                className="border border-[#139dba] mx-4 rounded-md"
+                className="border border-[#455591] mx-4 rounded-md"
               />
             </label>
             <label>
@@ -187,7 +187,7 @@ const Products = () => {
               <input
                 type="text"
                 {...register("promotionDescription")}
-                className="border border-[#139dba] mx-4 rounded-md"
+                className="border border-[#455591] mx-4 rounded-md"
               />
             </label>
           </div>
@@ -197,14 +197,14 @@ const Products = () => {
             <input
               type="file"
               {...register("image")}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             />
           </label>
           <label>
             Marca ID:
             <select
               {...register("brandId", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             >
               <option value="">Seleccione una marca</option>
               {state.brands.map((brand) => (
@@ -218,7 +218,7 @@ const Products = () => {
             Categoría ID:
             <select
               {...register("categoryId", { required: "Campo obligatorio" })}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md"
             >
               <option value="">Seleccione una categoría</option>
               {state.categories.map((category) => (
@@ -228,8 +228,11 @@ const Products = () => {
               ))}
             </select>
           </label>
-          <button type="submit" className="p-4 bg-[#139dba] w-40 rounded-md">
-            Agregar Producto
+          <button
+            type="submit"
+            className="p-3 bg-[#455591] w-40 rounded-md text-white font-bold  text-lg"
+          >
+            Agregar
           </button>
         </div>
         <ToastContainer />

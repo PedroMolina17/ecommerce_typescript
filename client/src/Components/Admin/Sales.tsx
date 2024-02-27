@@ -7,7 +7,7 @@ import { IoExit } from "react-icons/io5";
 const Sales = () => {
   return (
     <>
-      <div className="flex m-8 items-center justify-end text-xl gap-10 ">
+      <div className="flex m-8 items-center justify-end text-xl gap-10  ">
         <div className="flex bg-white rounded-md items-center gap-1 border py-1 focus-within:border-[#f97f63] w-full px-4">
           <input type="text " className="p-2 outline-none w-full " />
           <FaSearch />
@@ -19,14 +19,14 @@ const Sales = () => {
           <div className="bg-white p-4 rounded-md">
             <IoIosNotifications />
           </div>
-          <div className="flex items-center p-4 bg-white rounded-md w-72 justify-center ">
+          <div className="flex items-center p-4 bg-white rounded-md w-72 justify-center  gap-2">
             <IoExit className="text-[#f97f63] rounded-md" /> Salir
           </div>
         </div>
       </div>
       <div className="grid grid-cols-7 w-full">
         <div className="col-span-5">
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-5 gap-4 mx-8">
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#f97f63] flex items-center justify-center p-4">
                 <FaDollarSign className="text-4xl text-white" />
