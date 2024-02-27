@@ -31,9 +31,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="grid grid-cols-9  h-screen gap-5  bg-[#eff3fc]">
-      <div className="col-span-2 h-screen">
-        <ul className="flex flex-col col bg-[#455591] text-white  py-8 h-screen w-96 fixed">
+    <div className="flex  h-screen ">
+      <div className="relative h-screen">
+        <ul className="flex flex-col col bg-[#455591] text-white  py-8 h-screen  fixed top-0 left-0 bottom-0 w-96 ">
           <p className="text-xl font-bold text-center">Dashboard</p>
           <p className="mx-8 font-bold text-xl py-4">Menu</p>
           <button
@@ -89,7 +89,10 @@ const Sidebar = () => {
           </button>
         </ul>
       </div>
-      <div className="col-span-7 justify-around "> {renderContent()}</div>
+      <div className="  ml-96 justify-around bg-[#eff3fc] w-full">
+        {" "}
+        {renderContent()}
+      </div>
     </div>
   );
 };
