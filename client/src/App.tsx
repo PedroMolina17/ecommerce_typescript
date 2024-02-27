@@ -9,7 +9,7 @@ import Deals from "./Components/Deals";
 import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
 import Sidebar from "./Components/Admin/Sidebar";
-
+import Login from "./Components/Admin/Login";
 function App() {
   return (
     <Router>
@@ -31,7 +31,8 @@ function App() {
             </>
           }
         />
-        <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="/admin/*" element={<AdminLayout />} />{" "}
+        <Route path="/adminLogin/*" element={<Login />} />
       </Routes>
     </Router>
   );
