@@ -44,7 +44,6 @@ model Products {
   id                   Int      @id @default(autoincrement())
   name                 String @unique
   description          String
-  technicalDescription Json
   price                Float
   stock                Int
   status               Boolean  @default(true)
@@ -57,6 +56,15 @@ model Products {
   comment              Comment[]
   category             Category @relation(fields: [categoryId], references: [id])
   brand                Brand    @relation(fields: [brandId], references: [id])
+  technicalDetailsProduct     TechnicalDetailsProduct[]
+}
+
+model TechnicalDetailsProduct {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  productId   Int
+  product     Products @relation(fields: [productId], references: [id])
 }
 
 model Category {

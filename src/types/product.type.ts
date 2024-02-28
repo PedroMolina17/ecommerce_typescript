@@ -1,9 +1,8 @@
 
-type Json ={ key: string;value: string;}[];
+
 export interface IProductCreate {
   name: string;
   description: string;
-  technicalDescription: Json;
   price: number;
   stock: number;
   status: boolean;
