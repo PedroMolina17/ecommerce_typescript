@@ -9,7 +9,8 @@ import Deals from "./Components/Deals";
 import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
 import Sidebar from "./Components/Admin/Sidebar";
-
+import Login from "./Components/Admin/Login";
+import ProductDetails from "./Components/ProductDetails";
 function App() {
   return (
     <Router>
@@ -27,11 +28,13 @@ function App() {
                 <Route path="/deals" element={<Deals />} />
                 <Route path="/electronics" element={<Electronic />} />
                 <Route path="/cellphones" element={<Cellphones />} />
+                <Route path="/electronics/:id" element={<ProductDetails />} />
               </Routes>
             </>
           }
         />
-        <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="/admin/*" element={<AdminLayout />} />{" "}
+        <Route path="/adminLogin/*" element={<Login />} />
       </Routes>
     </Router>
   );

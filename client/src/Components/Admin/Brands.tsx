@@ -33,12 +33,15 @@ const Brands: React.FC = () => {
             <input
               type="text"
               {...register("name")}
-              className="border border-[#139dba] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md p-2  "
             />
           </label>{" "}
-          <button type="submit" className="p-4 bg-[#139dba] w-40 rounded-md">
+          <button
+            type="submit"
+            className="p-3 bg-[#455591] w-40 rounded-md text-white font-bold  text-lg "
+          >
             Agregar
-          </button>{" "}
+          </button>
           <ToastContainer />
         </div>
       </form>

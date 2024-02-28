@@ -71,16 +71,19 @@ const Categories: React.FC = () => {
   return (
     <div className="m-8">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col p-5 gap-6 text-white">
+        <div className="flex flex-col p-5 gap-6 ">
           <label>
             Nombre de la categoria:
             <input
               type="text"
               {...register("name")}
-              className="border border-[#455591] mx-4 rounded-md"
+              className="border border-[#455591] mx-4 rounded-md p-2"
             />
           </label>
-          <button type="submit" className="p-4 bg-[#455591] w-40 rounded-md">
+          <button
+            type="submit"
+            className="p-3 bg-[#455591] w-40 rounded-md text-white font-bold  text-lg"
+          >
             Agregar
           </button>
           <ToastContainer />
@@ -89,7 +92,7 @@ const Categories: React.FC = () => {
       <div className="rounded-tr-md text-black">
         <h2>Lista de Categorías</h2>
         <table className="w-full text-xl border">
-          <thead className="bg-[#455591] h-16 mr-9">
+          <thead className="bg-[#455591] h-16 mr-9 text-white">
             <tr>
               <th className="text-center ">ID</th>
               <th className="text-center">Nombre</th>
