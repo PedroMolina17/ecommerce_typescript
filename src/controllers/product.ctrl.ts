@@ -10,7 +10,7 @@ type fnCtrl = (
 ) => Promise<void>;
 const getAllProductsPaginated: fnCtrl = async (req, res, next) => {
   try {
-    const { page = 1, pageSize = 10 } = req.query;
+    const { page = 1, pageSize = 20 } = req.query;
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
     const data = await ProductsService.getAllProductsPaginated(
