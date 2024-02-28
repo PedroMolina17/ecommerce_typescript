@@ -4,6 +4,6 @@ export interface ICreateBrand{
 export interface IUpdateBrand extends ICreateBrand{
     id: number
 }
-export interface IDeleteBrand extends ICreateBrand{
+export interface IDeleteBrand{
     id: number
 }
