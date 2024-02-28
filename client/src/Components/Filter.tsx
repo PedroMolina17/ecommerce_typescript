@@ -4,8 +4,8 @@ import { LiaGripLinesVerticalSolid } from "react-icons/lia";
 import Products from "./Products";
 const Filter = () => {
   return (
-    <div className="ml-4">
-      <div className="flex justify-between pb-4 ">
+    <div className="md:ml-4 max-sm:mx-9 max-md:mx-4">
+      <div className="flex justify-between pb-4  max-md:hidden ">
         <div>
           <select
             id="frutas"

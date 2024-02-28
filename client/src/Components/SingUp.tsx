@@ -35,8 +35,6 @@ const SingUp = () => {
           userName: data.userName,
           email: data.email,
           password: data.password,
-          direction: data.direction,
-          cellphone: data.cellphone,
         }
       );
 
