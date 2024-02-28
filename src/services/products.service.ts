@@ -17,7 +17,7 @@ export class ProductsService {
       skip: (page - 1) * pageSize,
     });
   
-    // Obtener el total de productos
+    // Obtener el total de productos y items
     const totalItems= products.length;
     const totalProducts = await prisma.products.count();
     
@@ -35,7 +35,6 @@ export class ProductsService {
     const next = nextPage ? `${baseUrl}/products?page=${nextPage}&pageSize=${pageSize}` : null;
     const prev = prevPage ? `${baseUrl}/products?page=${prevPage}&pageSize=${pageSize}` : null;
   
-    // Estructura de la respuesta
     return {
       info: {
         count: totalProducts,
