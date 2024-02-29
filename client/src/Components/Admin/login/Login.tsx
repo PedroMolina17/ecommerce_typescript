@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from '../../assets/logo.jpeg'; // importo la imagen a este archivo tsx
+import { Input } from './Input';
 
 // Componente a cerar para el login del sistema
 const Login = () => {
@@ -13,12 +14,7 @@ const Login = () => {
             Si eres un miembro, porfavor inicie sesión
           </p>
           <form action="" className="flex flex-col gap-4">
-            <input
-              className="p-2 mt-8 rounded-xl border hover:bg-[#faf7f7]"
-              type="email"
-              name="email"
-              placeholder="Correo"
-            />
+           <Input type='email'/>
             <div className="relative">
               <input
                 className="p-2 mt-2 rounded-xl border w-full hover:bg-[#faf7f7]"
@@ -48,4 +44,3 @@ const Login = () => {
 }
 
 export default Login
-
