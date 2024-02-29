@@ -78,6 +78,7 @@ const Blogs = () => {
                 </p>
                 <p className="text-[#139dba] underline">Leer más</p>
               </div>
+
             </div>
           ))}
         </div>
