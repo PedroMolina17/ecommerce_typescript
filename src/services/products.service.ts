@@ -29,7 +29,7 @@ export class ProductsService {
     const prevPage = page > 1 ? page - 1 : null;
   
     // Construir la URL base
-    const baseUrl = process.env.BASE_URL || "http://localhost:3500"; // Adapta la URL base según tu entorno
+    const baseUrl = process.env.BASE_URL+"/product";
   
     // Construir los enlaces next y prev
     const next = nextPage ? `${baseUrl}/products?page=${nextPage}&pageSize=${pageSize}` : null;

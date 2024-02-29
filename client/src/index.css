@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.table-body tr:nth-child(even) {
+  @apply bg-slate-200;
+}
+/* css react responsive pagination */
+
+.pagination {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+  gap: 8px;
+}
+
+.page-item .page-link {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.page-item a.page-link:hover {
+  background-color: #cccccc;
+}
+
+.page-item.active .page-link {
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+}
