@@ -54,18 +54,18 @@ const Blogs = () => {
 
   return (
     <div className="bg-[#f7f7f7] py-8">
-      <div className="mx-28 bg-[#f7f7f7]">
-        <div className="grid grid-cols-3 gap-x-24 gap-y-6">
+      <div className="mx-28 max-md:mx-4 bg-[#f7f7f7]">
+        <div className="grid grid-cols-3 max-md:grid-cols-1  gap-x-5 gap-y-6">
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white border rounded-tr-md rounded-tl-md  flex flex-col "
+              className="bg-white border rounded-tr-md rounded-tl-md flex flex-col "
             >
               <div className="relative">
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="rounded-tr-md rounded-tl-md object-cover object-center h-96 w-full "
+                  className="rounded-tr-md rounded-tl-md object-cover object-center h-96 w-full  min-w-44"
                 />
                 <div className="absolute -bottom-4 left-7 bg-[#139dba] text-white rounded-md p-2">
                   <p>{product.date}</p>
@@ -78,6 +78,7 @@ const Blogs = () => {
                 </p>
                 <p className="text-[#139dba] underline">Leer más</p>
               </div>
+
             </div>
           ))}
         </div>

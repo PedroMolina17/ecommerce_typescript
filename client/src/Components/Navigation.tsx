@@ -56,52 +56,54 @@ const Navigation = () => {
         </div>
       </div>
       {/* Nav Desktop */}
-      <div className="flex justify-between py-6 items-center border-b-2 border-[#ededed] mx-28 max-md:hidden relative">
-        <Link to={"/"}>
-          <img className="h-11" src="/images/logo-Celeste.png" alt="Logo" />
-        </Link>
-        <div className="flex  justify-center items-center ">
-          <input
-            className="border-2 border-[#139dba] p-2 w-96 rounded-tl-lg rounded-bl-lg"
-            placeholder="Busca tu producto aqui"
-          ></input>
-          <div className="bg-[#139dba] border border-[#139dba] p-3 text-white text-xl rounded-tr-lg rounded-br-lg">
-            <FaSearch />
+      <div className="border-b-2 relative">
+        <div className="flex justify-between py-6 items-center  border-[#ededed] mx-28 max-md:hidden relative">
+          <Link to={"/"}>
+            <img className="h-11" src="/images/logo-Celeste.png" alt="Logo" />
+          </Link>
+          <div className=" mx-2 flex justify-center items-center border rounded-tl-lg rounded-bl-lg min-w-16 w-96 focus-within:border-[#139dba] rounded-tr-lg rounded-br-lg">
+            <input
+              className="outline-none p-2 min-w-16 w-96"
+              placeholder="Busca tu producto aqui"
+            ></input>
+            <div className="bg-[#139dba] border border-[#139dba] p-3 text-white text-xl rounded-tr-lg rounded-br-lg">
+              <FaSearch />
+            </div>
           </div>
-        </div>
-        <div className="flex justify-center text-2xl items-center gap-4">
-          <CiUser
-            onClick={() => {
-              openMenu("user");
-            }}
-          />
-          <div className="relative ">
-            <RxLayers />
-            <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
-              0
-            </p>
-          </div>
-          <div
-            className="relative "
-            onClick={() => {
-              openMenu("likes");
-            }}
-          >
-            <CiHeart />
-            <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
-              0
-            </p>
-          </div>
-          <div
-            className="relative "
-            onClick={() => {
-              openMenu("shop");
-            }}
-          >
-            <PiShoppingCartSimpleLight />
-            <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
-              0
-            </p>
+          <div className="flex justify-center text-2xl items-center gap-4">
+            <CiUser
+              onClick={() => {
+                openMenu("user");
+              }}
+            />
+            <div className="relative ">
+              <RxLayers />
+              <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
+                0
+              </p>
+            </div>
+            <div
+              className="relative "
+              onClick={() => {
+                openMenu("likes");
+              }}
+            >
+              <CiHeart />
+              <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
+                0
+              </p>
+            </div>
+            <div
+              className="relative "
+              onClick={() => {
+                openMenu("shop");
+              }}
+            >
+              <PiShoppingCartSimpleLight />
+              <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
+                0
+              </p>
+            </div>
           </div>
         </div>
         {/* User Open*/}

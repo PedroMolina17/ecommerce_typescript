@@ -4,7 +4,7 @@ import Products from "./Products";
 import Brands from "./Brands";
 import Suppliers from "./Suppliers";
 import Sales from "./Sales";
-import Users from "./Users";
+import Users from "./users/Users";
 import { FaDollarSign } from "react-icons/fa6";
 
 import { TbCategoryFilled } from "react-icons/tb";

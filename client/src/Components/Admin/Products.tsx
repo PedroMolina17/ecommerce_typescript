@@ -8,7 +8,6 @@ interface FormularioProductoProps {
   name: string;
   categoryId: number;
   price: number;
-  category: string;
   image: string | null;
   categories: { id: number; name: string }[];
   description: string;
@@ -25,7 +24,6 @@ interface FormularioProductoState {
   name: string;
   categoryId: number;
   price: number;
-  category: string;
   image: string | null;
   categories: { id: number; name: string }[];
   description: string;
@@ -44,7 +42,6 @@ const Products = () => {
     name: "",
     categoryId: 0,
     price: 0,
-    category: "",
     image: null,
     categories: [],
     description: "",
@@ -57,21 +54,55 @@ const Products = () => {
     brands: [],
   });
 
-  const onSubmit: SubmitHandler<FormularioProductoState> = async (data) => {
+  const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("categoryId", data.categoryId.toString());
+    formData.append("price", data.price.toString());
+    if (data.image) {
+      formData.append("image", data.image[0]);
+    }
+    formData.append("description", data.description);
+    formData.append("stock", data.stock.toString());
+    formData.append("status", data.status.toString());
+    formData.append("promotion", data.promotion.toString());
+    formData.append("promotionPrice", data.promotionPrice.toString());
+    formData.append("promotionDescription", data.promotionDescription || "");
+    formData.append("brandId", data.brandId.toString());
+
     try {
       const response = await axios.post(
         "http://localhost:3500/api/product/create-product",
-        data
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+
       console.log("Server response:", response.data);
-      toast.success("Categoria añadida");
+      toast.success("Producto añadido");
       reset();
     } catch (error) {
-      console.error("Se produjo un error. Inténtalo de nuevo más tarde.");
-      toast.error("ERROR");
+      console.error("Error completo:", error);
+
+      if (axios.isAxiosError(error) && error.response?.data?.errors) {
+        const errorMessages = (
+          error.response.data.errors as Array<{ msg: string }>
+        )
+          .map((e) => e.msg)
+          .join(", ");
+        console.error("Error de servidor:", errorMessages);
+        toast.error(
+          `Se produjo un error: ${errorMessages}. Inténtalo de nuevo más tarde.`
+        );
+      } else {
+        console.error("Error de servidor desconocido:", error);
+        toast.error("Se produjo un error. Inténtalo de nuevo más tarde.");
+      }
     }
   };
-
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {

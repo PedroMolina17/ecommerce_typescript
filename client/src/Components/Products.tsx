@@ -1,6 +1,6 @@
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarHalf } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 interface Product {
   id: number;
   nombre: string;
@@ -80,11 +80,20 @@ const Products = () => {
 
     return stars;
   };
+  const navigate = useNavigate();
+
+  const navigateToProductDetails = (productId: number) => {
+    navigate(`/electronics/${productId.toString()}`);
+  };
 
   return (
-    <div className="grid grid-cols-4 gap-2 ">
+    <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-2 ">
       {products.map((product) => (
-        <div key={product.id} className="col-span-1 border rounded-md">
+        <div
+          key={product.id}
+          className="col-span-1 border rounded-md"
+          onClick={() => navigateToProductDetails(product.id)}
+        >
           <div className="border-b-4">
             <img
               src={product.imagen}
@@ -98,7 +107,7 @@ const Products = () => {
             </div>
             <p className="text-slate-500">{product.nombre}</p>
             <p className="text-[#139dba] font-bold">${product.price}</p>
-            <button className="px-4 py-2 text-center bg-[#cccccc] rounded-md w-36">
+            <button className="py-2 text-center bg-[#cccccc] rounded-md min-w-8 ">
               Add Cart
             </button>
           </div>

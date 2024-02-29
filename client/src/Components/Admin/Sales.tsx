@@ -9,7 +9,11 @@ const Sales = () => {
     <>
       <div className="flex m-8 items-center justify-end text-xl gap-10  ">
         <div className="flex bg-white rounded-md items-center gap-1 border py-1 focus-within:border-[#f97f63] w-full px-4">
-          <input type="text " className="p-2 outline-none w-full " />
+          <input
+            type="text "
+            className="p-2 outline-none w-full "
+            placeholder="Buscar"
+          />
           <FaSearch />
         </div>
         <div className="flex items-center justify-end gap-5 ">
