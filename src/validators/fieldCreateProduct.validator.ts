@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { check, validationResult } from "express-validator";
-import { IProductCreate } from "../types/product.type";
+import { check } from "express-validator";
+import { validateResult } from "../middlewares/validateResult.mdl";
 export const validateFieldCreateProduct = [
   check("name")
     .not()
@@ -14,17 +14,13 @@ export const validateFieldCreateProduct = [
     .withMessage("description is required")
     .isString()
     .withMessage("description must be a string"),
-  check("technicalDescription")
-    .not()
-    .isEmpty()
-    .withMessage("technicalDescription is required")
-    .isJSON()
-    .withMessage("technicalDescription must be a json"),
+
   check("price")
     .not()
     .isEmpty()
     .withMessage("price is required")
     .isNumeric()
+
     .withMessage("price must be a number"),
   check("stock")
     .not()
@@ -38,12 +34,7 @@ export const validateFieldCreateProduct = [
     .withMessage("status is required")
     .isBoolean()
     .withMessage("status must be a boolean"),
-  check("image")
-    .not()
-    .isEmpty()
-    .withMessage("image is required")
-    .isString()
-    .withMessage("image must be a string"),
+  check("image").not().isEmpty().withMessage("image is required"),
   check("promotion")
     .not()
     .isEmpty()
@@ -76,10 +67,6 @@ export const validateFieldCreateProduct = [
     .withMessage("brandId must be a number"),
 
   (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    next();
+    validateResult(req, res, next);
   },
 ];
