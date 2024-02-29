@@ -1,9 +1,9 @@
 import Filter from "./Filter";
 const Electronic = () => {
   return (
-    <div className="bg-[#f7f7f7] py-4  ">
-      <div className="mx-28 grid grid-cols-10 ">
-        <div className="col-span-2 overflow-hidden">
+    <div className="bg-[#f7f7f7] py-4 flex items-center justify-center w-full ">
+      <div className="mx-28 grid grid-cols-10 max-md:mx-0  max-md:grid-cols-1">
+        <div className="col-span-2 max-md:hidden ">
           <div className="bg-white shadow-md  rounded-md">
             <p className="border-b-2 p-2 mx-4 font-bold">
               Categorias de Productos

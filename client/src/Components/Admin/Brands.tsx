@@ -33,7 +33,7 @@ const Brands: React.FC = () => {
             <input
               type="text"
               {...register("name")}
-              className="border border-[#455591] mx-4 rounded-md p-2"
+              className="border border-[#455591] mx-4 rounded-md p-2  "
             />
           </label>{" "}
           <button
