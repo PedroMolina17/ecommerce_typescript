@@ -8,6 +8,7 @@ import TableBody from "../../../ui/table/TableBody";
 import TableHeader from "../../../ui/table/TableHeader";
 
 import ButtonsActionTable from "./ButtonsActionTable";
+import { queryClient } from "../../../../App";
 
 interface TableUserProps {
   data: Users;
@@ -20,6 +21,7 @@ const TableUser = ({ data }: TableUserProps) => {
     onSuccess: (data) => {
       console.log("data-->", data);
       notify(data.message);
+      queryClient.refetchQueries( { queryKey: ["users"] } );
     },
   });
   const columns: TableColumn[] = [

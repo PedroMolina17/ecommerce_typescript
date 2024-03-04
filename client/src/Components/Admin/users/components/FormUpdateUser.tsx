@@ -31,7 +31,7 @@ const FormUpdateUser = () => {
         confirmButtonText: "OK",
       });
       setOpenForm(false);
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.refetchQueries( { queryKey: ["users"] } );
     },
   });
   const onSubmit = handleSubmit((data: FormValues) => {
