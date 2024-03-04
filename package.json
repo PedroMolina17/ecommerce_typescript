@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "dotenv -e environments/.env.development -- npx prisma db seed",
     "migrate": "dotenv -e environments/.env.development -- npx prisma migrate dev ",
     "migrate:docker": "dotenv -e environments/.env.docker.dev -- npx prisma migrate dev",
     "dev": "cross-env NODE_ENV=DEVELOPMENT  nodemon src/index.ts",
     "start": "cross-env NODE_ENV=PRODUCTION nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",

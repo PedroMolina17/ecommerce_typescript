@@ -31,7 +31,7 @@ const Table = ({
   return (
     <table className={`${tableClass}`}>
       {render({ table })}
-      {children}      
+           
     </table>
   );
 };

@@ -1,14 +1,27 @@
+import { useMutation } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { deleteUserById } from "../../../../api/user";
 import { Users } from "../../../../types/user.type";
 import Table, { TableColumn } from "../../../ui/table/Table";
 import TableBody from "../../../ui/table/TableBody";
 import TableHeader from "../../../ui/table/TableHeader";
-import { CiEdit } from "react-icons/ci";
-import { MdDeleteOutline } from "react-icons/md";
-import ResponsivePagination from "react-responsive-pagination";
+
+import ButtonsActionTable from "./ButtonsActionTable";
+
 interface TableUserProps {
   data: Users;
 }
 const TableUser = ({ data }: TableUserProps) => {
+  const notify = (message: string) => toast(message);
+
+  const mutation = useMutation({
+    mutationFn: async (id: number) => await deleteUserById(id),
+    onSuccess: (data) => {
+      console.log("data-->", data);
+      notify(data.message);
+    },
+  });
   const columns: TableColumn[] = [
     {
       accessorKey: "id",
@@ -70,14 +83,7 @@ const TableUser = ({ data }: TableUserProps) => {
       accessorKey: "action",
       header: "Action",
       cell: ({ cell }: any) => (
-        <div className="flex gap-2 items-center justify-center ">
-          <button>
-            <CiEdit className="text-lg text-green-600" />
-          </button>
-          <button>
-            <MdDeleteOutline className="text-lg text-red-600" />
-          </button>
-        </div>
+        <ButtonsActionTable cell={cell} mutation={mutation} />
       ),
     },
   ];
@@ -102,6 +108,7 @@ const TableUser = ({ data }: TableUserProps) => {
           </>
         )}
       ></Table>
+      <ToastContainer />
     </>
   );
 };
