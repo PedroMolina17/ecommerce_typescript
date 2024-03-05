@@ -6,7 +6,7 @@ import { IoExit } from "react-icons/io5";
 
 const Sales = () => {
   return (
-    <>
+    <div className="">
       <div className="flex m-8 items-center justify-end text-xl gap-10  ">
         <div className="flex bg-white rounded-md items-center gap-1 border py-1 focus-within:border-[#f97f63] w-full px-4">
           <input
@@ -91,7 +91,7 @@ const Sales = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

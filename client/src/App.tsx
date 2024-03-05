@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigation from "./Components/Navigation";
 import Slider from "./Components/Slider";
@@ -8,12 +7,11 @@ import Acessories from "./Components/Acessories";
 import Deals from "./Components/Deals";
 import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
-import Sidebar from "./Components/Admin/Sidebar";
-
+import Login from "./Components/Admin/Login";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import Login from "./Components/Admin/login/Login";
-const queryClient = new QueryClient();
+import Dashboard from "./pages/admin/Dashboard";
+export const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -47,7 +45,7 @@ function App() {
 
 const AdminLayout = () => (
   <Routes>
-    <Route index element={<Sidebar />} />
+    <Route index element={<Dashboard/>} />
   </Routes>
 );
 
