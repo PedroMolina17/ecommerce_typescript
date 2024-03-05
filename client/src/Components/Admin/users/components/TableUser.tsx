@@ -99,7 +99,7 @@ const TableUser = ({ data }: TableUserProps) => {
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full bg-[#455591] text-white text-center text-slate-600 "
+              theadClass="w-full bg-primary text-white text-center text-slate-600 "
               thClass="py-1 px-2"
             />
             <TableBody
