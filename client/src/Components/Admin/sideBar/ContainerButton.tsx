@@ -18,7 +18,7 @@ const ContainerButton = ({ title, name, onClick,children }: Props) => {
     >
       <div className="w-12">{children}</div>
 
-      <h2 className={` text-base font-medium  text-primary whitespace-nowrap `}>
+      <h2 className={` text-base font-medium  text-slate-600 whitespace-nowrap `}>
         {title}
       </h2>
     </div>

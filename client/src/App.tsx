@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navigation from "./Components/Navigation";
 import Slider from "./Components/Slider";
@@ -12,7 +11,6 @@ import Login from "./Components/Admin/Login";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Dashboard from "./pages/admin/Dashboard";
-import Sidebar from "./Components/Admin/Sidebar";
 export const queryClient = new QueryClient();
 function App() {
   return (

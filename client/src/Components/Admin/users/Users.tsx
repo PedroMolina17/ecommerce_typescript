@@ -9,8 +9,10 @@ import { useForm } from "react-hook-form";
 import { useDebounce } from "../../../hooks/useDebounce";
 import FormUpdateUser from "./components/FormUpdateUser";
 import { useOpenFormStore } from "./store/useOpenForm.store";
+import TableSkeleton from "./components/TableSkeleton";
+
 const Users = () => {
-  const { handlePagination, pagination, setPagination } = usePagination();
+  const { handlePagination, pagination } = usePagination();
   const { openForm } = useOpenFormStore((state) => state);
   const { watch, register } = useForm({ defaultValues: { search: "" } });
   const watchSearch = useDebounce(watch("search"), 500);
@@ -33,15 +35,19 @@ const Users = () => {
     },
     placeholderData: keepPreviousData,
   });
-  console.log(watch("search"));
+
   return (
     <>
       <div className="relative py-3 px-3  flex w-full flex-col gap-2">
         <h2 className="text-3xl font-bold text-slate-600">List of users</h2>
         <UserSearchInput register={register("search")} />
         <section className=" w-full mt-1 flex flex-col gap-2">
-          {data ? <TableUser data={data} /> : <p>cargando...</p>} 
-          
+          {data ? (
+            <TableUser data={data} />
+          ) : (
+            <TableSkeleton/>
+          )}
+
           <div className="flex items-center justify-between gap-1">
             <div className=" ">
               <RowSelector
@@ -70,10 +76,10 @@ const Users = () => {
         </section>
       </div>
       {openForm && (
-        <div className="absolute top-0 left-0 w-full h-screen bg-[#00000080] z-10 flex items-center justify-center">
+        <div className="absolute top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
           <FormUpdateUser />
         </div>
-      )} 
+      )}
     </>
   );
 };

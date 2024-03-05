@@ -5,7 +5,7 @@ import { FaDollarSign } from "react-icons/fa6";
 import ButonSideBar from "./ButonSideBar";
 import { useState } from "react";
 import ContainerButton from "./ContainerButton";
-import logo from "../../../../public/images/logo-Celeste.png";
+import logo from "/images/logo-Celeste.png";
 import { useSelectNavStore } from "./store/useSelectNav";
 import { IoExit } from "react-icons/io5";
 const Sidebar = () => {
