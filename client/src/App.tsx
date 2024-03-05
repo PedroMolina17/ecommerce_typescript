@@ -7,9 +7,9 @@ import Acessories from "./Components/Acessories";
 import Deals from "./Components/Deals";
 import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
-import Login from "./Components/Admin/Login";
+import Login from "./Components/Admin/login/Login";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Dashboard from "./pages/admin/Dashboard";
 export const queryClient = new QueryClient();
 function App() {
@@ -45,7 +45,7 @@ function App() {
 
 const AdminLayout = () => (
   <Routes>
-    <Route index element={<Dashboard/>} />
+    <Route index element={<Dashboard />} />
   </Routes>
 );
 
