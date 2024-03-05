@@ -33,53 +33,53 @@ const Sales = () => {
           <div className="grid grid-cols-5 gap-4 mx-8">
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#f97f63] flex items-center justify-center p-4">
-                <FaDollarSign className="text-4xl text-white" />
+                <FaDollarSign className="text-2xl text-white" />
               </div>
               <div className="text-center">
                 <p className="text-xl">Ventas Totales</p>
                 <p className="text-slate-400">+50% ingresos</p>
               </div>
-              <p className="text-[#f97f63] text-4xl font-bold">$278m</p>
+              <p className="text-[#f97f63] text-2xl font-bold">$278m</p>
             </div>
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#39a1ea] flex items-center justify-center p-4">
-                <FaPercentage className="text-4xl text-white" />
+                <FaPercentage className="text-2xl text-white" />
               </div>
               <div className="text-center">
                 <p className="text-xl">Ingresos Diarios</p>
                 <p className="text-slate-400">+50% ingresos</p>
               </div>
-              <p className="text-[#39a1ea] text-4xl font-bold">$278m</p>
+              <p className="text-[#39a1ea] text-2xl font-bold">$278m</p>
             </div>{" "}
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#f97f63] flex items-center justify-center p-4">
-                <FaDollarSign className="text-4xl text-white" />
+                <FaDollarSign className="text-2xl text-white" />
               </div>
               <div>
                 <p className="text-xl">Ventas Totales</p>
                 <p className="text-slate-400">+50% ingresos</p>
               </div>
-              <p className="text-[#f97f63] text-4xl font-bold">$278m</p>
+              <p className="text-[#f97f63] text-2xl font-bold">$278m</p>
             </div>{" "}
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#f97f63] flex items-center justify-center p-4">
-                <FaDollarSign className="text-4xl text-white" />
+                <FaDollarSign className="text-2xl text-white" />
               </div>
               <div>
                 <p className="text-xl">Ventas Totales</p>
                 <p className="text-slate-400">+50% ingresos</p>
               </div>
-              <p className="text-[#f97f63] text-4xl font-bold">$278m</p>
+              <p className="text-[#f97f63] text-2xl font-bold">$278m</p>
             </div>{" "}
             <div className="col-span-1 bg-white rounded-md flex flex-col py-4 items-center justify-around h-64">
               <div className="rounded-full bg-[#455692] flex items-center justify-center p-4">
-                <FaCartShopping className="text-4xl text-white" />
+                <FaCartShopping className="text-2xl text-white" />
               </div>
               <div className="text-center">
                 <p className="text-xl">Productos Totales</p>
                 <p className="text-slate-400">+50% nuevos productos</p>
               </div>
-              <p className="text-[#455692] text-4xl font-bold">278</p>
+              <p className="text-[#455692] text-2xl font-bold">278</p>
             </div>
           </div>
           <GraphArea />

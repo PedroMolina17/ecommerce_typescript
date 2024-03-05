@@ -7,17 +7,9 @@ CREATE TABLE `User` (
     `address` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NULL,
     `googleId` VARCHAR(191) NULL,
-    `roleId` INTEGER NOT NULL,
+    `role` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 
-    UNIQUE INDEX `User_roleId_key`(`roleId`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Role` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` ENUM('user', 'admin') NOT NULL,
-
+    UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -38,8 +30,8 @@ CREATE TABLE `Products` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `thecnicalDescription` JSON NOT NULL,
-    `price` INTEGER NOT NULL,
+    `technicalDescription` JSON NOT NULL,
+    `price` DOUBLE NOT NULL,
     `stock` INTEGER NOT NULL,
     `status` BOOLEAN NOT NULL DEFAULT true,
     `image` VARCHAR(191) NOT NULL,
@@ -49,6 +41,7 @@ CREATE TABLE `Products` (
     `categoryId` INTEGER NOT NULL,
     `brandId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Products_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -57,6 +50,7 @@ CREATE TABLE `Category` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Category_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -65,6 +59,7 @@ CREATE TABLE `Brand` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Brand_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -77,9 +72,6 @@ CREATE TABLE `Comment` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `User` ADD CONSTRAINT `User_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `Role`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Token` ADD CONSTRAINT `Token_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
