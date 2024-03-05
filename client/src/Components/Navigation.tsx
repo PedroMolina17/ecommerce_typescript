@@ -21,9 +21,9 @@ const Navigation = () => {
   const handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "http://localhost:3500/api/auth/login",
         {
-          username,
+          email:username,
           password,
         }
       );

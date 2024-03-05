@@ -21,7 +21,9 @@ export const register: AuthFunction = async (req, res, next) => {
 export const login: AuthFunction = async (req, res, next) => {
   try {
     const user = req.body as ILogin
+    
     const data = await AuthService.login(user)
+
     setCookies(res, data)
     sendResponse(res, HTTP_STATUS.OK, { message: data.message })
   } catch (error) {
