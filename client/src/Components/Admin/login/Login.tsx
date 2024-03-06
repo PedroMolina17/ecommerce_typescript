@@ -47,7 +47,7 @@ const Login = () => {
           position: "top-center",
         });
 
-        // Espera 5 segundos antes de redirigir
+        // Espera 3 segundos antes de redirigir
         setTimeout(() => {
           // Redirige al usuario a la página deseada
           navigate("/admin");
