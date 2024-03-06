@@ -12,7 +12,7 @@ const Category = () => {
     },
   });
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       <h2 className="text-3xl font-bold text-slate-600">Categories</h2>
       <div className="bg-white p-4 shadow-md rounded-md">
         <SearchInput

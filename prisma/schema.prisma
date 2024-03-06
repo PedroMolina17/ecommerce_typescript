@@ -24,6 +24,7 @@ model User {
   address  String?
   phone    String?
   googleId String?
+  createAt DateTime @default(now())
   role     typeRoleEnum @default(user)
   tokens   Token[] 
   comment  Comment[]
@@ -53,6 +54,7 @@ model Products {
   promotionDescription String?
   categoryId           Int
   brandId              Int
+  crateAt              DateTime @default(now())
   comment              Comment[]
   category             Category @relation(fields: [categoryId], references: [id])
   brand                Brand    @relation(fields: [brandId], references: [id])
@@ -64,18 +66,21 @@ model TechnicalDetailsProduct {
   name        String
   description String
   productId   Int
+  createAt    DateTime @default(now())
   product     Products @relation(fields: [productId], references: [id])
 }
 
 model Category {
   id       Int        @id @default(autoincrement())
   name     String @unique
+  createAt DateTime  @default(now())
   products Products[]
 }
 
 model Brand {
   id       Int        @id @default(autoincrement())
   name     String     @unique
+  createAt DateTime   @default(now())
   products Products[]
 }
 
@@ -86,4 +91,5 @@ model Comment {
   productId Int
   product   Products @relation(fields: [productId], references: [id])
   comment   String
+  createAt  DateTime @default(now())
 }

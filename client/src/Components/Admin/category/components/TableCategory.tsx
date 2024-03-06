@@ -28,10 +28,10 @@ const TableCategory = () => {
   });
 
   return (
-    <div>
+    <div className=" bg-white p-4">
       {data ? (
         <Table
-          tableClass="min-w-72"
+          tableClass="min-w-80 shadow-md rounded-md"
           columns={columns}
           data={data.data}
           render={({ table }) => (
