@@ -1,11 +1,12 @@
 import Brands from "../../Components/Admin/brand/Brands"; // ruta a mi componente brand
-import Categories from "../../Components/Admin/Categories";
+
 import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Sidebar from "../../Components/Admin/sideBar/Sidebar";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
 import Products from "../../Components/Products";
+import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
@@ -14,7 +15,7 @@ const Dashboard = () => {
   const renderContent = (value: string) => {
     switch (value) {
       case "Categories":
-        return <Categories />;
+        return <Category />;
       case "Sales":
         return <Sales />;
       case "Products":
@@ -32,7 +33,7 @@ const Dashboard = () => {
   return (
     <section className="container mx-auto bg-[#f9f9f9] p-2 flex w-full relative h-screen">
       <Sidebar />
-      <div className="ml-16 flex-1">{renderContent(selectNav)}</div>
+      <div className="ml-24 mr-8 mt-3 flex-1">{renderContent(selectNav)}</div>
     </section>
   );
 };

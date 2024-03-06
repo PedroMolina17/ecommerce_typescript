@@ -94,7 +94,7 @@ const TableUser = ({ data }: TableUserProps) => {
       <Table
         tableClass="w-full rounded-md bg-white shadow-md"
         columns={columns}
-        data={data}
+        data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
