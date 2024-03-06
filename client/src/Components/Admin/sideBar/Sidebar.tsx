@@ -8,10 +8,11 @@ import ContainerButton from "./ContainerButton";
 import logo from "/images/logo-Celeste.png";
 import { useSelectNavStore } from "./store/useSelectNav";
 import { IoExit } from "react-icons/io5";
+import { SiBrandfolder } from "react-icons/si";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { setSelectNav } = useSelectNavStore((state) => state);
-  
+
   return (
     <aside
       className={`${
@@ -63,6 +64,20 @@ const Sidebar = () => {
           <ButonSideBar
             icon={<TbCategoryFilled className="text-primary" />}
             onClick={() => setSelectNav("Categories")}
+          />
+        </ContainerButton>
+
+        {/* Aqui se ponen los comentarios en React
+            Aqui creo un nuevo boton con un nuevo formato de icono
+        */}
+        <ContainerButton
+          title="Brands"
+          name="Brands"
+          onClick={() => setSelectNav("Brands")}
+        >
+          <ButonSideBar
+            icon={<SiBrandfolder className="text-primary" />}
+            onClick={() => setSelectNav("Brands")}
           />
         </ContainerButton>
         <ContainerButton title="salir" name="Exit">
