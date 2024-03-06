@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getAllUsers, getUserByName } from "../../../api/user";
 import TableUser from "./components/TableUser";
-import UserSearchInput from "./components/UserSearchInput";
+import SearchInput from "../SearchInput";
 import ResponsivePagination from "react-responsive-pagination";
 import usePagination from "../../../hooks/usePagination";
 import RowSelector from "./components/RowSelector";
@@ -38,9 +38,9 @@ const Users = () => {
 
   return (
     <>
-      <div className="relative py-3 px-3  flex w-full flex-col gap-2">
+      <div className="relative flex w-full flex-col gap-2">
         <h2 className="text-3xl font-bold text-slate-600">List of users</h2>
-        <UserSearchInput register={register("search")} />
+        <SearchInput register={register("search")} />
         <section className=" w-full mt-1 flex flex-col gap-2">
           {data ? (
             <TableUser data={data} />

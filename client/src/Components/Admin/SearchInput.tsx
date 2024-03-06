@@ -1,13 +1,17 @@
+import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { MdPersonSearch } from "react-icons/md";
-interface UserSearchInputProps {
+interface ISearchInputProps
+  extends DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   register: any;
 }
-const UserSearchInput = ({ register }: UserSearchInputProps) => {
+const SearchInput = ({ register, ...props }: ISearchInputProps) => {
   return (
     <div className="relative w-fit h-fit ">
       <input
-        type="search"
-        placeholder="Search for user name..."
+        {...props}
         {...register}
         className="px-8 py-1.5 border  rounded-md  focus:ring-[#3293c0]"
       />
@@ -17,4 +21,4 @@ const UserSearchInput = ({ register }: UserSearchInputProps) => {
     </div>
   );
 };
-export default UserSearchInput;
+export default SearchInput;

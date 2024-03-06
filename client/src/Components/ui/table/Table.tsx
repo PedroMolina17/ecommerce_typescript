@@ -1,6 +1,5 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { HTMLAttributes, ReactNode, TableHTMLAttributes } from "react";
-import { Users } from "../../../types/user.type";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface TableColumn {
   accessorKey: string;
@@ -9,7 +8,7 @@ export interface TableColumn {
 }
 interface TableUserProps extends HTMLAttributes<HTMLTableElement> {
   columns: TableColumn[];
-  data: Users;
+  data: any;
   tableClass: string;
   render: ({ table }: any) => React.ReactNode;
   children?: ReactNode;
@@ -22,7 +21,7 @@ const Table = ({
   children,
 }: TableUserProps) => {
   const table = useReactTable({
-    data: data.results,
+    data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
    
