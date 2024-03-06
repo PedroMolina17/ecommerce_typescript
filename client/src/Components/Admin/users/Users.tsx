@@ -12,7 +12,6 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 
-
 const Users = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 1,
@@ -62,7 +61,7 @@ const Users = () => {
             cell.getValue()
           )}
         </span>
-      )
+      ),
     },
     {
       accessorKey: "address",
@@ -75,7 +74,7 @@ const Users = () => {
             cell.getValue()
           )}
         </span>
-      )
+      ),
     },
   ];
 

@@ -1,6 +1,6 @@
 import Categories from "./Categories";
 import { useState } from "react";
-import Products from "./Products";
+import ProductsTable from "./Products/ProductsTable";
 import Brands from "./Brands";
 import Suppliers from "./Suppliers";
 import Sales from "./Sales";
@@ -18,7 +18,7 @@ const Sidebar = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <Products />;
+        return <ProductsTable />;
       case "Brands":
         return <Brands />;
       case "Users":
