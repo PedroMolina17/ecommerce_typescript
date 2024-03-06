@@ -16,3 +16,12 @@ export interface AuthResult {
     refreshToken: string;
     message: string;
   }
+ export interface DecodedToken {
+    user: {
+      id: number;
+      role: string;
+    };
+    iat: number; 
+    exp: number; 
+  }
+  

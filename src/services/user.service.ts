@@ -100,7 +100,7 @@ export class UserService {
       }
       return acc;
     }, {});
-  console.log("--->",filteredUserData)
+
 
     const updatedUser = await prisma.user.update({
       where: { id },

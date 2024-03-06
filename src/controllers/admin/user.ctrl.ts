@@ -14,6 +14,7 @@ const getAllUsers: fnCtrl = async (req, res, next) => {
     const { page = 1, pageSize = 10 } = req.query;
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
+    console.log(req.cookies)
     const data = await UserService.getAllUsers(pageNumber, pageSizeNumber);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
