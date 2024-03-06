@@ -259,14 +259,49 @@ const usuarios=[
       "password": "mypassword"
     }
   ]
-
+const categories = [
+  {
+    "name": "Laptops"
+  },
+  {
+    "name": "Desktops"
+  },
+  {
+    "name": "Monitors"
+  },
+  {
+    "name": "Keyboards"
+  },
+  {
+    "name": "Mice"
+  },
+  {
+    "name": "Printers"
+  },
+  {
+    "name": "Scanners"
+  },
+  {
+    "name": "Routers"
+  },
+  {
+    "name": "Software"
+  },
+  {
+    "name": "Accessories"
+  }
+]
 async function main() {
     const users = usuarios.map((user) => ({ ...user, password: bcryp.hashSync(user.password, 10)}))
    await prisma.user.createMany({
     data: users,
     skipDuplicates: true
   })
-  console.log("Seeding finished.",users) 
+  
+  await prisma.category.createMany({
+    data: categories,
+    skipDuplicates:true
+  })
    
 }
 main()

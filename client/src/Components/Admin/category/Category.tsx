@@ -12,18 +12,17 @@ const Category = () => {
     },
   });
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <h2 className="text-3xl font-bold text-slate-600">Categories</h2>
       <div className="bg-white p-4 shadow-md rounded-md">
         <SearchInput
-        type="search"
+          type="search"
           placeholder="Search category..."
           register={register("category")}
         />
       </div>
       <div>
-        
-        <TableCategory/>
+        <TableCategory />
       </div>
     </div>
   );
