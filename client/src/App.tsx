@@ -10,33 +10,37 @@ import Electronic from "./Components/Electronic";
 import Cellphones from "./Components/Cellphones";
 import Sidebar from "./Components/Admin/Sidebar";
 import Login from "./Components/Admin/Login";
-import ProductDetails from "./Components/ProductDetails";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/*"
-          element={
-            <>
-              <Navigation />
-              <Routes>
-                <Route path="/" element={<Slider />} />
-                <Route path="/signup" element={<SingUp />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/accesories" element={<Acessories />} />
-                <Route path="/deals" element={<Deals />} />
-                <Route path="/electronics" element={<Electronic />} />
-                <Route path="/cellphones" element={<Cellphones />} />
-                <Route path="/electronics/:id" element={<ProductDetails />} />
-              </Routes>
-            </>
-          }
-        />
-        <Route path="/admin/*" element={<AdminLayout />} />{" "}
-        <Route path="/adminLogin/*" element={<Login />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <>
+                <Navigation />
+                <Routes>
+                  <Route path="/" element={<Slider />} />
+                  <Route path="/signup" element={<SingUp />} />
+                  <Route path="/blogs" element={<Blogs />} />
+                  <Route path="/accesories" element={<Acessories />} />
+                  <Route path="/deals" element={<Deals />} />
+                  <Route path="/electronics" element={<Electronic />} />
+                  <Route path="/cellphones" element={<Cellphones />} />
+                </Routes>
+              </>
+            }
+          />
+          <Route path="/admin/*" element={<AdminLayout />} />{" "}
+          <Route path="/adminLogin/*" element={<Login />} />
+        </Routes>
+      </Router>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

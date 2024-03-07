@@ -1,10 +1,10 @@
 import Categories from "./Categories";
 import { useState } from "react";
-import Products from "./Products";
+import ProductsTable from "./Products/ProductsTable";
 import Brands from "./Brands";
 import Suppliers from "./Suppliers";
 import Sales from "./Sales";
-import Users from "./Users";
+import Users from "./users/Users";
 import { FaDollarSign } from "react-icons/fa6";
 
 import { TbCategoryFilled } from "react-icons/tb";
@@ -18,7 +18,7 @@ const Sidebar = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <Products />;
+        return <ProductsTable />;
       case "Brands":
         return <Brands />;
       case "Users":
