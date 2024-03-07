@@ -31,9 +31,9 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className="container mx-auto bg-[#f9f9f9] p-2 flex w-full relative h-screen">
+    <section className="container mx-auto bg-[#f9f9f9]  flex w-full relative h-screen">
       <Sidebar />
-      <div className="ml-24 mr-8 mt-3 flex-1">{renderContent(selectNav)}</div>
+      <div className="ml-20 mr-8 mt-3 flex-1">{renderContent(selectNav)}</div>
     </section>
   );
 };

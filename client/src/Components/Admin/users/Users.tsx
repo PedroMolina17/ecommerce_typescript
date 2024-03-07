@@ -76,7 +76,7 @@ const Users = () => {
         </section>
       </div>
       {openForm && (
-        <div className="absolute top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
+        <div className="absolute pointer-events-none top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
           <FormUpdateUser />
         </div>
       )}
