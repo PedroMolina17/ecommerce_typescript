@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios";
-import { Users } from "../types/user.type";
+import { Product } from "../types/products.type";
 import { api } from "./axios.config";
 
 const getAllProducts = async (
   page: number = 1,
   pageSize: number = 10
-): Promise<Users> => {
-  const { data }: AxiosResponse<Users> = await api.get(
+): Promise<Product> => {
+  const { data }: AxiosResponse<Product> = await api.get(
     `product/products?page=${page}&pageSize=${pageSize}`
   );
   return data;
