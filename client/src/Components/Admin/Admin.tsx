@@ -72,6 +72,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
       }
     };
 
+    // funcion que me va a obtener las marcas
     const obtenerMarcas = async () => {
       try {
         const response = await axios.get(
@@ -94,6 +95,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
       }
     };
 
+    // se llaman a las funciones
     obtenerCategorias();
     obtenerMarcas();
   }, []);

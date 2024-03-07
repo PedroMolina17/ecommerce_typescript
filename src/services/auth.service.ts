@@ -59,11 +59,11 @@ export class AuthService {
     const refreshToken = jwt.sign({ user }, REFRESH_SECRET_TOKEN!, {
       expiresIn: "7d",
     });
-
+    //verifica si el refres token existe en la base de datos
     const existingToken = await prisma.token.findFirst({
       where: { userId: user.id },
     });
-
+    //actualiza el refresh token
     if (existingToken) {
       await prisma.token.update({
         where: { id: existingToken.id },

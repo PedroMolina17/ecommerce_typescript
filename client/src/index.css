@@ -12,16 +12,16 @@
   padding-left: 0;
   list-style: none;
   margin: 0;
-  gap: 8px;
+
 }
 
 .page-item .page-link {
   display: flex;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
+ font-size: 14px;
   color: #007bff;
   text-decoration: none;
 }
@@ -37,7 +37,7 @@
 .page-item.active .page-link {
   font-weight: 700;
   color: #ffffff;
-  background-color: #007bff;
+  background-color: #139dba;
 }
 
 .page-item.disabled .page-link {

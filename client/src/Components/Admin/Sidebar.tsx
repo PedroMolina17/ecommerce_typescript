@@ -1,14 +1,14 @@
-import Categories from "./Categories";
 import { useState } from "react";
-import ProductsTable from "./Products/ProductsTable";
-import Brands from "./Brands";
-import Suppliers from "./Suppliers";
-import Sales from "./Sales";
-import Users from "./users/Users";
 import { FaDollarSign } from "react-icons/fa6";
+import Brands from "./Brands";
+import Categories from "./Categories";
+import Products from "./Products";
+import Sales from "./Sales";
+import Suppliers from "./Suppliers";
+import Users from "./users/Users";
 
-import { TbCategoryFilled } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
+import { TbCategoryFilled } from "react-icons/tb";
 const Sidebar = () => {
   const [selectedNav, setSelectedNav] = useState("Sales");
   const renderContent = () => {
@@ -31,9 +31,9 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex  h-screen ">
-      <div className="relative h-screen">
-        <ul className="flex flex-col col bg-[#455591] text-white  py-8 h-screen  fixed top-0 left-0 bottom-0 w-96 ">
+    <div className="flex h-screen ">
+      <div className="relative h-screen ">
+        <ul className="shadow-lg flex flex-col col bg-[#455591] text-white py-3 h-screen  fixed top-0 left-0 bottom-0 w-96 ">
           <p className="text-xl font-bold text-center">Dashboard</p>
           <p className="mx-8 font-bold text-xl py-4">Menu</p>
           <button
@@ -77,7 +77,7 @@ const Sidebar = () => {
               selectedNav === "Brands" ? " bg-[#5b6aa1] text-white" : ""
             }`}
           >
-            Marcas
+            Marcashadow-lg
           </button>
           <button
             onClick={() => setSelectedNav("Suppliers")}
@@ -89,7 +89,7 @@ const Sidebar = () => {
           </button>
         </ul>
       </div>
-      <div className="  ml-96 justify-around bg-[#eff3fc] w-full">
+      <div className="  ml-96 justify-around bg-[#f2f2f2] w-full">
         {" "}
         {renderContent()}
       </div>

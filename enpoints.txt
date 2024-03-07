@@ -16,3 +16,6 @@ http://localhost:3500/api/product/create-product
 http://localhost:3500/api/product/update-product/:id
 http://localhost:3500/api/product/delete-product/:id
 http://localhost:3500/api/product/products?page&pageSize //lista de productos
+
+users
+http://localhost:3500/api/user/users/:name?page=2&pageSize=10 //obtener usaurios por nombre

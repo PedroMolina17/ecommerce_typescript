@@ -10,9 +10,35 @@ import {
   validateDeleteBrand,
   validateUpdateBrand,
 } from "../validators";
+import { verifyJwt } from "../middlewares/verifyJwt.mdl";
+import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
+import { ROLE } from "../constants/roleUser.constants";
 const router = Router();
-router.get("/brands", getBrands);
-router.post("/create-brand", validateCreateBrand, createBrand);
-router.put("/update-brand/:id", validateUpdateBrand, updateBrand);
-router.delete("/delete-brand/:id", validateDeleteBrand, deleteBrand);
+router.get(
+  "/brands",
+  verifyJwt,
+  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
+  getBrands
+);
+router.post(
+  "/create-brand",
+  verifyJwt,
+  verifyAuthRole([ROLE.ADMIN]),
+  validateCreateBrand,
+  createBrand
+);
+router.put(
+  "/update-brand/:id",
+  verifyJwt,
+  verifyAuthRole([ROLE.ADMIN]),
+  validateUpdateBrand,
+  updateBrand
+);
+router.delete(
+  "/delete-brand/:id",
+  verifyJwt,
+  verifyAuthRole([ROLE.ADMIN]),
+  validateDeleteBrand,
+  deleteBrand
+);
 export default router;
