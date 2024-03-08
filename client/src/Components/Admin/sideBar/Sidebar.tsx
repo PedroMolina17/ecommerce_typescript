@@ -1,7 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { BsArrowLeftShort } from "react-icons/bs";
-import { FaDollarSign } from "react-icons/fa6";
+import { FaDollarSign, FaCartShopping } from "react-icons/fa6";
 import ButonSideBar from "./ButonSideBar";
 import { useState } from "react";
 import ContainerButton from "./ContainerButton";
@@ -9,6 +9,7 @@ import logo from "/images/logo-Celeste.png";
 import { useSelectNavStore } from "./store/useSelectNav";
 import { IoExit } from "react-icons/io5";
 import { SiBrandfolder } from "react-icons/si";
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { setSelectNav } = useSelectNavStore((state) => state);
@@ -66,7 +67,16 @@ const Sidebar = () => {
             onClick={() => setSelectNav("Categories")}
           />
         </ContainerButton>
-
+        <ContainerButton
+          title="Products"
+          name="Products"
+          onClick={() => setSelectNav("Products")}
+        >
+          <ButonSideBar
+            icon={<FaCartShopping className="text-primary" />}
+            onClick={() => setSelectNav("Products")}
+          />
+        </ContainerButton>
         {/* Aqui se ponen los comentarios en React
             Aqui creo un nuevo boton con un nuevo formato de icono
         */}

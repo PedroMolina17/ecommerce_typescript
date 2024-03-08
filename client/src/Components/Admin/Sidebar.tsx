@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaDollarSign } from "react-icons/fa6";
 import Brands from "./Brands";
 import Categories from "./Categories";
-import Products from "./Products";
+import ProductsTable from "./Products/ProductsTable";
 import Sales from "./Sales";
 import Suppliers from "./Suppliers";
 import Users from "./users/Users";

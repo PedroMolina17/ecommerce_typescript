@@ -5,7 +5,7 @@ import Suppliers from "../../Components/Admin/Suppliers";
 import Sidebar from "../../Components/Admin/sideBar/Sidebar";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-import Products from "../../Components/Products";
+import ProductsTable from "../../Components/Admin/Products/ProductsTable";
 import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {
@@ -19,7 +19,7 @@ const Dashboard = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <Products />;
+        return <ProductsTable />;
       case "Brands":
         return <Brands />;
       case "Users":
