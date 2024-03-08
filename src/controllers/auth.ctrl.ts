@@ -11,6 +11,7 @@ type AuthFunction = (req: Request, res: Response, next: NextFunction) => Promise
 export const register: AuthFunction = async (req, res, next) => {
   try {
     const user = req.body as Iregister
+    console.log(req.cookies)
     const data = await AuthService.register(user)
     setCookies(res, data)
     sendResponse(res, HTTP_STATUS.OK, { message: data.message })
@@ -21,8 +22,12 @@ export const register: AuthFunction = async (req, res, next) => {
 export const login: AuthFunction = async (req, res, next) => {
   try {
     const user = req.body as ILogin
+    console.log("-->>>",req.cookies)
     const data = await AuthService.login(user)
+    
     setCookies(res, data)
+    console.log(res.getHeader('Set-Cookie'));
+
     sendResponse(res, HTTP_STATUS.OK, { message: data.message })
   } catch (error) {
     registrationError(error, res, next);

@@ -1,11 +1,11 @@
-enum Role {
+export enum userRole {
     admin='admin',user='user'
 }
 export interface Iregister{
     userName: string
     email: string
     password: string
-    role:Role
+    role:userRole
 }
 export interface ILogin{
     email:string
@@ -16,3 +16,12 @@ export interface AuthResult {
     refreshToken: string;
     message: string;
   }
+ export interface DecodedToken {
+    user: {
+      id: number;
+      role: string;
+    };
+    iat: number; 
+    exp: number; 
+  }
+  

@@ -24,14 +24,14 @@ model User {
   phone    String?
   googleId String?
   role     typeRoleEnum @default(user)
-  tokens   Token[]
+  tokens   Token[] 
   comment  Comment[]
 }
 
 model Token {
   id        Int      @id @default(autoincrement())
   userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   token     String
   createAt  DateTime @default(now())
   expiredAt DateTime
@@ -79,7 +79,7 @@ model Brand {
 model Comment {
   id        Int      @id @default(autoincrement())
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   productId Int
   product   Products @relation(fields: [productId], references: [id])
   comment   String
