@@ -2,12 +2,12 @@ import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useOpenFormStore } from "../store/useOpenForm.store";
+import { useOpenFormStoreCategory } from "../store/useOpenForm.store";
 
 export const MySwal = withReactContent(Swal);
 const ButtonsActionTable = ({ cell, mutation }: any) => {
     /* const {setRowValue}=useRowValueStore((state)=>state) */
-    const {setOpenForm}=useOpenFormStore((state)=>state)
+    const {setOpenForm}=useOpenFormStoreCategory((state)=>state)
    
     return (
     <div className="flex gap-2  items-center justify-center ">

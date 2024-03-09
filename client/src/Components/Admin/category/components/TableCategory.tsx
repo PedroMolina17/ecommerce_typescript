@@ -27,7 +27,6 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
       accessorKey: "createAt",
       header: "Created At",
       cell: (cell: ITableRow) => {
-        console.log(cell);
         return <span>{formatDate(cell.createAt)}</span>;
       },
     },
@@ -39,7 +38,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
   return (
     <div className="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs border-b text-gray-700 uppercase dark:text-gray-400">
+        <thead className="text-xs border-b border-gray-700 text-gray-700 uppercase dark:text-gray-400">
           <tr className="">
             {columns &&
               columns.map((col) => (

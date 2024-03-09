@@ -7,21 +7,32 @@ import usePagination from "../../../hooks/usePagination";
 import { getAllCategory } from "../../../api/category";
 import TableSkeleton from "../users/components/TableSkeleton";
 import FormCreateCategory from "./components/FormCreateCategory";
-import { useOpenFormStore } from "./store/useOpenForm.store";
+
+import { useDebounce } from "../../../hooks/useDebounce";
+import { filterCategoriesByName } from "../../../utils/filterCategories";
+import { useOpenFormStoreCategory } from "./store/useOpenForm.store";
 
 const Category = () => {
-  const { register } = useForm();
+  const { register, watch } = useForm();
   const { pagination, handlePagination } = usePagination();
-  const { openForm,setOpenForm } = useOpenFormStore((state) => state);
+  const { openForm, setOpenForm } = useOpenFormStoreCategory((state) => state);
   const { data } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => await getAllCategory(),
   });
-  const paginateData = data?.data?.slice(
-    (pagination.pageIndex - 1) * 10,
-    pagination.pageIndex * 10
-  );
+  const searchTerms = useDebounce(watch("category"), 500);
+  const filterData =
+    data && searchTerms && searchTerms.length > 0
+      ? filterCategoriesByName(data?.data, searchTerms)
+      : data?.data;
 
+  const paginateData =
+    filterData &&
+    filterData.slice(
+      (pagination.pageIndex - 1) * 10,
+      pagination.pageIndex * 10
+    );
+  console.log(openForm);
   return (
     <div className="flex flex-col gap-3">
       <h2 className=" font-bold text-white">Categories</h2>
@@ -33,7 +44,12 @@ const Category = () => {
             register={register("category")}
           />
           <div></div>
-          <button onClick={()=>{setOpenForm("create")}} className="py-1 px-3 rounded-md bg-primary text-white">
+          <button
+            onClick={() => {
+              setOpenForm("create");
+            }}
+            className="py-1 px-3 rounded-md bg-primary text-white"
+          >
             Create new category
           </button>
         </div>
@@ -46,20 +62,23 @@ const Category = () => {
             <TableSkeleton />
           )}
           <div className="m-2 w-full flex justify-center">
-            <ResponsivePagination
-              current={pagination.pageIndex}
-              onPageChange={(page) => {
-                handlePagination({ ...pagination, pageIndex: page });
-              }}
-              total={Math.ceil((data?.data?.length || 1) / 10)}
-            />
+            {paginateData && (
+              <ResponsivePagination
+                current={pagination.pageIndex}
+                onPageChange={(page) => {
+                  handlePagination({ ...pagination, pageIndex: page });
+                }}
+                total={Math.ceil((filterData.length || 1) / 10)}
+              />
+            )}
           </div>
         </div>
       </div>
-      {openForm.create && <div className="absolute  top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
-        <FormCreateCategory />
-      </div>}
-      
+      {openForm.create && (
+        <div className="fixed inset-0   flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
+          <FormCreateCategory />
+        </div>
+      )}
     </div>
   );
 };
