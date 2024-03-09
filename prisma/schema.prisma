@@ -10,16 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum typeRoleEnum {
   user
   admin
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
+  id       Int          @id @default(autoincrement())
   userName String
-  email    String  @unique
+  email    String       @unique
   password String?
   address  String?
   phone    String?
@@ -28,8 +27,6 @@ model User {
   tokens   Token[] 
   comment  Comment[]
 }
-
-
 
 model Token {
   id        Int      @id @default(autoincrement())
@@ -41,22 +38,22 @@ model Token {
 }
 
 model Products {
-  id                   Int      @id @default(autoincrement())
-  name                 String @unique
-  description          String
-  price                Float
-  stock                Int
-  status               Boolean  @default(true)
-  image                String
-  promotion            Boolean
-  promotionPrice       Float
-  promotionDescription String?
-  categoryId           Int
-  brandId              Int
-  comment              Comment[]
-  category             Category @relation(fields: [categoryId], references: [id])
-  brand                Brand    @relation(fields: [brandId], references: [id])
-  technicalDetailsProduct     TechnicalDetailsProduct[]
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  description             String
+  price                   Float
+  stock                   Int
+  status                  Boolean                   @default(true)
+  image                   String
+  promotion               Boolean
+  promotionPrice          Float
+  promotionDescription    String?
+  categoryId              Int
+  brandId                 Int
+  category                Category                  @relation(fields: [categoryId], references: [id])
+  brand                   Brand                     @relation(fields: [brandId], references: [id])
+  technicalDetailsProduct TechnicalDetailsProduct[]
+  Comment                 Comment[]
 }
 
 model TechnicalDetailsProduct {
@@ -69,7 +66,7 @@ model TechnicalDetailsProduct {
 
 model Category {
   id       Int        @id @default(autoincrement())
-  name     String @unique
+  name     String     @unique
   products Products[]
 }
 

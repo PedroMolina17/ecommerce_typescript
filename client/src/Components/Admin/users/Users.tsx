@@ -42,11 +42,7 @@ const Users = () => {
         <h2 className="text-3xl font-bold text-slate-600">List of users</h2>
         <SearchInput register={register("search")} />
         <section className=" w-full mt-1 flex flex-col gap-2">
-          {data ? (
-            <TableUser data={data} />
-          ) : (
-            <TableSkeleton/>
-          )}
+          {data ? <TableUser data={data} /> : <TableSkeleton />}
 
           <div className="flex items-center justify-between gap-1">
             <div className=" ">

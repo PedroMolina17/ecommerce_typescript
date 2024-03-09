@@ -18,7 +18,7 @@ const Sidebar = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <Products />;
+        return <ProductsTable />;
       case "Brands":
         return <Brands />;
       case "Users":

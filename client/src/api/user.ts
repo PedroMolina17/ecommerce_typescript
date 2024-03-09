@@ -43,4 +43,4 @@ const deleteUserById = async (id: number): Promise<ResponseDeleteUser> => {
   return data;
 };
 
-export { getAllUsers, getUserByName,updateUserById ,deleteUserById };
+export { getAllUsers, getUserByName, updateUserById, deleteUserById };

@@ -54,6 +54,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
         const response = await axios.get(
           "http://localhost:3500/api/category/categories"
         );
+        console.log(response);
 
         if (response.data && Array.isArray(response.data.data)) {
           setState((prevState) => ({
