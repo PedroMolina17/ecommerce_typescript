@@ -1,0 +1,21 @@
+http://localhost:3500/api/brand/brands  //obtener brands methodo get
+http://localhost:3500/api/brand/delete-brand/:id
+http://localhost:3500/api/brand/update-brand/:id
+http://localhost:3500/api/brand/create-brand
+
+catgories
+
+http://localhost:3500/api/category/update-category/:id
+http://localhost:3500/api/category/create-category
+http://localhost:3500/api/category/delete-category/:id
+http://localhost:3500/api/category/categories
+
+products
+
+http://localhost:3500/api/product/create-product
+http://localhost:3500/api/product/update-product/:id
+http://localhost:3500/api/product/delete-product/:id
+http://localhost:3500/api/product/products?page&pageSize //lista de productos
+
+users
+http://localhost:3500/api/user/users/:name?page=2&pageSize=10 //obtener usaurios por nombre
