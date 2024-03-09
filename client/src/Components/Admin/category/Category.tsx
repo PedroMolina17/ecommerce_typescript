@@ -24,21 +24,21 @@ const Category = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <h2 className="text-3xl font-bold text-slate-600">Categories</h2>
+      <h2 className=" font-bold text-white">Categories</h2>
       {
-        <div className="bg-white p-4 flex justify-between shadow-md rounded-md">
+        <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
           <SearchInput
             type="search"
             placeholder="Search category..."
             register={register("category")}
           />
           <div></div>
-          <button onClick={()=>{setOpenForm("create")}} className="p-2 rounded-md bg-primary text-white">
+          <button onClick={()=>{setOpenForm("create")}} className="py-1 px-3 rounded-md bg-primary text-white">
             Create new category
           </button>
         </div>
       }
-      <div className="flex flex-col bg-white p-4  rounded-md shadow-md">
+      <div className="flex flex-col    rounded-md shadow-md">
         <div className="  flex flex-col justify-center items-center">
           {paginateData ? (
             <TableCategory data={paginateData} />
