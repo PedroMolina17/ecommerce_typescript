@@ -15,15 +15,15 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { setSelectNav } = useSelectNavStore((state) => state);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationKey: ["logout"],
-    mutationFn:async ()=> await logout(),
+    mutationFn: async () => await logout(),
     onSuccess: () => {
-      navigate("/admin-login")
+      navigate("/admin-login");
     },
-   retry:1
-  })
+    retry: 1,
+  });
   return (
     <aside
       className={`fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0 w-64 min-h-screen  border-r border-gray-800`}
@@ -89,8 +89,12 @@ const Sidebar = () => {
             onClick={() => setSelectNav("Brands")}
           />
         </ContainerButton>
-        <ContainerButton title="salir" name="Exit" onClick={() => mutation.mutate()}>
-          <ButonSideBar icon={<IoExit className="text-secondary text-2xl" />}  />
+        <ContainerButton
+          title="salir"
+          name="Exit"
+          onClick={() => mutation.mutate()}
+        >
+          <ButonSideBar icon={<IoExit className="text-secondary text-2xl" />} />
         </ContainerButton>
       </div>
     </aside>
