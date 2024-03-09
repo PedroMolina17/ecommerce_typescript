@@ -6,7 +6,7 @@ export interface IResponseCategory extends IResponse {
 export interface ICategory {
   id: number;
   name: string;
-  createdAt: string;
+  createAt: string;
 }
 export interface IcreateCategory {
   name: string;

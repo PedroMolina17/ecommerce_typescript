@@ -13,12 +13,12 @@ const ContainerButton = ({ title, name, onClick,children }: Props) => {
     <div
     onClick={onClick}
       className={`${
-        selectNav === name ? "bg-[#cadbda]" : ""
-      } hover:bg-[#cadbda] rounded-md h-12 overflow-hidden flex items-center gap-1 cursor-pointer`}
+        selectNav === name ? "bg-bgHover text-white" : "text-slate-400"
+      } hover:bg-bgHover rounded-md h-12 overflow-hidden flex items-center gap-1 cursor-pointer`}
     >
       <div className="w-12">{children}</div>
 
-      <h2 className={` text-base font-medium  text-slate-600 whitespace-nowrap `}>
+      <h2 className={` text-sm truncate`}>
         {title}
       </h2>
     </div>

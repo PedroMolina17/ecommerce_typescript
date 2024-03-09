@@ -1,9 +1,10 @@
 import { Response } from "express";
+import { AUTH } from "../constants";
 interface ICookie {
     accessToken: string, 
     refreshToken: string
 }
 export const setCookies = (res: Response, data: ICookie):void => {
-    res.cookie('refreshToken', data.refreshToken);
-    res.cookie('accessToken', data.accessToken);
+    res.cookie(AUTH.REFRESHTOKEN, data.refreshToken);
+    res.cookie(AUTH.ACCESSTOKEN, data.accessToken);
 };

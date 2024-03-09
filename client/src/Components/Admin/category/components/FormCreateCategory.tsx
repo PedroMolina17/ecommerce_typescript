@@ -1,6 +1,4 @@
-import { IoMdClose } from "react-icons/io";
 import Input from "../../../ui/Input";
-
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createCategory } from "../../../../api/category";

@@ -18,7 +18,6 @@ const Table = ({
   data,
   render,
   tableClass,
-  children,
 }: TableUserProps) => {
   const table = useReactTable({
     data: data || [],

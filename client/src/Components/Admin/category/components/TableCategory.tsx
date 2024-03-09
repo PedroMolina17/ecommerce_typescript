@@ -1,85 +1,104 @@
-import { useMutation } from "@tanstack/react-query";
-import { deleteCategory } from "../../../../api/category";
-import Table from "../../../ui/table/Table";
-import TableHeader from "../../../ui/table/TableHeader";
-import TableBody from "../../../ui/table/TableBody";
-import { ToastContainer, toast } from "react-toastify";
-
-import { formatDate } from "../../../../utils/fomatDate";
-import {
-  ICategory,
-  IDeletecategory,
-  IResponseDeleteCategory,
-} from "../../../../types/category.type";
-import ButtonsActionTable from "./ButtonsActionTable";
-import { queryClient } from "../../../../App";
+import { ICategory } from "../../../../types/category.type";
 interface ITableCategoryProps {
   data: ICategory[];
 }
 const TableCategory = ({ data }: ITableCategoryProps) => {
-  const notify = (message: string) => toast(message);
-  const mutation = useMutation({
-    mutationFn: async (data: IDeletecategory) => await deleteCategory(data),
-    onSuccess: (data: IResponseDeleteCategory) => {
-      notify(data.message);
-      queryClient.refetchQueries({ queryKey: ["categories"] });
-    },
-  });
-  const columns = [
-    {
-      accessorKey: "id",
-      header: "ID",
-      cell: ({ cell }: any) => {
-        return <span className="">{cell.getValue()}</span>;
-      },
-    },
-    {
-      accessorKey: "name",
-      header: "Name",
-      cell: ({ cell }: any) => {
-        return <span className="">{cell.getValue()}</span>;
-      },
-    },
-    {
-      accessorKey: "createAt",
-      header: "Created At",
-      cell: ({ cell }: any) => (
-        <span className="">{formatDate(cell.getValue())}</span>
-      ),
-    },
-    {
-      accessorKey: "action",
-      header: "Action",
-      cell: ({ cell }: any) => (
-        <ButtonsActionTable cell={cell} mutation={mutation} />
-      ),
-    },
-  ];
-
   return (
-    <div className=" w-full">
-      <Table
-        tableClass="  shadow-md rounded-md "
-        columns={columns}
-        data={data}
-        render={({ table }) => (
-          <>
-            <TableHeader
-              headers={table.getHeaderGroups}
-              theadClass="bg-primary  text-white text-center text-slate-600 "
-              thClass="py-1 "
-            />
-            <TableBody
-              rows={table.getRowModel}
-              trClass=""
-              tbodyClass="table-body text-center  text-sm tracking-widest text-slate-600 "
-              tdClass="py-2 text-left border border-slate-300 "
-            />
-          </>
-        )}
-      ></Table>
-      <ToastContainer />
+    
+
+    <div className="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="px-6 py-3 bg-gray-50 ">
+                        Product name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Color
+                    </th>
+                    <th scope="col" className="px-6 py-3 bg-gray-50 ">
+                        Category
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Price
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                        Apple MacBook Pro 17"
+                    </th>
+                    <td className="px-6 py-4">
+                        Silver
+                    </td>
+                    <td className="px-6 py-4 bg-gray-50 ">
+                        Laptop
+                    </td>
+                    <td className="px-6 py-4">
+                        $2999
+                    </td>
+                </tr>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                        Microsoft Surface Pro
+                    </th>
+                    <td className="px-6 py-4">
+                        White
+                    </td>
+                    <td className="px-6 py-4 bg-gray-50 ">
+                        Laptop PC
+                    </td>
+                    <td className="px-6 py-4">
+                        $1999
+                    </td>
+                </tr>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                        Magic Mouse 2
+                    </th>
+                    <td className="px-6 py-4">
+                        Black
+                    </td>
+                    <td className="px-6 py-4 bg-gray-50">
+                        Accessories
+                    </td>
+                    <td className="px-6 py-4">
+                        $99
+                    </td>
+                </tr>
+                <tr className="border-b border-gray-200 dark:border-gray-700">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                        Google Pixel Phone
+                    </th>
+                    <td className="px-6 py-4">
+                        Gray
+                    </td>
+                    <td className="px-6 py-4 bg-gray-50 ">
+                        Phone
+                    </td>
+                    <td className="px-6 py-4">
+                        $799
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                        Apple Watch 5
+                    </th>
+                    <td className="px-6 py-4">
+                        Red
+                    </td>
+                    <td className="px-6 py-4  ">
+                        Wearables
+                    </td>
+                    <td className="px-6 py-4">
+                        $999
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    
   );
 };
 export default TableCategory;

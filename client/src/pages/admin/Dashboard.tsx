@@ -2,10 +2,9 @@ import Brands from "../../Components/Admin/brand/Brands"; // ruta a mi component
 
 import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
-import Sidebar from "../../Components/Admin/sideBar/Sidebar";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-import Products from "../../Components/Products";
+import Products from "../../Components/Products";0
 import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {
@@ -31,9 +30,8 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className="container mx-auto bg-[#f9f9f9]  flex w-full relative h-screen">
-      <Sidebar />
-      <div className="ml-20 mr-8 mt-3 flex-1">{renderContent(selectNav)}</div>
+    <section className="container mx-auto  flex w-full relative min-h-screen">
+      <div className=" w-full mx-8">{renderContent(selectNav)}</div>
     </section>
   );
 };

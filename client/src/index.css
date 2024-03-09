@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 .table-body tr:nth-child(even) {
-  @apply bg-slate-200;
+  @apply bg-bgHover;
 }
 /* css react responsive pagination */
-
+body{
+  @apply h-screen w-full
+}
 .pagination {
   display: flex;
   padding-left: 0;

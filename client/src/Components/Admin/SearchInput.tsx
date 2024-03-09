@@ -13,7 +13,7 @@ const SearchInput = ({ register, ...props }: ISearchInputProps) => {
       <input
         {...props}
         {...register}
-        className="px-8 py-1.5 border  rounded-md  focus:ring-[#3293c0]"
+        className="block w-full   focus:outline-none border-0  rounded-md  placeholder-gray-500 text-sm px-2.5 py-1.5 shadow-sm bg-gray-900 text-white ring-1 ring-inset ring-gray-700 focus:ring-2   ps-9 pe-9"
       />
       <span className="absolute top-1/2 left-2 transform -translate-y-1/2">
         <MdPersonSearch className="text-xl text-[#3293c0]" />

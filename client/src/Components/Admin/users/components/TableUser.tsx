@@ -92,19 +92,19 @@ const TableUser = ({ data }: TableUserProps) => {
   return (
     <>
       <Table
-        tableClass="w-full rounded-md bg-white shadow-md"
+        tableClass="w-full rounded-md  shadow-md"
         columns={columns}
         data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full bg-primary text-white text-center text-slate-600 "
+              theadClass="w-full bg-primary text-white text-center  "
               thClass="py-1 px-2"
             />
             <TableBody
               rows={table.getRowModel}
-              tbodyClass="table-body text-center text-slate-500 text-sm "
+              tbodyClass="table-body text-center text-white text-sm "
               tdClass="py-2 px-2"
             />
           </>
