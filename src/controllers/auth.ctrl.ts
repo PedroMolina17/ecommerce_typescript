@@ -5,8 +5,10 @@ import registrationError from "../utils/registrationError.util";
 import { sendResponse } from "../utils/sendResponse.util";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
 import { setCookies } from "../utils/setCookies.util";
+import { CustomRequest } from "../middlewares/verifyAuthRole.mdt";
+import { AUTH } from "../constants";
 
-type AuthFunction = (req: Request, res: Response, next: NextFunction) => Promise<any>;
+type AuthFunction = (req: CustomRequest, res: Response, next: NextFunction) => Promise<any>;
 
 export const register: AuthFunction = async (req, res, next) => {
   try {
@@ -29,6 +31,33 @@ export const login: AuthFunction = async (req, res, next) => {
     console.log(res.getHeader('Set-Cookie'));
 
     sendResponse(res, HTTP_STATUS.OK, { message: data.message })
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+};
+
+export const logout:AuthFunction = async (req, res, next) => {
+  try {
+    const {user}=req.user
+    console.log(user)
+    const data = await AuthService.logout(user)
+    res.clearCookie(AUTH.ACCESSTOKEN)
+    res.clearCookie(AUTH.REFRESHTOKEN)
+    sendResponse(res, HTTP_STATUS.OK, { data })
+  } catch (error) {
+
+    registrationError(error, res, next);
+    
+  }
+}
+export const checkAuth:AuthFunction = async (req, res, next) => {
+  try {
+    const user = req.user
+    const data={
+      authenticate:true,
+      user
+    }
+    sendResponse(res, HTTP_STATUS.OK,data)
   } catch (error) {
     registrationError(error, res, next);
   }

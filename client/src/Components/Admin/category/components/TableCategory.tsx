@@ -1,13 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAllCategory } from "../../../../api/category";
-import Table from "../../../ui/table/Table";
-import TableSkeleton from "../../users/components/TableSkeleton";
-import TableHeader from "../../../ui/table/TableHeader";
-import TableBody from "../../../ui/table/TableBody";
-import ButtonsActionTable from "../../users/components/ButtonsActionTable";
-
-const TableCategory = () => {
-  const columns = [
+import { ICategory } from "../../../../types/category.type";
+import { formatDate } from "../../../../utils/fomatDate";
+import ButtonsActionTable from "./ButtonsActionTable";
+interface ITableCategoryProps {
+  data: ICategory[];
+}
+interface ITableColumns {
+  accessorKey: string;
+  header: string;
+  cell?: any;
+}
+interface ITableRow extends ICategory {
+  action?: string;
+  cell?: any;
+}
+const TableCategory = ({ data }: ITableCategoryProps) => {
+  const columns: ITableColumns[] = [
     {
       accessorKey: "id",
       header: "ID",
@@ -17,41 +24,70 @@ const TableCategory = () => {
       header: "Name",
     },
     {
+      accessorKey: "createAt",
+      header: "Created At",
+      cell: (cell: ITableRow) => {
+        console.log(cell);
+        return <span>{formatDate(cell.createAt)}</span>;
+      },
+    },
+    {
       accessorKey: "action",
       header: "Action",
-      cell: ({ cell }: any) => <ButtonsActionTable cell={cell} />,
     },
   ];
-  const { data } = useQuery({
-    queryKey: ["category"],
-    queryFn: async () => await getAllCategory(),
-  });
-
   return (
-    <div>
-      {data ? (
-        <Table
-          tableClass="min-w-72"
-          columns={columns}
-          data={data.data}
-          render={({ table }) => (
-            <>
-              <TableHeader
-                headers={table.getHeaderGroups}
-                theadClass="w-full bg-primary text-white text-center text-slate-600 "
-                thClass="py-1 px-2"
-              />
-              <TableBody
-                rows={table.getRowModel}
-                tbodyClass="table-body text-center text-slate-500 text-sm "
-                tdClass="py-2 px-2"
-              />
-            </>
-          )}
-        ></Table>
-      ) : (
-        <TableSkeleton />
-      )}
+    <div className="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead className="text-xs border-b text-gray-700 uppercase dark:text-gray-400">
+          <tr className="">
+            {columns &&
+              columns.map((col) => (
+                <th
+                  key={col.accessorKey}
+                  scope="col"
+                  className={`${
+                    col.accessorKey === "id" &&
+                    "text-center w-14  "
+                  } ${col.accessorKey === "name" && " "} ${
+                    col.accessorKey === "createAt" && "whitespace-nowrap w-72 text-left  "
+                  } ${col.accessorKey === "action" && "w-14 text-center px-4"} py-4  text-white font-medium  leading-4 uppercase shadow-md `}
+                >
+                  {col.header}
+                </th>
+              ))}
+          </tr>
+        </thead>
+        <tbody className="table-body">
+          {data &&
+            data.map((row: ITableRow) => (
+              <tr key={row.id} className="">
+                {columns &&
+                  columns.map((col: ITableColumns) => (
+                    <td
+                      key={col.accessorKey}
+                      className={` ${
+                        col.accessorKey === "createAt" &&
+                        " whitespace-nowrap px-0 text-left"
+                      } ${col.accessorKey === "id" && "text-center "} ${
+                        col.accessorKey === "action" && "text-center"
+                      } text-left py-4 `}
+                    >
+                      {col.accessorKey === "action" ? (
+                        
+                          <ButtonsActionTable />
+                        
+                      ) : "cell" in col ? (
+                        col.cell(row)
+                      ) : (
+                        row[col.accessorKey as keyof ITableRow]
+                      )}
+                    </td>
+                  ))}
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 };

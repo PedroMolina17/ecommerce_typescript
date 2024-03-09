@@ -1,5 +1,5 @@
 import {create} from "zustand";
-interface IOpenForm {
+export interface IOpenForm {
     openForm: boolean
     setOpenForm: (openForm: boolean) => void
 }

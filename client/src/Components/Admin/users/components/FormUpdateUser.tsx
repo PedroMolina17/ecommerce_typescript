@@ -6,7 +6,7 @@ import { updateUserById } from "../../../../api/user";
 import { useForm } from "react-hook-form";
 import { useRowValueStore } from "../store/useRowValue.store";
 import { MySwal } from "./ButtonsActionTable";
-import {queryClient} from "../../../../App";
+import {queryClient} from "../../../../main";
 interface FormValues {
   userName: string;
   email: string;

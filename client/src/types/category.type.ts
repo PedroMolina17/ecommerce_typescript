@@ -6,4 +6,19 @@ export interface IResponseCategory extends IResponse {
 export interface ICategory {
   id: number;
   name: string;
+  createAt: string;
 }
+export interface IcreateCategory {
+  name: string;
+}
+export interface IResponseCreateCategory extends IResponse {
+  message: string;
+}
+
+export interface IDeletecategory{
+  id: number
+} 
+export interface IResponseDeleteCategory extends IResponse {
+  message: string;
+}
+

@@ -8,7 +8,8 @@ import TableBody from "../../../ui/table/TableBody";
 import TableHeader from "../../../ui/table/TableHeader";
 
 import ButtonsActionTable from "./ButtonsActionTable";
-import { queryClient } from "../../../../App";
+import { queryClient } from "../../../../main";
+
 
 interface TableUserProps {
   data: Users;
@@ -92,20 +93,20 @@ const TableUser = ({ data }: TableUserProps) => {
   return (
     <>
       <Table
-        tableClass="w-full rounded-md bg-white shadow-md"
+        tableClass="w-full rounded-md  shadow-md"
         columns={columns}
         data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full bg-primary text-white text-center text-slate-600 "
+              theadClass="w-full bg-primary text-white text-center  "
               thClass="py-1 px-2"
             />
             <TableBody
               rows={table.getRowModel}
-              tbodyClass="table-body text-center text-slate-500 text-sm "
-              tdClass="py-2 px-2"
+              tbodyClass="table-body text-center text-white text-sm "
+              tdClass="py-4 px-2"
             />
           </>
         )}

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { ILogin, Iregister, AuthResult } from "../types/auth.type";
+import { ILogin, Iregister, AuthResult ,User} from "../types/auth.type";
 import bcryp from "bcrypt";
 import jwt from "jsonwebtoken";
 import ClientError from "../errors/clientError.error";
@@ -7,10 +7,7 @@ import { HTTP_STATUS } from "../constants/statusCode.constants";
 
 const { ACCESS_SECRET_TOKEN, REFRESH_SECRET_TOKEN } = process.env;
 
-interface User {
-  id: number;
-  role: string;
-}
+
 const prisma = new PrismaClient();
 export class AuthService {
   static async register(user: Iregister) {
@@ -85,5 +82,16 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken, message };
+  }
+static async logout(user:User)
+{
+  console.log("----->>>>>>>",user)
+    const deleteToken = await prisma.token.delete({
+        where: { userId: user.id },
+    })
+    return deleteToken
+}
+  static async checkAuth() {
+    return await prisma.user.findMany();
   }
 }

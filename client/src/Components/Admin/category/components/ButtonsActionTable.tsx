@@ -3,17 +3,17 @@ import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useOpenFormStore } from "../store/useOpenForm.store";
-import { useRowValueStore } from "../store/useRowValue.store";
 
 export const MySwal = withReactContent(Swal);
 const ButtonsActionTable = ({ cell, mutation }: any) => {
-    const {setRowValue}=useRowValueStore((state)=>state)
+    /* const {setRowValue}=useRowValueStore((state)=>state) */
     const {setOpenForm}=useOpenFormStore((state)=>state)
-  return (
-    <div className="flex gap-2 px-2 items-center justify-center ">
+   
+    return (
+    <div className="flex gap-2  items-center justify-center ">
           <button onClick={()=>{
-              setRowValue(cell.row.original)
-              setOpenForm(true)
+             /*  setRowValue(cell.row.original) */
+              setOpenForm('edit')
           }}>
             
             <CiEdit
@@ -23,8 +23,9 @@ const ButtonsActionTable = ({ cell, mutation }: any) => {
           </button>
           <button
             onClick={() => {
+              
               MySwal.fire({
-                title: `Are you sure to eliminate ${cell.row.original.userName} ?`,
+                title: `Are you sure to eliminate the category ${cell.row.original.name} ?`,
                 text: "You won't be able to revert this!",
                 icon: "warning",
                 showCancelButton: true,
@@ -39,7 +40,7 @@ const ButtonsActionTable = ({ cell, mutation }: any) => {
                 },
               }).then((result) => {
                 if (result.isConfirmed) {
-                  mutation.mutate(cell.row.original.id);
+                  mutation.mutate({id:cell.row.original.id});
                 }
               });
             }}
