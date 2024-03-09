@@ -34,16 +34,17 @@ const Category = () => {
     );
   console.log(openForm);
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className=" font-bold text-white">Categories</h2>
-      {
+    <div className="relative flex flex-col gap-3">
+      <div className="sticky top-16 bg-bg z-20">
+        <h2 className=" font-bold text-white">Categories</h2>
+
         <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
           <SearchInput
             type="search"
             placeholder="Search category..."
             register={register("category")}
           />
-          <div></div>
+
           <button
             onClick={() => {
               setOpenForm("create");
@@ -53,7 +54,7 @@ const Category = () => {
             Create new category
           </button>
         </div>
-      }
+      </div>
       <div className="flex flex-col    rounded-md shadow-md">
         <div className="  flex flex-col justify-center items-center">
           {paginateData ? (
