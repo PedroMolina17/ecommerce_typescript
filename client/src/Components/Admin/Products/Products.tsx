@@ -69,7 +69,6 @@ const Products = () => {
     formData.append("promotionPrice", data.promotionPrice.toString());
     formData.append("promotionDescription", data.promotionDescription || "");
     formData.append("brandId", data.brandId.toString());
-
     try {
       const response = await axios.post(
         "http://localhost:3500/api/product/create-product",
@@ -147,7 +146,28 @@ const Products = () => {
         console.error("Error al obtener las marcas:", error);
       }
     };
+    const getProducts = async () => {
+      try {
+        const response = await axios.get(
+          "hhttp://localhost:3500/api/product/products?page=1&pageSize=2"
+        );
 
+        if (response.data && Array.isArray(response.data.data)) {
+          setState((prevState) => ({
+            ...prevState,
+            brands: response.data.data,
+          }));
+        } else {
+          console.error(
+            "La respuesta del servidor no es un array:",
+            response.data
+          );
+        }
+      } catch (error) {
+        console.error("Error al obtener las marcas:", error);
+      }
+    };
+    getProducts();
     obtenerCategorias();
     obtenerMarcas();
   }, []);
