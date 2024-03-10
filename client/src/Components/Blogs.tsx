@@ -53,7 +53,7 @@ const Blogs = () => {
   ];
 
   return (
-    <div className="bg-[#f7f7f7] py-8">
+    <div className="bg-[#f7f7f7] py-8 mt-16">
       <div className="mx-28 max-md:mx-4 bg-[#f7f7f7]">
         <div className="grid grid-cols-3 max-md:grid-cols-1  gap-x-5 gap-y-6">
           {products.map((product) => (
@@ -78,7 +78,6 @@ const Blogs = () => {
                 </p>
                 <p className="text-[#139dba] underline">Leer más</p>
               </div>
-
             </div>
           ))}
         </div>

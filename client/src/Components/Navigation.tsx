@@ -182,7 +182,7 @@ const Navigation = () => {
         )}
       </div>
       {/*Nav Mobile */}
-      <div className="flex h-12 py-8 md:hidden items-center justify-between mx-2 text-[#139dba]">
+      <div className="flex h-12 py-8 md:hidden items-center justify-between px-2 text-[#139dba] fixed right-0 left-0 top-0 w-full bg-white z-10">
         {menuMobile ? (
           <>
             <div className="flex gap-2">
@@ -195,11 +195,12 @@ const Navigation = () => {
           </>
         ) : (
           <>
-            <IoClose onClick={() => setMenuMobile(true)} className="text-3xl" />
-            <div className="flex flex-col h-96 w-full z-10 bg-white">
-              <Link to={"/electronics"}>Electronica</Link>
-              <Link to={"/electronics"}>Electronica</Link>
-              <Link to={"/electronics"}>Electronica</Link>
+            <div className="flex gap-2">
+              <IoClose
+                className="text-3xl"
+                onClick={() => setMenuMobile(true)}
+              />{" "}
+              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>{" "}
             </div>
           </>
         )}
@@ -215,6 +216,19 @@ const Navigation = () => {
           </div>
         </div>
       </div>
+      {!menuMobile && (
+        <div className="mt-14 items-center flex flex-col gap-2 fixed bg-white  right-0 left-0 w-full py-4 z-10">
+          <Link to={"/electronics"} className="text-[#139dba] block">
+            Electronica
+          </Link>
+          <Link to={"/blogs"} className="text-[#139dba] block">
+            Blogs
+          </Link>
+          <Link to={"/electronics"} className="text-[#139dba] block">
+            Electronica
+          </Link>
+        </div>
+      )}
       <NavBar
         selectedMenuItem={selectedMenuItem}
         setSelectedMenuItem={setSelectedMenuItem}
