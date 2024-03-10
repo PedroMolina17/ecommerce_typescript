@@ -10,7 +10,6 @@ import TableHeader from "../../../ui/table/TableHeader";
 import ButtonsActionTable from "./ButtonsActionTable";
 import { queryClient } from "../../../../main";
 
-
 interface TableUserProps {
   data: Users;
 }
@@ -22,7 +21,7 @@ const TableUser = ({ data }: TableUserProps) => {
     onSuccess: (data) => {
       console.log("data-->", data);
       notify(data.message);
-      queryClient.refetchQueries( { queryKey: ["users"] } );
+      queryClient.refetchQueries({ queryKey: ["users"] });
     },
   });
   const columns: TableColumn[] = [
@@ -32,16 +31,16 @@ const TableUser = ({ data }: TableUserProps) => {
     },
     {
       accessorKey: "userName",
-      header: "Name",
+      header: "NAME",
     },
     {
       accessorKey: "email",
-      header: "Email",
+      header: "EMAIL",
     },
 
     {
       accessorKey: "googleId",
-      header: "Google Id",
+      header: "GOOGLE ID",
       cell: ({ cell }: any) => (
         <span>
           {!cell.getValue() ? (
@@ -54,11 +53,11 @@ const TableUser = ({ data }: TableUserProps) => {
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: "ROLE",
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: "PHONE",
       cell: ({ cell }: any) => (
         <span>
           {!cell.getValue() ? (
@@ -71,7 +70,7 @@ const TableUser = ({ data }: TableUserProps) => {
     },
     {
       accessorKey: "address",
-      header: "Address",
+      header: "ADDRESS",
       cell: ({ cell }: any) => (
         <span>
           {!cell.getValue() ? (
@@ -84,7 +83,7 @@ const TableUser = ({ data }: TableUserProps) => {
     },
     {
       accessorKey: "action",
-      header: "Action",
+      header: "ACTION",
       cell: ({ cell }: any) => (
         <ButtonsActionTable cell={cell} mutation={mutation} />
       ),
@@ -93,19 +92,20 @@ const TableUser = ({ data }: TableUserProps) => {
   return (
     <>
       <Table
-        tableClass="w-full rounded-md  shadow-md"
+        tableClass="w-full rounded-md "
         columns={columns}
         data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full bg-primary text-white text-center  "
-              thClass="py-1 px-2"
+              theadClass="w-full sticky top-[108px] bg-bg   before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs "
+              thClass="py-4 px-2 "
+              trClass=""
             />
             <TableBody
               rows={table.getRowModel}
-              tbodyClass="table-body text-center text-white text-sm "
+              tbodyClass="table-body  text-gray-500 text-sm "
               tdClass="py-4 px-2"
             />
           </>
