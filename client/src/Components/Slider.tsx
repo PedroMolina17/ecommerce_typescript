@@ -2,7 +2,7 @@ import ProductsTop from "./ProductsTop";
 const Slider = () => {
   return (
     <>
-      <div className="grid grid-cols-3 bg-[#ececec] max-md:grid-cols-2 py-4">
+      <div className="grid grid-cols-3 bg-[#ececec] max-md:grid-cols-2 py-4 mt-16">
         <div className="col-span-1 flex flex-col justify-around items-end max-md:gap-y-6">
           <div className="flex flex-col gap-y-4 max-w-96 max-md:gap-y-0">
             <h2 className="text-2xl text-slate-600 text-end max-md:text-sm font-bold">
