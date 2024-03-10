@@ -17,11 +17,11 @@ export interface AuthResult {
     message: string;
   }
  export interface DecodedToken {
-    user: {
-      id: number;
-      role: string;
-    };
+    user: User;
     iat: number; 
     exp: number; 
   }
-  
+  export interface User {
+    id: number;
+    role: string;
+  }

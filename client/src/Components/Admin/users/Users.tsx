@@ -39,8 +39,8 @@ const Users = () => {
   return (
     <>
       <div className="relative flex w-full flex-col gap-2">
-        <h2 className="text-3xl font-bold text-slate-600">List of users</h2>
-        <SearchInput register={register("search")} />
+        <h2 className="font-semibold text-white">List of users</h2>
+        <SearchInput register={register("search")} placeholder="Search user..." />
         <section className=" w-full mt-1 flex flex-col gap-2">
           {data ? <TableUser data={data} /> : <TableSkeleton />}
 
@@ -52,27 +52,29 @@ const Users = () => {
               />
             </div>
 
-            <div className="flex  items-center gap-1">
-              <span className="text-sm text-slate-500">
-                showing {`${data?.info.totalItems} of ${data?.info.count}`}{" "}
-                users
-              </span>
-              <ResponsivePagination
-                current={pagination.pageIndex}
-                total={Math.ceil(data?.info.count! / pagination.pageSize)}
-                onPageChange={(page) => {
-                  handlePagination({
-                    ...pagination,
-                    pageIndex: page,
-                  });
-                }}
-              />
-            </div>
+            {data && (
+              <div className="flex  items-center gap-1">
+                <span className="text-sm text-slate-500">
+                  showing {`${data.info.totalItems} of ${data.info.count}`}{" "}
+                  users
+                </span>
+                <ResponsivePagination
+                  current={pagination.pageIndex}
+                  total={Math.ceil(data.info.count! / pagination.pageSize)}
+                  onPageChange={(page) => {
+                    handlePagination({
+                      ...pagination,
+                      pageIndex: page,
+                    });
+                  }}
+                />
+              </div>
+            )}
           </div>
         </section>
       </div>
       {openForm && (
-        <div className="absolute top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
+        <div className="absolute  top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
           <FormUpdateUser />
         </div>
       )}

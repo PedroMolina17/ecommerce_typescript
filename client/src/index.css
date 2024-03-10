@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 .table-body tr:nth-child(even) {
-  @apply bg-slate-200;
+  @apply bg-bgHover;
 }
 /* css react responsive pagination */
-
+body{
+  @apply h-screen w-full
+}
 .pagination {
   display: flex;
   padding-left: 0;
@@ -14,7 +16,25 @@
   margin: 0;
 
 }
-
+.text-shadown{
+  
+    color: #ebe9e2;
+    font-family: Arial Black, Gadget, sans-serif;
+    text-shadow: 0px 0px 0 rgb(230,228,221),
+                 1px 1px 0 rgb(226,224,217),
+                 2px 2px 0 rgb(221,219,212),
+                 3px 3px 0 rgb(217,215,208),
+                 4px 4px 0 rgb(212,210,203),
+                 5px 5px 0 rgb(207,205,198),
+                 6px 6px 0 rgb(203,201,194),
+                 7px 7px 0 rgb(198,196,189),
+                 8px 8px 0 rgb(194,192,185),
+                 9px 9px 0 rgb(189,187,180),
+                 10px 10px  0 rgb(184,182,175),
+                 11px 11px 10px rgba(0,0,0,0.34),
+                 11px 11px 1px rgba(0,0,0,0.5),
+                 0px 0px 10px rgba(0,0,0,.2)
+}
 .page-item .page-link {
   display: flex;
   width: 24px;
