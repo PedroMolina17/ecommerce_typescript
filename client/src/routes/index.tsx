@@ -3,20 +3,20 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Login from "../Components/Admin/login/Login";
 import Dashboard from "../pages/admin/Dashboard";
 import Slider from "../Components/Slider";
-import {PageNotFound, PageNotFoundAdmin} from "../pages/admin/PageNotFound";
+import { PageNotFound, PageNotFoundAdmin } from "../pages/admin/PageNotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <PageNotFound />,
-    element: <Slider/>,
+    element: <Slider />,
   },
   { path: "/admin-login", element: <Login /> },
   {
     path: "/dashboard",
     element: <DashboardLayout />,
     errorElement: <PageNotFoundAdmin />,
-   
+
     children: [
       { index: true, element: <Dashboard /> },
 
