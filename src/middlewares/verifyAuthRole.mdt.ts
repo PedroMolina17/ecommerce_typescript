@@ -12,6 +12,7 @@ export const verifyAuthRole =
     try {
       const user: DecodedToken = req.user;
       if (!role.includes(user.user.role)) {
+        console.error("unauthorized role", user.user.role);
         throw new ClientError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
       }
       next();

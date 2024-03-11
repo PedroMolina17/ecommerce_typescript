@@ -1,19 +1,19 @@
-import { ICategory } from "../../../../types/category.type";
+import { IBrand } from "../../../../types/brands.type";
 import { formatDate } from "../../../../utils/fomatDate";
 import ButtonsActionTable from "./ButtonsActionTable";
-interface ITableCategoryProps {
-  data: ICategory[];
+interface ITableBrandsProps {
+  data: IBrand[];
 }
 interface ITableColumns {
   accessorKey: string;
   header: string;
   cell?: any;
 }
-interface ITableRow extends ICategory {
+interface ITableRow extends IBrand {
   action?: string;
   cell?: any;
 }
-const TableCategory = ({ data }: ITableCategoryProps) => {
+const TableBrands = ({ data }: ITableBrandsProps) => {
   const columns: ITableColumns[] = [
     {
       accessorKey: "id",
@@ -36,9 +36,9 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
     },
   ];
   return (
-    
+    <div className="w-full overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className=" sticky top-32 bg-bg before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs ">
+        <thead className="  text-xs border-b border-gray-700 text-gray-700 uppercase dark:text-gray-400">
           <tr className="">
             {columns &&
               columns.map((col) => (
@@ -46,11 +46,13 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                   key={col.accessorKey}
                   scope="col"
                   className={`${
-                    col.accessorKey === "id" &&
-                    "text-center w-14  "
+                    col.accessorKey === "id" && "text-center w-14  "
                   } ${col.accessorKey === "name" && " "} ${
-                    col.accessorKey === "createAt" && "whitespace-nowrap w-72 text-left  "
-                  } ${col.accessorKey === "action" && "w-14 text-center px-4"} py-4  text-white font-medium  leading-4 uppercase shadow-md `}
+                    col.accessorKey === "createAt" &&
+                    "whitespace-nowrap w-72 text-left  "
+                  } ${
+                    col.accessorKey === "action" && "w-14 text-center px-4"
+                  } py-4  text-white font-medium  leading-4 uppercase shadow-md `}
                 >
                   {col.header}
                 </th>
@@ -73,9 +75,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                       } text-left py-4 `}
                     >
                       {col.accessorKey === "action" ? (
-                        
-                          <ButtonsActionTable />
-                        
+                        <ButtonsActionTable />
                       ) : "cell" in col ? (
                         col.cell(row)
                       ) : (
@@ -87,7 +87,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
             ))}
         </tbody>
       </table>
-    
+    </div>
   );
 };
-export default TableCategory;
+export default TableBrands;
