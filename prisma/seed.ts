@@ -2,7 +2,12 @@ import { PrismaClient } from '@prisma/client'
 import bcryp from 'bcrypt'
 const prisma = new PrismaClient()
 
-const usuarios=[
+const usuarios = [
+    {
+      "userName": "Aran",
+      "email": "armandortmontes@gmail.com",
+      "password": "12345678"
+    },
     {
       "userName": "JohnDoe",
       "email": "johndoe@example.com",
@@ -291,15 +296,56 @@ const categories = [
     "name": "Accessories"
   }
 ]
+const brands = [
+  {
+    "name": "Samnsung"
+  },
+  {
+    "name": "Xiaomi"
+  },
+  {
+    "name": "LG"
+  },
+  {
+    "name": "Motorola"
+  },
+  {
+    "name": "IPhone"
+  },
+  {
+    "name": "Google"
+  },
+  {
+    "name": "OnePlus"
+  },
+  {
+    "name": "Blu"
+  },
+  {
+    "name": "ZTE Blade"
+  },
+  {
+    "name": "Doogee"
+  }
+]
 async function main() {
-    const users = usuarios.map((user) => ({ ...user, password: bcryp.hashSync(user.password, 10)}))
+  const users = usuarios.map((user) => ({ ...user, password: bcryp.hashSync(user.password, 10)}))
+  
+  // crear usuarios de prueba
    await prisma.user.createMany({
     data: users,
     skipDuplicates: true
   })
   
+  // crear categorias de prueba
   await prisma.category.createMany({
     data: categories,
+    skipDuplicates:true
+  })
+    
+  // crear marcas de prueba
+  await prisma.brand.createMany({
+    data: brands,
     skipDuplicates:true
   })
    
