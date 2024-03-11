@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import ResponsivePagination from "react-responsive-pagination";
 import usePagination from "../../../hooks/usePagination";
 import TableSkeleton from "../users/components/TableSkeleton";
-import { useDebounce } from "../../../hooks/useDebounce";
+import { useDebounce } from "../../../hooks/useDebounce"; // hooks que me permite gestionar forms
 import { useOpenFormStoreCategory } from "../category/store/useOpenForm.store";
 import FormCreateBrand from "./components/FormCreateBrand";
 import { filterBrandByName } from "../../../utils/filterBrands";
@@ -19,7 +19,7 @@ const Brand = () => {
     queryKey: ["brands"],
     queryFn: async () => await getAllBrands(),
   });
-  const searchTerms = useDebounce(watch("category"), 500);
+  const searchTerms = useDebounce(watch("brand"), 500);
   const filterData =
     data && searchTerms && searchTerms.length > 0
       ? filterBrandByName(data?.data, searchTerms)
