@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import ResponsivePagination from "react-responsive-pagination";
 import usePagination from "../../../hooks/usePagination";
 import TableSkeleton from "../users/components/TableSkeleton";
-import { useDebounce } from "../../../hooks/useDebounce";   // libreria
+import { useDebounce } from "../../../hooks/useDebounce"; // hooks que me permite gestionar forms
 import { useOpenFormStoreCategory } from "../category/store/useOpenForm.store";
 import FormCreateBrand from "./components/FormCreateBrand";
 import { filterBrandByName } from "../../../utils/filterBrands";
