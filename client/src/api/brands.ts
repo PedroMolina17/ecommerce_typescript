@@ -1,21 +1,35 @@
-
-// importo el api (solicitud al servidor)
-import { api } from "./axios.config";
-
-// importo una interfaz para las marcas
-import { IResponseBrand } from "../types/brands.ts";
 import { AxiosResponse } from "axios";
+import { api } from "./axios.config";
+import {
+  IDeletebrand,
+  IResponseBrand,
+  IResponseCreateBrand,
+  IResponseDeleteBrand,
+  ICreateBrand,
+} from "../types/brands.type";
 
-async function getBrands() {
+const getAllBrands = async (): Promise<IResponseBrand> => {
+  const { data }: AxiosResponse<IResponseBrand> = await api.get(
+    "brand/brands"
+  );
 
-    // hago una peticion post al login con los datos del usuario
-    const result:AxiosResponse<IResponseBrand> = await api.get("/brand/brands");
+  return data;
+};
+const createBrand = async (
+  data: ICreateBrand
+): Promise<IResponseCreateBrand> => {
+  const { data: response }: AxiosResponse<IResponseCreateBrand> =
+    await api.post("brand/create-brand", data);
+  return response;
+};
 
-    console.log(result.data);
+const deleteBrand = async ({
+  id,
+}: IDeletebrand): Promise<IResponseDeleteBrand> => {
+  const { data }: AxiosResponse<IResponseDeleteBrand> = await api.delete(
+    `brand/delete-brand/${id}`
+  );
+  return data;
+};
 
-    // envio los datos 
-    return result.data;
-}
-
-// exportar mas de una funcion, en este caso la login
-export { getBrands };
+export { getAllBrands, createBrand, deleteBrand };

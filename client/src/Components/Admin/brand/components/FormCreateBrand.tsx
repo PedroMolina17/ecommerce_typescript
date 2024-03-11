@@ -1,16 +1,16 @@
 import Input from "../../../ui/Input";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { createCategory } from "../../../../api/category";
-import { IResponseCreateCategory } from "../../../../types/category.type";
 import { MySwal } from "../../users/components/ButtonsActionTable";
 import { queryClient } from "../../../../main";
 import ButtonClose from "../../../ui/ButtonClose";
-import { useOpenFormStoreCategory } from "../store/useOpenForm.store";
+import { useOpenFormStoreCategory } from "../../category/store/useOpenForm.store";
+import { IResponseCreateBrand } from "../../../../types/brands.type";
+import { createBrand } from "../../../../api/brands";
 interface FormValues {
   name: string;
 }
-const FormCreateCategory = () => {
+const FormCreateBrand = () => {
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
   const { register, handleSubmit } = useForm<FormValues>({
     defaultValues: {
@@ -18,8 +18,8 @@ const FormCreateCategory = () => {
     },
   });
   const mutation = useMutation({
-    mutationFn: async (data: FormValues) => await createCategory(data),
-    onSuccess: (data: IResponseCreateCategory) => {
+    mutationFn: async (data: FormValues) => await createBrand(data),
+    onSuccess: (data: IResponseCreateBrand) => {
       MySwal.fire({
         title: "Success!",
         text: data.message,
@@ -27,7 +27,7 @@ const FormCreateCategory = () => {
         confirmButtonText: "OK",
       });
       setOpenForm("create");
-      queryClient.refetchQueries({ queryKey: ["categories"] });
+      queryClient.refetchQueries({ queryKey: ["brands"] });
     },
   });
   const onSubmit = handleSubmit((data: FormValues) => {
@@ -41,17 +41,17 @@ const FormCreateCategory = () => {
         className="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 p-1.5 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center self-end"
       />
       <div>
-        <h2 className="  font-bold text-white ">New Category</h2>
+        <h2 className="  font-bold text-white ">New Brand</h2>
         <p className="text-gray-400 text-sm mt-1">
-          Add a new category to your database
+          Add a new brand to your database
         </p>
       </div>
 
       <form onSubmit={onSubmit}>
         <Input
           type="text"
-          placeholder="name category"
-          labelText="Name category"
+          placeholder="name brand"
+          labelText="Name brand"
           labelClass="text-white"
           className="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-2.5 py-1.5 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 "
           register={register("name")}
@@ -72,4 +72,4 @@ const FormCreateCategory = () => {
     </div>
   );
 };
-export default FormCreateCategory;
+export default FormCreateBrand;

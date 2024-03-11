@@ -3,7 +3,6 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { FaDollarSign, FaCartShopping } from "react-icons/fa6";
 import ButonSideBar from "./ButonSideBar";
-import { useState } from "react";
 import ContainerButton from "./ContainerButton";
 import logo from "/images/logo-Celeste.png";
 import { useSelectNavStore } from "./store/useSelectNav";
@@ -12,8 +11,7 @@ import { SiBrandfolder } from "react-icons/si";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../../api/auth";
 import { useNavigate } from "react-router-dom";
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
   const navigate = useNavigate();
   const mutation = useMutation({
@@ -26,7 +24,9 @@ const Sidebar = () => {
   });
   return (
     <aside
-      className={`fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0 w-64 min-h-screen  border-r border-gray-800`}
+      className={`${
+        isOpen ? "w-64" : "w-12"
+      } duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
     >
       <BsArrowLeftShort
         className={`${
