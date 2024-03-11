@@ -2,7 +2,12 @@ import { PrismaClient } from '@prisma/client'
 import bcryp from 'bcrypt'
 const prisma = new PrismaClient()
 
-const usuarios=[
+const usuarios = [
+    {
+      "userName": "Aran",
+      "email": "armandortmontes@gmail.com",
+      "password": "12345678"
+    },
     {
       "userName": "JohnDoe",
       "email": "johndoe@example.com",
