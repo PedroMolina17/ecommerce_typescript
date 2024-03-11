@@ -7,7 +7,6 @@ CREATE TABLE `User` (
     `address` VARCHAR(191) NULL,
     `phone` VARCHAR(191) NULL,
     `googleId` VARCHAR(191) NULL,
-    `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `role` ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 
     UNIQUE INDEX `User_email_key`(`email`),
@@ -40,7 +39,6 @@ CREATE TABLE `Products` (
     `promotionDescription` VARCHAR(191) NULL,
     `categoryId` INTEGER NOT NULL,
     `brandId` INTEGER NOT NULL,
-    `crateAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Products_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -52,7 +50,6 @@ CREATE TABLE `TechnicalDetailsProduct` (
     `name` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `productId` INTEGER NOT NULL,
-    `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -61,7 +58,6 @@ CREATE TABLE `TechnicalDetailsProduct` (
 CREATE TABLE `Category` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Category_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -71,7 +67,6 @@ CREATE TABLE `Category` (
 CREATE TABLE `Brand` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Brand_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -83,7 +78,6 @@ CREATE TABLE `Comment` (
     `userId` INTEGER NOT NULL,
     `productId` INTEGER NOT NULL,
     `comment` VARCHAR(191) NOT NULL,
-    `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
