@@ -7,6 +7,7 @@ import usePagination from "../../../hooks/usePagination";
 import { getAllCategory } from "../../../api/category";
 import TableSkeleton from "../users/components/TableSkeleton";
 import FormCreateCategory from "./components/FormCreateCategory";
+
 import { useDebounce } from "../../../hooks/useDebounce";
 import { filterCategoriesByName } from "../../../utils/filterCategories";
 import { useOpenFormStoreCategory } from "./store/useOpenForm.store";
@@ -33,8 +34,8 @@ const Category = () => {
     );
   console.log(openForm);
   return (
-    <div className="relative flex flex-col ">
-      <div className="sticky  top-16 bg-bg z-20">
+    <div className="relative flex flex-col gap-3">
+      <div className="sticky top-16 bg-bg z-20">
         <h2 className=" font-bold text-white">Categories</h2>
 
         <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
@@ -55,7 +56,7 @@ const Category = () => {
         </div>
       </div>
       <div className="flex flex-col    rounded-md shadow-md">
-        <section className=" relative flex flex-col justify-center items-center">
+        <div className="  flex flex-col justify-center items-center">
           {paginateData ? (
             <TableCategory data={paginateData} />
           ) : (
@@ -72,7 +73,7 @@ const Category = () => {
               />
             )}
           </div>
-        </section>
+        </div>
       </div>
       {openForm.create && (
         <div className="fixed inset-0   flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
