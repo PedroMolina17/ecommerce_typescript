@@ -2,11 +2,11 @@ import { useState } from "react";
 import { FaDollarSign } from "react-icons/fa6";
 import Brands from "./Brands";
 import Categories from "./Categories";
-import Products from "./Products";
+import ProductsTable from "./Products/ProductsTable";
 import Sales from "./Sales";
 import Suppliers from "./Suppliers";
 import Users from "./users/Users";
-
+import Products from "./Products/Products";
 import { FaUser } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 const Sidebar = () => {
@@ -18,7 +18,7 @@ const Sidebar = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <ProductsTable />;
+        return <Products />;
       case "Brands":
         return <Brands />;
       case "Users":

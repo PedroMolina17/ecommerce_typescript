@@ -13,6 +13,8 @@ import { useState } from "react";
 //import { useForm } from "react-hook-form";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import ResponsivePagination from "react-responsive-pagination";
+import { FaSearch } from "react-icons/fa";
+import { IoAddCircle } from "react-icons/io5";
 
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
@@ -63,18 +65,29 @@ const ProductsTable = () => {
     debugTable: true,
   });
   return (
-    <div className=" mx-2">
+    <div className="mx-2">
       <h2 className="text-3xl font-bold text-slate-600">Lista de Productos</h2>
-      <input
-        type="text"
-        placeholder="Buscar Producto"
-        value={filtering}
-        onChange={(e) => setFiltering(e.target.value)}
-      ></input>
-      <table className=" w-full">
-        <thead className=" text-slate-600  bg-slate-200 ">
+      <div className="flex justify-between items-center ">
+        <div className="flex items-center w-96 focus-within:border-2 gap-5 px-4  my-4 rounded-md focus-within:border-[#139dba] bg-[#ffffff] border">
+          <FaSearch className="text-[#139dba]" />
+          <input
+            type="text"
+            placeholder="Buscar Producto"
+            value={filtering}
+            className="outline-none  bg-transparent w-full py-2"
+            onChange={(e) => setFiltering(e.target.value)}
+          ></input>
+        </div>
+        <button className="bg-green-500 text-white flex items-center h-10 rounded-md px-2 gap-1">
+          <IoAddCircle />
+          Agregar Producto
+        </button>
+      </div>
+
+      <table className="w-full">
+        <thead className=" text-slate-600  bg-slate-200 font-bold">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="bg-[#455591] text-white">
+            <tr key={headerGroup.id} className="bg-[#139dba] text-white">
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -112,9 +125,7 @@ const ProductsTable = () => {
       <div className="flex justify-between items-center w-full mt-1">
         <span className="text-sm text-slate-500">
           Mostrando
-          {`${table.getFilteredRowModel().rows.length} of ${
-            data?.info.count
-          }`}{" "}
+          {` ${table.getFilteredRowModel().rows.length} of ${data?.info.count}`}
           users
         </span>
         <ResponsivePagination

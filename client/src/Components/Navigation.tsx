@@ -6,6 +6,7 @@ import NavBar from "./NavBar";
 import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
 
 import axios, { AxiosError } from "axios";
 const Navigation = () => {
@@ -13,7 +14,7 @@ const Navigation = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>("Home");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [menuMobile, setMenuMobile] = useState(true);
   const openMenu = (menu: string) => {
     setMenuOpen((prevMenu) => (prevMenu === menu ? null : menu));
   };
@@ -23,7 +24,7 @@ const Navigation = () => {
       const response = await axios.post(
         "http://localhost:3500/api/auth/login",
         {
-          email:username,
+          email: username,
           password,
         }
       );
@@ -181,11 +182,28 @@ const Navigation = () => {
         )}
       </div>
       {/*Nav Mobile */}
-      <div className="flex h-12 py-8 md:hidden  items-center justify-between mx-2 text-[#139dba]">
-        <div className="flex gap-2">
-          <IoMdMenu className="text-3xl" />
-          <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>
-        </div>
+      <div className="flex h-12 py-8 md:hidden items-center justify-between px-2 text-[#139dba] fixed right-0 left-0 top-0 w-full bg-white z-10">
+        {menuMobile ? (
+          <>
+            <div className="flex gap-2">
+              <IoMdMenu
+                className="text-3xl"
+                onClick={() => setMenuMobile(false)}
+              />{" "}
+              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>{" "}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex gap-2">
+              <IoClose
+                className="text-3xl"
+                onClick={() => setMenuMobile(true)}
+              />{" "}
+              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>{" "}
+            </div>
+          </>
+        )}
         <div className="flex text-3xl gap-2">
           <div className="relative">
             <PiShoppingCartSimpleLight />
@@ -198,6 +216,19 @@ const Navigation = () => {
           </div>
         </div>
       </div>
+      {!menuMobile && (
+        <div className="mt-14 items-center flex flex-col gap-2 fixed bg-white  right-0 left-0 w-full py-4 z-10">
+          <Link to={"/electronics"} className="text-[#139dba] block">
+            Electronica
+          </Link>
+          <Link to={"/blogs"} className="text-[#139dba] block">
+            Blogs
+          </Link>
+          <Link to={"/electronics"} className="text-[#139dba] block">
+            Electronica
+          </Link>
+        </div>
+      )}
       <NavBar
         selectedMenuItem={selectedMenuItem}
         setSelectedMenuItem={setSelectedMenuItem}

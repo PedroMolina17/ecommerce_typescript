@@ -1,7 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { BsArrowLeftShort } from "react-icons/bs";
-import { FaDollarSign } from "react-icons/fa6";
+import { FaDollarSign, FaCartShopping } from "react-icons/fa6";
 import ButonSideBar from "./ButonSideBar";
 import ContainerButton from "./ContainerButton";
 import logo from "/images/logo-Celeste.png";
@@ -11,7 +11,8 @@ import { SiBrandfolder } from "react-icons/si";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../../api/auth";
 import { useNavigate } from "react-router-dom";
-const Sidebar = ({ isOpen, setIsOpen }: any) => {
+const Sidebar = ({isOpen,setIsOpen}:any) => {
+  
   const { setSelectNav } = useSelectNavStore((state) => state);
   const navigate = useNavigate();
   const mutation = useMutation({
@@ -24,9 +25,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
   });
   return (
     <aside
-      className={`${
-        isOpen ? "w-64" : "w-12"
-      } duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
+      className={`${isOpen ? "w-64" : "w-12"} duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
     >
       <BsArrowLeftShort
         className={`${
@@ -75,7 +74,16 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
             onClick={() => setSelectNav("Categories")}
           />
         </ContainerButton>
-
+        <ContainerButton
+          title="Products"
+          name="Products"
+          onClick={() => setSelectNav("Products")}
+        >
+          <ButonSideBar
+            icon={<FaCartShopping className="text-primary" />}
+            onClick={() => setSelectNav("Products")}
+          />
+        </ContainerButton>
         {/* Aqui se ponen los comentarios en React
             Aqui creo un nuevo boton con un nuevo formato de icono
         */}

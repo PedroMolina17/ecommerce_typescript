@@ -40,10 +40,13 @@ const Users = () => {
     <>
       <div className="relative flex bg-bg w-full flex-col ">
         <div className="flex items-center justify-between bg-bg z-20 sticky top-16 pt-3">
-        <h2 className="font-semibold text-white">List of users</h2>
-        <SearchInput register={register("search")} placeholder="Search user..." />
+          <h2 className="font-semibold text-white">List of users</h2>
+          <SearchInput
+            register={register("search")}
+            placeholder="Search user..."
+          />
         </div>
-        
+
         <section className=" w-full  bg-bg relative flex flex-col gap-2">
           {data ? <TableUser data={data} /> : <TableSkeleton />}
 

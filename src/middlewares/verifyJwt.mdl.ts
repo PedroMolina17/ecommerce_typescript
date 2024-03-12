@@ -9,9 +9,7 @@ export const verifyJwt = (req:CustomRequest,res:Response,next:NextFunction) => {
     try {
         const token= req.cookies.accessToken
         console.log(token)
-        if(!token) {
-            console.error("no existe token",token)
-            throw new ClientError("unauthorized", HTTP_STATUS.UNAUTHORIZED)}
+        if(!token) throw new ClientError("unauthorized", HTTP_STATUS.UNAUTHORIZED)
         const decoded = Jwt.verify(token, process.env.ACCESS_SECRET_TOKEN!)
         req.user = decoded
         console.log("req--->",decoded)

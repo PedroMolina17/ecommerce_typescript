@@ -4,7 +4,7 @@ import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-import Products from "../../Components/Products";0
+import Products from "../../Components/Admin/Products/Products";
 import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {

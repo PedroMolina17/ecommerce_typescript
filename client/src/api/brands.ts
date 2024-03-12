@@ -9,9 +9,7 @@ import {
 } from "../types/brands.type";
 
 const getAllBrands = async (): Promise<IResponseBrand> => {
-  const { data }: AxiosResponse<IResponseBrand> = await api.get(
-    "brand/brands"
-  );
+  const { data }: AxiosResponse<IResponseBrand> = await api.get("brand/brands");
 
   return data;
 };

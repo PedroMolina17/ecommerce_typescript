@@ -15,10 +15,9 @@ export interface IResponseCreateCategory extends IResponse {
   message: string;
 }
 
-export interface IDeletecategory{
-  id: number
-} 
+export interface IDeletecategory {
+  id: number;
+}
 export interface IResponseDeleteCategory extends IResponse {
   message: string;
 }
-
