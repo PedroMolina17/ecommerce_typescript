@@ -50,36 +50,36 @@ const Products = () => {
   const brands = brandsData?.data || [];
 
   // React Query: Mutation para la creación de productos
-  const createProductMutation = useMutation<
-    IResponseCreateProduct,
-    Error,
-    IcreateProduct
-  >(
-    async (formData: IcreateProduct) => {
-      try {
-        const response = await createProduct(formData);
-        return response.data;
-      } catch (error) {
-        console.error("Error al crear el producto:", error);
-        throw new Error(
-          "Error al crear el producto. Inténtalo de nuevo más tarde."
-        );
-      }
-    },
-    {
-      onSuccess: (data: IResponseCreateProduct) => {
-        queryClient.invalidateQueries(["products"] as InvalidateQueryFilters);
-        reset();
-        toast.success("Producto añadido");
-      },
-      onError: (error: Error) => {
-        console.error("Error al crear producto:", error);
-        toast.error(
-          "Se produjo un error al agregar el producto. Inténtalo de nuevo más tarde."
-        );
-      },
-    }
-  );
+  // const createProductMutation = useMutation<
+  //   IResponseCreateProduct,
+  //   Error,
+  //   IcreateProduct
+  // >(
+  //   async (formData: IcreateProduct) => {
+  //     try {
+  //       const response = await createProduct(formData);
+  //       return response.data;
+  //     } catch (error) {
+  //       console.error("Error al crear el producto:", error);
+  //       throw new Error(
+  //         "Error al crear el producto. Inténtalo de nuevo más tarde."
+  //       );
+  //     }
+  //   },
+  //   {
+  //     onSuccess: (data: IResponseCreateProduct) => {
+  //       queryClient.invalidateQueries(["products"] as InvalidateQueryFilters);
+  //       reset();
+  //       toast.success("Producto añadido");
+  //     },
+  //     onError: (error: Error) => {
+  //       console.error("Error al crear producto:", error);
+  //       toast.error(
+  //         "Se produjo un error al agregar el producto. Inténtalo de nuevo más tarde."
+  //       );
+  //     },
+  //   }
+  // );
 
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
     const formData = new FormData();
