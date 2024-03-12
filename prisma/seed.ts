@@ -4,6 +4,16 @@ const prisma = new PrismaClient();
 
 const usuarios = [
   {
+    userName: "admin",
+    email: "admin@example.com",
+    password: "password",
+  },
+  {
+    userName: "Aran",
+    email: "armandortmontes@gmail.com",
+    password: "12345678",
+  },
+  {
     userName: "JohnDoe",
     email: "johndoe@example.com",
     password: "password123",
@@ -254,12 +264,7 @@ const usuarios = [
     password: "password123",
   },
   {
-    userName: "JenniferHayes",
-    email: "jenniferhayes@example.com",
-    password: "mypassword",
-  },
-  {
-    userName: "PedroMolina",
+    userName: "pedro.molinanoa@gmail.com",
     email: "pedro.molinanoa@gmail.com",
     password: "mypassword",
   },
@@ -296,18 +301,59 @@ const categories = [
     name: "Accessories",
   },
 ];
+const brands = [
+  {
+    name: "Samnsung",
+  },
+  {
+    name: "Xiaomi",
+  },
+  {
+    name: "LG",
+  },
+  {
+    name: "Motorola",
+  },
+  {
+    name: "IPhone",
+  },
+  {
+    name: "Google",
+  },
+  {
+    name: "OnePlus",
+  },
+  {
+    name: "Blu",
+  },
+  {
+    name: "ZTE Blade",
+  },
+  {
+    name: "Doogee",
+  },
+];
 async function main() {
   const users = usuarios.map((user) => ({
     ...user,
     password: bcryp.hashSync(user.password, 10),
   }));
+
+  // crear usuarios de prueba
   await prisma.user.createMany({
     data: users,
     skipDuplicates: true,
   });
 
+  // crear categorias de prueba
   await prisma.category.createMany({
     data: categories,
+    skipDuplicates: true,
+  });
+
+  // crear marcas de prueba
+  await prisma.brand.createMany({
+    data: brands,
     skipDuplicates: true,
   });
 }
