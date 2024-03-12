@@ -48,4 +48,3 @@ export interface ResponseDeleteUser {
   statusCode: number;
   message: string;
 }
-
