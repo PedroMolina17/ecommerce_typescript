@@ -5,7 +5,6 @@ import CustomError from "../errors/customError.error";
 import { TokenExpiredError } from "jsonwebtoken";
 import { AUTH } from "../constants";
 
-
 const registrationError = (error: any, res: Response, next: NextFunction) => {
   if (error instanceof PrismaClientKnownRequestError) {
     console.error("Error conocido de Prisma:", { error: error.name });
@@ -25,14 +24,10 @@ const registrationError = (error: any, res: Response, next: NextFunction) => {
     return next(error);
   }
   if (error instanceof TokenExpiredError) {
-  if (error instanceof TokenExpiredError) {
     console.error("Error personalizado:", error.message);
-    return next(error);
-  }
     return next(error);
   }
   console.error("Error desconocido:", error);
   return res.status(500).json({ error: "Error al procesar la solicitud." });
 };
 export default registrationError;
-
