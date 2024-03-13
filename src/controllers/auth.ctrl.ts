@@ -55,7 +55,7 @@ export const checkAuth:AuthFunction = async (req, res, next) => {
     const user = req.user
     const data={
       authenticate:true,
-      user
+      ...user
     }
     sendResponse(res, HTTP_STATUS.OK,data)
   } catch (error) {

@@ -6,6 +6,7 @@ import {
   User,
   IRegisterAdmin,
   ILoginAdmin,
+  DecodeTokenAdmin,
 } from "../types/auth.type";
 import bcryp from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -104,6 +105,17 @@ export class AuthService {
     return { accessToken, refreshToken, message: "login success" };
   }
 
+  static async logoutAdmin(user: User) {
+    console.log("----->>>>>>>", user);
+     await prisma.token.delete({
+      where: { adminId: user.id },
+      
+    });
+    return {message:"logout success"};
+  }
+
+  
+/*------------------- auth user(cliente) -----------*/
   static async register(user: IRegisterUser) {
     const existingUser = await prisma.user.findUnique({
       where: { email: user.email },
@@ -177,13 +189,16 @@ export class AuthService {
 
     return { accessToken, refreshToken, message };
   }
+  
   static async logout(user: User) {
     console.log("----->>>>>>>", user);
     const deleteToken = await prisma.token.delete({
       where: { userId: user.id },
+      select: {user:true },
     });
     return deleteToken;
   }
+
   static async checkAuth() {
     return await prisma.user.findMany();
   }
