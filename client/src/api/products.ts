@@ -18,9 +18,14 @@ const getAllProducts = async (
 };
 
 const createProduct = async (
-  dataProduct: ICreateProduct
+  dataProduct: IcreateProduct
 ): Promise<IResponseCreateProduct> => {
   try {
+    const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
+      "product/create-product",
+      dataProduct
+    );
+    return data;
     const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
       "product/create-product",
       dataProduct

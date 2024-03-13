@@ -32,10 +32,11 @@ export interface Data {
   categoryId: number;
   brandId: number;
 }
-export interface ICreateProduct {
+export interface IcreateProduct {
   name: string;
   categoryId: number;
   price: number;
+  image: File;
   image: File;
   description: string;
   stock: number;
@@ -47,15 +48,5 @@ export interface ICreateProduct {
 }
 export interface IResponseCreateProduct extends Response {
   data: Data;
-  message: string;
-}
-export interface IDUpdateProduct {
-  id: number;
-}
-
-export interface IDeleteProduct {
-  id: number;
-}
-export interface IResponseDeleteProduct extends IResponse {
   message: string;
 }
