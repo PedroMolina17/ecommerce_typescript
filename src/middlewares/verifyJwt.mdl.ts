@@ -3,7 +3,7 @@ import  Jwt  from "jsonwebtoken";
 import registrationError from "../utils/registrationError.util";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
-import { DecodedToken } from "../types/auth.type";
+import { DecodedTokenUser } from "../types/auth.type";
 import { CustomRequest } from "./verifyAuthRole.mdt";
 export const verifyJwt = (req:CustomRequest,res:Response,next:NextFunction) => {
     try {

@@ -14,7 +14,6 @@ const router = Router();
 router.get(
   "/products",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
   getAllProductsPaginated
 );
 

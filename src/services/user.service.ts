@@ -63,15 +63,6 @@ export class UserService {
     return user;
   }
 
-  static async getUserByRole(role: any) {
-    const user = await prisma.user.findMany({
-      where: {
-        role,
-      },
-    });
-    return user;
-  }
-
   static async deleteUserById(id: IdUser) {
     const user = await prisma.user.delete({
       where: {
@@ -88,32 +79,30 @@ export class UserService {
     const existingUser = await prisma.user.findUnique({
       where: { id },
     });
-  
+
     if (!existingUser) {
       throw new ClientError("user not found", HTTP_STATUS.NOT_FOUND);
     }
-  
-   
-    const filteredUserData = Object.entries(userData).reduce((acc:UserData, [key, value]) => {
-      if (value !== undefined && value !== "" && value !== null) { 
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
 
+    const filteredUserData = Object.entries(userData).reduce(
+      (acc: UserData, [key, value]) => {
+        if (value !== undefined && value !== "" && value !== null) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
 
     const updatedUser = await prisma.user.update({
       where: { id },
       data: filteredUserData,
     });
-  
+
     return {
       message: `user updated successfully`,
     };
   }
-  
-    
-  
 
   static async getUserByName(data: IUserByNamePaginate) {
     const searchTerm = data.userName.toLowerCase(); // Ensure case-insensitive search
