@@ -13,11 +13,14 @@ const getAllProducts = async (
 };
 
 const createProduct = async (
-  data: IcreateProduct
+  dataProduct: IcreateProduct
 ): Promise<IResponseCreateProduct> => {
   try {
-    const { data: response } = await api.post("product/create-product", data);
-    return response;
+    const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
+      "product/create-product",
+      dataProduct
+    );
+    return data;
   } catch (error) {
     console.error("Error al crear el producto:", error);
     throw new Error(

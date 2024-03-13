@@ -16,12 +16,25 @@ export interface Result {
   id: number;
   name: string;
 }
-
+export interface Data {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  status: boolean;
+  image: string;
+  promotion: boolean;
+  promotionPrice: number;
+  promotionDescription: string;
+  categoryId: number;
+  brandId: number;
+}
 export interface IcreateProduct {
   name: string;
   categoryId: number;
   price: number;
-  image: File | null;
+  image: File;
   description: string;
   stock: number;
   status: boolean;
@@ -30,8 +43,7 @@ export interface IcreateProduct {
   promotionDescription?: string;
   brandId: number;
 }
-export interface IResponseCreateProduct {
-  error: boolean;
-  statusCode: number;
+export interface IResponseCreateProduct extends Response {
+  data: Data;
   message: string;
 }
