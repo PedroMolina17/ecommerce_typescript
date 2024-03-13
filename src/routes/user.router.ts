@@ -4,7 +4,7 @@ import { verifyJwt } from "../middlewares/verifyJwt.mdl"
 import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt"
 import { ROLE } from "../constants/roleUser.constants"
 const router = Router()
-router.get('/users',verifyJwt,getAllUsers)
+router.get('/users',verifyJwt,verifyAuthRole([ROLE.ADMIN]),getAllUsers)
 router.get("/users/:name",verifyJwt,verifyAuthRole([ROLE.ADMIN]),getUserByName)
 router.put("/:id",verifyJwt,verifyAuthRole([ROLE.ADMIN]),updateUserById)
 router.delete("/:id",verifyJwt,verifyAuthRole([ROLE.ADMIN]),deleteUserById)
