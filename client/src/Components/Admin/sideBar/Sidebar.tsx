@@ -3,22 +3,29 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { FaDollarSign, FaCartShopping } from "react-icons/fa6";
 import ButonSideBar from "./ButonSideBar";
-import { useState } from "react";
 import ContainerButton from "./ContainerButton";
 import logo from "/images/logo-Celeste.png";
 import { useSelectNavStore } from "./store/useSelectNav";
 import { IoExit } from "react-icons/io5";
 import { SiBrandfolder } from "react-icons/si";
-
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "../../../api/auth";
+import { useNavigate } from "react-router-dom";
+const Sidebar = ({isOpen,setIsOpen}:any) => {
+  
   const { setSelectNav } = useSelectNavStore((state) => state);
-
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => await logout(),
+    onSuccess: () => {
+      navigate("/admin-login");
+    },
+    retry: 1,
+  });
   return (
     <aside
-      className={`${
-        isOpen ? "w-80" : "w-16"
-      } z-50 p-2 duration-150 fixed h-screen bg-[#fffafa]  shadow-md   rounded-md`}
+      className={`${isOpen ? "w-64" : "w-12"} duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
     >
       <BsArrowLeftShort
         className={`${
@@ -90,7 +97,11 @@ const Sidebar = () => {
             onClick={() => setSelectNav("Brands")}
           />
         </ContainerButton>
-        <ContainerButton title="salir" name="Exit">
+        <ContainerButton
+          title="salir"
+          name="Exit"
+          onClick={() => mutation.mutate()}
+        >
           <ButonSideBar icon={<IoExit className="text-secondary text-2xl" />} />
         </ContainerButton>
       </div>

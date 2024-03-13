@@ -4,7 +4,7 @@ interface ButonSideBarProps {
   onClick?: () => void;
   children?: React.ReactNode;
 }
-const ButonSideBar = ({ icon, name, onClick }: ButonSideBarProps) => {
+const ButonSideBar = ({ icon, onClick }: ButonSideBarProps) => {
   return (
     <button
       onClick={onClick}

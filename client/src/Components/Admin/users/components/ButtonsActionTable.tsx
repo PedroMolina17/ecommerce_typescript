@@ -10,7 +10,7 @@ const ButtonsActionTable = ({ cell, mutation }: any) => {
     const {setRowValue}=useRowValueStore((state)=>state)
     const {setOpenForm}=useOpenFormStore((state)=>state)
   return (
-    <div className="flex gap-2 items-center justify-center ">
+    <div className="flex gap-2 px-2 items-center justify-center ">
           <button onClick={()=>{
               setRowValue(cell.row.original)
               setOpenForm(true)

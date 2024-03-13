@@ -50,7 +50,7 @@ const Login = () => {
         // Espera 3 segundos antes de redirigir
         setTimeout(() => {
           // Redirige al usuario a la página deseada
-          navigate("/admin");
+          navigate("/dashboard");
         }, 3000);
       }
     } catch (error) {
@@ -58,9 +58,7 @@ const Login = () => {
     }
   };
 
-  console.log("Correo: ", valueForm.email);
-  console.log("Password: ", valueForm.password);
-
+ 
   // datos devueltos
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center w-full ">

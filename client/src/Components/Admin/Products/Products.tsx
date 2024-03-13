@@ -1,8 +1,20 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
+import {
+  useQuery,
+  useQueryClient,
+  useMutation,
+  InvalidateQueryFilters,
+} from "@tanstack/react-query";
+import { getAllCategory } from "../../../api/category";
+import { getAllBrands } from "../../../api/brands";
+
+import { createProduct } from "../../../api/products";
+import {
+  IResponseCreateProduct,
+  IcreateProduct,
+} from "../../../types/products.type";
 
 interface FormularioProductoProps {
   name: string;
@@ -20,38 +32,27 @@ interface FormularioProductoProps {
   brands: { id: number; name: string }[];
 }
 
-interface FormularioProductoState {
-  name: string;
-  categoryId: number;
-  price: number;
-  image: string | null;
-  categories: { id: number; name: string }[];
-  description: string;
-  stock: number;
-  status: boolean;
-  promotion: boolean;
-  promotionPrice: number;
-  promotionDescription?: string;
-  brandId: number;
-  brands: { id: number; name: string }[];
-}
-
 const Products = () => {
   const { handleSubmit, register, reset } = useForm<FormularioProductoProps>();
-  const [state, setState] = useState<FormularioProductoState>({
-    name: "",
-    categoryId: 0,
-    price: 0,
-    image: null,
-    categories: [],
-    description: "",
-    stock: 0,
-    status: false,
-    promotion: false,
-    promotionPrice: 0,
-    promotionDescription: "",
-    brandId: 0,
-    brands: [],
+  const queryClient = useQueryClient();
+
+  // Obtener Data de Categories
+  const { data: categoriesData } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => await getAllCategory(),
+  });
+  const categories = categoriesData?.data || [];
+
+  // Obtener Data de Brands
+  const { data: brandsData } = useQuery({
+    queryKey: ["brands"],
+    queryFn: async () => await getAllBrands(),
+  });
+  const brands = brandsData?.data || [];
+  //Registrar Productos
+  const createProductMutation = useMutation({
+    mutationFn: async (data) => await createProduct(data),
+    onSuccess: (data) => console.log(data),
   });
 
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
@@ -69,108 +70,9 @@ const Products = () => {
     formData.append("promotionPrice", data.promotionPrice.toString());
     formData.append("promotionDescription", data.promotionDescription || "");
     formData.append("brandId", data.brandId.toString());
-    try {
-      const response = await axios.post(
-        "http://localhost:3500/api/product/create-product",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("Server response:", response.data);
-      toast.success("Producto añadido");
-      reset();
-    } catch (error) {
-      console.error("Error completo:", error);
-
-      if (axios.isAxiosError(error) && error.response?.data?.errors) {
-        const errorMessages = (
-          error.response.data.errors as Array<{ msg: string }>
-        )
-          .map((e) => e.msg)
-          .join(", ");
-        console.error("Error de servidor:", errorMessages);
-        toast.error(
-          `Se produjo un error: ${errorMessages}. Inténtalo de nuevo más tarde.`
-        );
-      } else {
-        console.error("Error de servidor desconocido:", error);
-        toast.error("Se produjo un error. Inténtalo de nuevo más tarde.");
-      }
-    }
+    // Llamar a la función de creación de producto usando la mutación de React Query
+    createProductMutation.mutate(formData);
   };
-  useEffect(() => {
-    const obtenerCategorias = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3500/api/category/categories"
-        );
-
-        if (response.data && Array.isArray(response.data.data)) {
-          setState((prevState) => ({
-            ...prevState,
-            categories: response.data.data,
-          }));
-        } else {
-          console.error(
-            "La respuesta del servidor no es un array:",
-            response.data
-          );
-        }
-      } catch (error) {
-        console.error("Error al obtener las categorías:", error);
-      }
-    };
-
-    const obtenerMarcas = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3500/api/brand/brands"
-        );
-
-        if (response.data && Array.isArray(response.data.data)) {
-          setState((prevState) => ({
-            ...prevState,
-            brands: response.data.data,
-          }));
-        } else {
-          console.error(
-            "La respuesta del servidor no es un array:",
-            response.data
-          );
-        }
-      } catch (error) {
-        console.error("Error al obtener las marcas:", error);
-      }
-    };
-    const getProducts = async () => {
-      try {
-        const response = await axios.get(
-          "hhttp://localhost:3500/api/product/products?page=1&pageSize=2"
-        );
-
-        if (response.data && Array.isArray(response.data.data)) {
-          setState((prevState) => ({
-            ...prevState,
-            brands: response.data.data,
-          }));
-        } else {
-          console.error(
-            "La respuesta del servidor no es un array:",
-            response.data
-          );
-        }
-      } catch (error) {
-        console.error("Error al obtener las marcas:", error);
-      }
-    };
-    getProducts();
-    obtenerCategorias();
-    obtenerMarcas();
-  }, []);
   return (
     <div className="m-8">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -258,7 +160,7 @@ const Products = () => {
               className="border border-[#455591] mx-4 rounded-md"
             >
               <option value="">Seleccione una marca</option>
-              {state.brands.map((brand) => (
+              {brands.map((brand) => (
                 <option key={brand.id} value={brand.id}>
                   {brand.name}
                 </option>
@@ -272,9 +174,9 @@ const Products = () => {
               className="border border-[#455591] mx-4 rounded-md"
             >
               <option value="">Seleccione una categoría</option>
-              {state.categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
+              {categories.map((categories) => (
+                <option key={categories.id} value={categories.id}>
+                  {categories.name}
                 </option>
               ))}
             </select>
