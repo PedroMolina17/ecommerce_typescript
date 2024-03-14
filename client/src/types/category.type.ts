@@ -21,3 +21,13 @@ export interface IDeletecategory {
 export interface IResponseDeleteCategory extends IResponse {
   message: string;
 }
+
+export interface IUpdateCategory {
+  name: string;
+}
+
+export interface ResponseUpdateCategory {
+  error: boolean;
+  statusCode: number;
+  message: string;
+}
