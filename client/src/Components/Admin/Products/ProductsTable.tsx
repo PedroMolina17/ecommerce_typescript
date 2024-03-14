@@ -1,4 +1,4 @@
-import getAllProducts from "../../../api/products";
+import { getAllProducts } from "../../../api/products";
 import {
   PaginationState,
   useReactTable,
@@ -9,15 +9,18 @@ import {
   getFilteredRowModel,
   //Cell,
 } from "@tanstack/react-table";
+import { useOpenFormStoreProduct } from "./store/ActionStore";
 import { useState } from "react";
 //import { useForm } from "react-hook-form";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import ResponsivePagination from "react-responsive-pagination";
 import { FaSearch } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
-
+import Products from "./Products";
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
+  const { openForm, setOpenForm } = useOpenFormStoreProduct();
+
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 1,
@@ -78,7 +81,10 @@ const ProductsTable = () => {
             onChange={(e) => setFiltering(e.target.value)}
           ></input>
         </div>
-        <button className="bg-green-500 text-white flex items-center h-10 rounded-md px-2 gap-1">
+        <button
+          className="bg-green-500 text-white flex items-center h-10 rounded-md px-2 gap-1"
+          onClick={() => setOpenForm("create")}
+        >
           <IoAddCircle />
           Agregar Producto
         </button>
@@ -135,6 +141,13 @@ const ProductsTable = () => {
             table.setPageIndex(e);
           }}
         />
+        {openForm.create && (
+          <div className="fixed inset-0  flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
+            <div className="rounded-md bg-[#111827]">
+              <Products />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
