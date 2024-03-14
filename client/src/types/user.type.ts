@@ -17,11 +17,11 @@ export interface Result {
   id: number;
   userName: string;
   email: string;
-  password: string;
-  address: null | string;
-  phone: null | string;
-  googleId: null | string;
-  role: Role;
+  image: string | null;
+  publicIdImage: string | null;
+  address: string | null;
+  phone: string | null;
+  createAt: Date;
 }
 
 export enum Role {
@@ -35,8 +35,9 @@ export interface IUserByNamePaginate {
 }
 export interface IUpdateUserById {
   userName: string;
-  email?: string;
-  role?: string;
+  image?: File;  
+  address?: string ;
+  phone?: string;
 }
 export interface ResponseUpdateUser {
   error: boolean;

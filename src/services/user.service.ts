@@ -3,6 +3,8 @@ import { IUpdateUserById, IUserByNamePaginate } from "../types/user.type";
 import { EmailUser, IdUser } from "../types/types";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
+import { CloudinaryService } from "./cloudinary/cloudinary.service";
+import fs from "fs-extra";
 const prisma = new PrismaClient();
 interface UserData {
   [key: string]: any; // Define the index signature for acc
@@ -63,15 +65,6 @@ export class UserService {
     return user;
   }
 
-  static async getUserByRole(role: any) {
-    const user = await prisma.user.findMany({
-      where: {
-        role,
-      },
-    });
-    return user;
-  }
-
   static async deleteUserById(id: IdUser) {
     const user = await prisma.user.delete({
       where: {
@@ -88,32 +81,36 @@ export class UserService {
     const existingUser = await prisma.user.findUnique({
       where: { id },
     });
-  
+
     if (!existingUser) {
       throw new ClientError("user not found", HTTP_STATUS.NOT_FOUND);
     }
-  
-   
-    const filteredUserData = Object.entries(userData).reduce((acc:UserData, [key, value]) => {
-      if (value !== undefined && value !== "" && value !== null) { 
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
 
+    const filteredUserData = Object.entries(userData).reduce(
+      (acc: UserData, [key, value]) => {
+        if (value !== undefined && value !== "" && value !== null) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {}
+    );
+    //subir image de perfil a cloudinary o actualizar url de cloudinary
+    if(filteredUserData.image){
+      const result = await CloudinaryService.uploadProfilePicture(filteredUserData.image, existingUser.publicIdImage);
+      /* filteredUserData.image = result.secure_url;
+      filteredUserData.publicIdImage = result.public_id; */
+    }
 
     const updatedUser = await prisma.user.update({
       where: { id },
       data: filteredUserData,
     });
-  
+
     return {
       message: `user updated successfully`,
     };
   }
-  
-    
-  
 
   static async getUserByName(data: IUserByNamePaginate) {
     const searchTerm = data.userName.toLowerCase(); // Ensure case-insensitive search

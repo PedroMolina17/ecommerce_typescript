@@ -9,6 +9,7 @@ import TableHeader from "../../../ui/table/TableHeader";
 
 import ButtonsActionTable from "./ButtonsActionTable";
 import { queryClient } from "../../../../main";
+import { formatDate } from "../../../../utils/fomatDate";
 
 interface TableUserProps {
   data: Users;
@@ -39,23 +40,6 @@ const TableUser = ({ data }: TableUserProps) => {
     },
 
     {
-      accessorKey: "googleId",
-      header: "GOOGLE ID",
-      cell: ({ cell }: any) => (
-        <span>
-          {!cell.getValue() ? (
-            <span className="text-red-400">SIN ESPECIFICAR</span>
-          ) : (
-            cell.getValue()
-          )}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "role",
-      header: "ROLE",
-    },
-    {
       accessorKey: "phone",
       header: "PHONE",
       cell: ({ cell }: any) => (
@@ -81,6 +65,14 @@ const TableUser = ({ data }: TableUserProps) => {
         </span>
       ),
     },
+    {
+      accessorKey: "createAt",
+      header: "CREATED AT",
+      cell: (cell: any) => {
+        return <span>{formatDate(cell.getValue())}</span>;
+      },
+    }
+    ,
     {
       accessorKey: "action",
       header: "ACTION",

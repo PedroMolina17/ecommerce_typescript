@@ -55,7 +55,7 @@ const Sidebar = ({isOpen,setIsOpen}:any) => {
           />
         </ContainerButton>
         <ContainerButton
-          title="Usuarios"
+          title="Customers"
           name="Users"
           onClick={() => setSelectNav("Users")}
         >

@@ -17,7 +17,6 @@ const router = Router();
 router.get(
   "/brands",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
   getBrands
 );
 router.post(

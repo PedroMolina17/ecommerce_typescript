@@ -11,7 +11,7 @@ const registrationError = (
   next: NextFunction,
 ) => {
   if (error instanceof PrismaClientKnownRequestError) {
-    console.error("Error conocido de Prisma:",{error:error.name});
+    console.error("Error conocido de Prisma:",{error:error});
     if(error.meta?.modelName==="Token" && error.code==="P2025"){
       res.clearCookie(AUTH.REFRESHTOKEN)
       res.clearCookie(AUTH.ACCESSTOKEN)

@@ -1,27 +1,37 @@
 export enum userRole {
-    admin='admin',user='user'
+  admin = "admin",
 }
-export interface Iregister{
-    userName: string
-    email: string
-    password: string
-    role:userRole
+export interface IRegisterUser {
+  userName: string;
+  email: string;
+  password: string;
 }
-export interface ILogin{
-    email:string
-    password:string
+export interface IRegisterAdmin extends IRegisterUser {}
+export interface ILoginAdmin extends ILoginUser {}
+export interface ILoginUser {
+  email: string;
+  password: string;
 }
+
 export interface AuthResult {
-    accessToken: string;
-    refreshToken: string;
-    message: string;
-  }
- export interface DecodedToken {
-    user: User;
-    iat: number; 
-    exp: number; 
-  }
-  export interface User {
-    id: number;
-    role: string;
-  }
+  accessToken: string;
+  refreshToken: string;
+  message: string;
+}
+export interface DecodedTokenUser {
+  user: User;
+  iat: number;
+  exp: number;
+}
+export interface User {
+  id: number;
+}
+export interface DecodeTokenAdmin {
+  user: UserAdmin;
+  iat: number;
+  exp: number;
+}
+export interface UserAdmin {
+  id: number;
+  role: userRole;
+}

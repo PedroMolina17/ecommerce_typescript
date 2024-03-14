@@ -17,7 +17,6 @@ const router = Router();
 router.get(
   "/categories",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
   getCategories
 );
 router.post(

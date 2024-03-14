@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ILogin, Iregister } from "../types/auth.type";
+import { ILoginUser, IRegisterUser } from "../types/auth.type";
 import { AuthService } from "../services/auth.service";
 import registrationError from "../utils/registrationError.util";
 import { sendResponse } from "../utils/sendResponse.util";
@@ -12,7 +12,7 @@ type AuthFunction = (req: CustomRequest, res: Response, next: NextFunction) => P
 
 export const register: AuthFunction = async (req, res, next) => {
   try {
-    const user = req.body as Iregister
+    const user = req.body as IRegisterUser
     console.log(req.cookies)
     const data = await AuthService.register(user)
     setCookies(res, data)
@@ -23,7 +23,7 @@ export const register: AuthFunction = async (req, res, next) => {
 };
 export const login: AuthFunction = async (req, res, next) => {
   try {
-    const user = req.body as ILogin
+    const user = req.body as ILoginUser
     console.log("-->>>",req.cookies)
     const data = await AuthService.login(user)
     
@@ -55,7 +55,7 @@ export const checkAuth:AuthFunction = async (req, res, next) => {
     const user = req.user
     const data={
       authenticate:true,
-      user
+      ...user
     }
     sendResponse(res, HTTP_STATUS.OK,data)
   } catch (error) {
