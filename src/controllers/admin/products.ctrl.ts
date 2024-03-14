@@ -13,13 +13,7 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   // Logic to get all products
 };
 
-const getProductById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // Logic to get a product by ID
-};
+
 
 const createProduct = async (
   req: Request,
@@ -73,8 +67,6 @@ const deleteProduct = async (
 };
 
 export {
-  getProducts,
-  getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
