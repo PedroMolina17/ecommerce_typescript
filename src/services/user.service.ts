@@ -3,6 +3,8 @@ import { IUpdateUserById, IUserByNamePaginate } from "../types/user.type";
 import { EmailUser, IdUser } from "../types/types";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
+import { CloudinaryService } from "./cloudinary/cloudinary.service";
+import fs from "fs-extra";
 const prisma = new PrismaClient();
 interface UserData {
   [key: string]: any; // Define the index signature for acc
@@ -93,6 +95,12 @@ export class UserService {
       },
       {}
     );
+    //subir image de perfil a cloudinary o actualizar url de cloudinary
+    if(filteredUserData.image){
+      const result = await CloudinaryService.uploadProfilePicture(filteredUserData.image, existingUser.publicIdImage);
+      /* filteredUserData.image = result.secure_url;
+      filteredUserData.publicIdImage = result.public_id; */
+    }
 
     const updatedUser = await prisma.user.update({
       where: { id },

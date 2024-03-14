@@ -43,9 +43,11 @@ const updateUserById: fnCtrl = async (req, res, netx) => {
   try {
     const { id } = req.params;
     const user = req.body;
+    console.log(user)
     const idUser = Number(id);
     const data = await UserService.updateUserById(idUser, user);
     sendResponse(res, HTTP_STATUS.OK, data);
+    
   } catch (error) {
     registrationError(error, res, netx);
   }
