@@ -1,6 +1,12 @@
+import { useMutation } from "@tanstack/react-query";
+import { ToastContainer, toast } from "react-toastify";
+
+import { deleteCategory } from "../../../../api/category";
+import { queryClient } from "../../../../main";
 import { ICategory } from "../../../../types/category.type";
 import { formatDate } from "../../../../utils/fomatDate";
 import ButtonsActionTable from "./ButtonsActionTable";
+
 interface ITableCategoryProps {
   data: ICategory[];
 }
@@ -13,6 +19,7 @@ interface ITableRow extends ICategory {
   action?: string;
   cell?: any;
 }
+
 const TableCategory = ({ data }: ITableCategoryProps) => {
   const columns: ITableColumns[] = [
     {
@@ -35,6 +42,17 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
       header: "Action",
     },
   ];
+
+  const notify = (message: string) => toast(message);
+
+  const mutation = useMutation({
+    mutationFn: async (id: number) => await deleteCategory(id),
+    onSuccess: (data) => {
+      notify(data.message);
+      queryClient.refetchQueries({ queryKey: ["categories"] });
+    },
+  });
+
   return (
     <div className="w-full overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -46,11 +64,13 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                   key={col.accessorKey}
                   scope="col"
                   className={`${
-                    col.accessorKey === "id" &&
-                    "text-center w-14  "
+                    col.accessorKey === "id" && "text-center w-14  "
                   } ${col.accessorKey === "name" && " "} ${
-                    col.accessorKey === "createAt" && "whitespace-nowrap w-72 text-left  "
-                  } ${col.accessorKey === "action" && "w-14 text-center px-4"} py-4  text-white font-medium  leading-4 uppercase shadow-md `}
+                    col.accessorKey === "createAt" &&
+                    "whitespace-nowrap w-72 text-left  "
+                  } ${
+                    col.accessorKey === "action" && "w-14 text-center px-4"
+                  } py-4  text-white font-medium  leading-4 uppercase shadow-md `}
                 >
                   {col.header}
                 </th>
@@ -73,9 +93,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                       } text-left py-4 `}
                     >
                       {col.accessorKey === "action" ? (
-                        
-                          <ButtonsActionTable />
-                        
+                        <ButtonsActionTable cell={row} mutation={mutation} />
                       ) : "cell" in col ? (
                         col.cell(row)
                       ) : (
@@ -87,6 +105,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
             ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 };
