@@ -1,4 +1,4 @@
-import { getAllProducts } from "../../../api/products";
+import { getAllProducts, deleteProduct } from "../../../api/products";
 import {
   PaginationState,
   useReactTable,
@@ -9,6 +9,8 @@ import {
   getFilteredRowModel,
   //Cell,
 } from "@tanstack/react-table";
+import { Row } from "@tanstack/react-table";
+
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import { useState } from "react";
 //import { useForm } from "react-hook-form";
@@ -17,9 +19,20 @@ import ResponsivePagination from "react-responsive-pagination";
 import { FaSearch } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
 import Products from "./Products";
+import DeleteProduct from "./DeleteProduct";
+import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import { useMutation } from "@tanstack/react-query";
+
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
+
+  interface ProductRow {
+    id: number;
+    name: string;
+    stock: number;
+  }
 
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
@@ -41,7 +54,15 @@ const ProductsTable = () => {
       accessorKey: "stock",
       header: "Stock",
     },
+    {
+      header: "Accion",
+    },
   ];
+
+  const deleteProductMutation = useMutation({
+    mutationFn: deleteProduct,
+  });
+
   const { data } = useQuery({
     queryKey: ["product", pagination],
     queryFn: async () =>
@@ -67,6 +88,7 @@ const ProductsTable = () => {
     manualPagination: true,
     debugTable: true,
   });
+
   return (
     <div className="mx-2">
       <h2 className="text-3xl font-bold text-slate-600">Lista de Productos</h2>
@@ -119,9 +141,32 @@ const ProductsTable = () => {
         <tbody className="table-body text-slate-700 font-normal text-sm">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
+              {row.getVisibleCells().map((cell, index) => (
                 <td key={cell.id} className="text-center p-3">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}{" "}
+                  {index === columns.length - 1 && (
+                    <div>
+                      <button
+                        onClick={() => setOpenForm("delete")}
+                        className="text-red-500 text-2xl focus:outline-none "
+                        aria-label="Eliminar producto"
+                      >
+                        <MdDeleteOutline
+                          className="text-xl"
+                          onClick={() =>
+                            deleteProductMutation.mutate(row.original.id)
+                          }
+                        />
+                      </button>
+                      <button
+                        onClick={() => setOpenForm("delete")}
+                        className="text-yellow-500 text-2xl focus:outline-none "
+                        aria-label="Eliminar producto"
+                      >
+                        <CiEdit className="text-xl" />
+                      </button>
+                    </div>
+                  )}
                 </td>
               ))}
             </tr>
