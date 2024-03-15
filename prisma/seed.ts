@@ -351,7 +351,7 @@ async function main() {
     (user: {
       email: string;
       login: { username: string; password: string };
-      picture: { thumbnail: string };
+      picture: { large: string };
       cell:string;
       location:{city:string}
     }) =>{
@@ -363,9 +363,9 @@ async function main() {
       email: user.email,
       userName: user.login.username,
       password: bcryp.hashSync( user.login.password,10),
-      image: user.picture.thumbnail,
+      image: user.picture.large,
       phone: user.cell,
-      addres: user.location.city
+      address: user.location.city
     }}
   );
 
@@ -385,7 +385,7 @@ async function main() {
 
   // crear usuarios de prueba
   await prisma.user.createMany({
-    data: users,
+    data: listUsers,
     skipDuplicates: true,
   });
 

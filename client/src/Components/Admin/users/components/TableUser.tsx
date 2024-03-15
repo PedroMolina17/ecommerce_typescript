@@ -33,6 +33,17 @@ const TableUser = ({ data }: TableUserProps) => {
     {
       accessorKey: "userName",
       header: "NAME",
+      cell: ({ cell }: any) => {
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={cell.row.original.image}
+              className="w-10 h-10 rounded-full"
+            />{" "}
+            <span>{cell.getValue()}</span>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "email",
@@ -71,8 +82,7 @@ const TableUser = ({ data }: TableUserProps) => {
       cell: (cell: any) => {
         return <span>{formatDate(cell.getValue())}</span>;
       },
-    }
-    ,
+    },
     {
       accessorKey: "action",
       header: "ACTION",
