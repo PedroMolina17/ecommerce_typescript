@@ -5,6 +5,7 @@ import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
 import { CloudinaryService } from "./cloudinary/cloudinary.service";
 import fs from "fs-extra";
+import { optimizeImage } from "../utils/optimizeImage.util";
 const prisma = new PrismaClient();
 interface UserData {
   [key: string]: any; // Define the index signature for acc
@@ -95,13 +96,26 @@ export class UserService {
       },
       {}
     );
-    //subir image de perfil a cloudinary o actualizar url de cloudinary
-    if(filteredUserData.image){
-      const result = await CloudinaryService.uploadProfilePicture(filteredUserData.image, existingUser.publicIdImage);
-      /* filteredUserData.image = result.secure_url;
-      filteredUserData.publicIdImage = result.public_id; */
+    if (filteredUserData.image && existingUser.image === null) {
+      const { public_id, secure_url } =
+        await CloudinaryService.uploadProfilePicture(
+          filteredUserData.image,
+          undefined
+        );
+      filteredUserData.image = secure_url;
+      filteredUserData.publicIdImage = public_id;
+      console.log("----->>>>> image no existe");
     }
-
+    if (filteredUserData.image && existingUser.image !== null) {
+      const { secure_url, public_id } =
+        await CloudinaryService.uploadProfilePicture(
+          filteredUserData.image,
+          existingUser.publicIdImage!
+        );
+      filteredUserData.image = secure_url;
+      filteredUserData.publicIdImage = public_id;
+      console.log("----->>>>> image existe");
+    }
     const updatedUser = await prisma.user.update({
       where: { id },
       data: filteredUserData,

@@ -1,13 +1,20 @@
 import { PrismaClient } from "@prisma/client";
+import fs from "fs-extra";
 import bcryp from "bcrypt";
 const prisma = new PrismaClient();
+const usersJson = JSON.parse(
+  fs.readFileSync(
+    "/home/santiago/Escritorio/proyecto/e_commerce/users.json",
+    "utf-8"
+  )
+);
 const administradores = [
   {
     userName: "admin",
     email: "admin@example.com",
     password: "password",
-  }
-]
+  },
+];
 const usuarios = [
   {
     userName: "admin",
@@ -340,23 +347,45 @@ const brands = [
   },
 ];
 async function main() {
+  const listUsers = usersJson.results.map(
+    (user: {
+      email: string;
+      login: { username: string; password: string };
+      picture: { large: string };
+      cell:string;
+      location:{city:string}
+    }) =>{
+      if(user.login.password.length < 8){
+        let acc=1
+        console.log(acc++)
+      }
+     return {
+      email: user.email,
+      userName: user.login.username,
+      password: bcryp.hashSync( user.login.password,10),
+      image: user.picture.large,
+      phone: user.cell,
+      address: user.location.city
+    }}
+  );
+
   const admins = administradores.map((admin) => ({
     ...admin,
     password: bcryp.hashSync(admin.password, 10),
-  }))
-    const users = usuarios.map((user) => ({
+  }));
+  const users = usuarios.map((user) => ({
     ...user,
     password: bcryp.hashSync(user.password, 10),
   }));
-//crear administradores de prueba
-await prisma.admin.createMany({
-  data: admins,
-  skipDuplicates: true,
-})
+  //crear administradores de prueba
+  await prisma.admin.createMany({
+    data: admins,
+    skipDuplicates: true,
+  });
 
   // crear usuarios de prueba
   await prisma.user.createMany({
-    data: users,
+    data: listUsers,
     skipDuplicates: true,
   });
 
