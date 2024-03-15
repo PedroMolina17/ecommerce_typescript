@@ -7,7 +7,10 @@ export interface IUserByName {
 export interface IUpdateUserById{
     userName: string
     email?: string
-    role?: userRole
+    image?: string
+    publicIdImage?: string
+    address?:string
+    phone?:string    
 }
 
 export interface IUserByNamePaginate extends IUserByName, IPaginate {}

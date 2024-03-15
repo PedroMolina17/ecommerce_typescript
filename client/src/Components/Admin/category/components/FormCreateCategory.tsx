@@ -1,15 +1,18 @@
-import Input from "../../../ui/Input";
-import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+
 import { createCategory } from "../../../../api/category";
-import { IResponseCreateCategory } from "../../../../types/category.type";
-import { MySwal } from "../../users/components/ButtonsActionTable";
 import { queryClient } from "../../../../main";
+import { IResponseCreateCategory } from "../../../../types/category.type";
 import ButtonClose from "../../../ui/ButtonClose";
+import Input from "../../../ui/Input";
+import { MySwal } from "../../users/components/ButtonsActionTable";
 import { useOpenFormStoreCategory } from "../store/useOpenForm.store";
+
 interface FormValues {
   name: string;
 }
+
 const FormCreateCategory = () => {
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
   const { register, handleSubmit } = useForm<FormValues>({

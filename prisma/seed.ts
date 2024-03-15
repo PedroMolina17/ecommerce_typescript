@@ -1,7 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import bcryp from "bcrypt";
 const prisma = new PrismaClient();
-
+const administradores = [
+  {
+    userName: "admin",
+    email: "admin@example.com",
+    password: "password",
+  }
+]
 const usuarios = [
   {
     userName: "admin",
@@ -334,10 +340,19 @@ const brands = [
   },
 ];
 async function main() {
-  const users = usuarios.map((user) => ({
+  const admins = administradores.map((admin) => ({
+    ...admin,
+    password: bcryp.hashSync(admin.password, 10),
+  }))
+    const users = usuarios.map((user) => ({
     ...user,
     password: bcryp.hashSync(user.password, 10),
   }));
+//crear administradores de prueba
+await prisma.admin.createMany({
+  data: admins,
+  skipDuplicates: true,
+})
 
   // crear usuarios de prueba
   await prisma.user.createMany({
