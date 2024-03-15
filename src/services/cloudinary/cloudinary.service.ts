@@ -18,8 +18,23 @@ export class CloudinaryService {
     return result;
   }
 
-  static async uploadProfilePicture(
-    pathToFile: string,
-    publicId?: string | null
-  ) {}
+  static async uploadProfilePicture(pathToFile: string, publicId?: string) {
+    const options = publicId
+      ? { public_id: publicId }
+      : { folder: "profile-picture" };
+    try {
+      const result = await cloudinary.uploader.upload(pathToFile, {
+        ...options,
+      });
+      fs.unlink(pathToFile);
+      return {
+        secure_url: result.secure_url,
+        public_id: result.public_id,
+      };
+    } catch (error) {
+      console.log(error);
+      fs.unlink(pathToFile);
+      throw error
+    }
+  }
 }

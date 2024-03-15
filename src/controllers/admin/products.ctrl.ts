@@ -58,8 +58,10 @@ const deleteProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = req.body as IProductDelete;
-    const data = await ProductsService.deleteProduct(product);
+    
+    const {id}=req.params
+    const productId = Number(id)
+    const data = await ProductsService.deleteProduct(productId);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);

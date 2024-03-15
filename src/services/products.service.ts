@@ -113,10 +113,10 @@ export class ProductsService {
       message: "Product updated",
     };
   }
-  static async deleteProduct(product: IProductDelete) {
+  static async deleteProduct(productId:number) {
     const existsProduct = await prisma.products.findUnique({
       where: {
-        id: product.id,
+        id: productId,
       },
     });
     if (!existsProduct) {
@@ -124,12 +124,13 @@ export class ProductsService {
     }
     const deletedProduct = await prisma.products.delete({
       where: {
-        id: product.id,
+        id: productId,
       },
+      select:{name:true}
     });
     return {
-      data: deletedProduct,
-      message: "Product deleted",
+      
+      message: `product ${deletedProduct.name} deleted`,
     };
   }
 }
