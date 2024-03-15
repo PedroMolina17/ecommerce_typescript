@@ -9,14 +9,14 @@ import { useRowValueStore } from "../store/useRowValue.store";
 export const MySwal = withReactContent(Swal);
 
 const ButtonsActionTable = ({ cell, mutation }: any) => {
-  const { setRowValue } = useRowValueStore((state) => state);
+  /* const {setRowValue}=useRowValueStore((state)=>state) */
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
 
   return (
     <div className="flex gap-2  items-center justify-center ">
       <button
         onClick={() => {
-          setRowValue(cell);
+          /*  setRowValue(cell.row.original) */
           setOpenForm("edit");
         }}
       >
@@ -25,11 +25,10 @@ const ButtonsActionTable = ({ cell, mutation }: any) => {
           strokeWidth="0.5"
         />
       </button>
-
       <button
         onClick={() => {
           MySwal.fire({
-            title: `Are you sure to eliminate the category ${cell.name}?`,
+            title: `Are you sure to eliminate the category ${cell.row.original.name} ?`,
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
@@ -44,7 +43,7 @@ const ButtonsActionTable = ({ cell, mutation }: any) => {
             },
           }).then((result) => {
             if (result.isConfirmed) {
-              mutation.mutate(cell.id);
+              mutation.mutate({ id: cell.row.original.id });
             }
           });
         }}

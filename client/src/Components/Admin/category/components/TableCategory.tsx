@@ -65,7 +65,13 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                   scope="col"
                   className={`${
                     col.accessorKey === "id" && "text-center w-14  "
+                    col.accessorKey === "id" && "text-center w-14  "
                   } ${col.accessorKey === "name" && " "} ${
+                    col.accessorKey === "createAt" &&
+                    "whitespace-nowrap w-72 text-left  "
+                  } ${
+                    col.accessorKey === "action" && "w-14 text-center px-4"
+                  } py-4  text-white font-medium  leading-4 uppercase shadow-md `}
                     col.accessorKey === "createAt" &&
                     "whitespace-nowrap w-72 text-left  "
                   } ${
@@ -93,7 +99,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                       } text-left py-4 `}
                     >
                       {col.accessorKey === "action" ? (
-                        <ButtonsActionTable cell={row} mutation={mutation} />
+                        <ButtonsActionTable />
                       ) : "cell" in col ? (
                         col.cell(row)
                       ) : (

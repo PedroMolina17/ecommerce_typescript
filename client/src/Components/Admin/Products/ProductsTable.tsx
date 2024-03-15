@@ -1,4 +1,4 @@
-import { getAllProducts } from "../../../api/products";
+import { getAllProducts, deleteProduct } from "../../../api/products";
 import {
   PaginationState,
   useReactTable,
@@ -9,6 +9,8 @@ import {
   getFilteredRowModel,
   //Cell,
 } from "@tanstack/react-table";
+import { Row } from "@tanstack/react-table";
+
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import { useState } from "react";
 //import { useForm } from "react-hook-form";
@@ -17,9 +19,20 @@ import ResponsivePagination from "react-responsive-pagination";
 import { FaSearch } from "react-icons/fa";
 import { IoAddCircle } from "react-icons/io5";
 import Products from "./Products";
+import DeleteProduct from "./DeleteProduct";
+import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import { useMutation } from "@tanstack/react-query";
+
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
+
+  interface ProductRow {
+    id: number;
+    name: string;
+    stock: number;
+  }
 
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState<PaginationState>({
