@@ -1,7 +1,12 @@
 import { AxiosResponse } from "axios";
 import { Product } from "../types/products.type";
 import { api } from "./axios.config";
-import { IcreateProduct, IResponseCreateProduct } from "../types/products.type";
+import {
+  ICreateProduct,
+  IResponseCreateProduct,
+  IDeleteProduct,
+  IResponseDeleteProduct,
+} from "../types/products.type";
 const getAllProducts = async (
   page: number = 1,
   pageSize: number = 10
@@ -13,7 +18,7 @@ const getAllProducts = async (
 };
 
 const createProduct = async (
-  dataProduct: IcreateProduct
+  dataProduct: ICreateProduct
 ): Promise<IResponseCreateProduct> => {
   try {
     const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
@@ -28,4 +33,27 @@ const createProduct = async (
     );
   }
 };
-export { getAllProducts, createProduct };
+const deleteProduct = async (
+  row: IDeleteProduct
+): Promise<IResponseDeleteProduct> => {
+  try {
+    const { data }: AxiosResponse<IResponseDeleteProduct> = await api.delete(
+      `product/delete-product/${row}`
+    );
+    return data;
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error);
+    throw error;
+  }
+};
+
+// const updateProduct = async ({
+//   id,
+// }: IDUpdateProduct): Promise<IResponseDeleteCategory> => {
+//   const { data }: AxiosResponse<IResponseDeleteCategory> = await api.delete(
+//     `category/delete-category/${id}`
+//   );
+//   return data;
+// };
+
+export { getAllProducts, createProduct, deleteProduct };
