@@ -5,7 +5,7 @@ import { api } from "./axios.config";
 // funcion para realizar la peticion de usuarios
 async function login(user: ILogin) {
   // hago una peticion post al login con los datos del usuario
-  const result = await api.post("/auth/login", user);
+  const result = await api.post("/auth/login-admin", user);
 
   console.log(result);
 
@@ -14,12 +14,12 @@ async function login(user: ILogin) {
 }
 
 async function logout() {
-  const result = await api.post("/auth/logout");
+  const result = await api.post("/auth/logout-admin");
   return result.data;
 }
 
 async function checkAuth(): Promise<IResponseAuth> {
-  const result: AxiosResponse<IResponseAuth> = await api.get("/auth/check");
+  const result: AxiosResponse<IResponseAuth> = await api.get("/auth/check-admin");
   return result.data;
 }
 // exportar mas de una funcion, en este caso la login

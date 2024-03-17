@@ -10,6 +10,17 @@ import { CloudinaryService } from "./cloudinary/cloudinary.service";
 import fs from "fs-extra";
 const prisma = new PrismaClient();
 export class ProductsService {
+  static async getProductById(productId: number) {
+    const existingProduct = await prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+    })
+    if(!existingProduct) {
+      throw new ClientError("product not found", HTTP_STATUS.NOT_FOUND);
+    }
+    return {product:existingProduct}
+  }
   static async getAllProductsPaginated(page: number, pageSize: number) {
     // Obtener productos
     const products = await prisma.products.findMany({
@@ -102,10 +113,10 @@ export class ProductsService {
       message: "Product updated",
     };
   }
-  static async deleteProduct(product: IProductDelete) {
+  static async deleteProduct(productId:number) {
     const existsProduct = await prisma.products.findUnique({
       where: {
-        id: product.id,
+        id: productId,
       },
     });
     if (!existsProduct) {
@@ -113,12 +124,13 @@ export class ProductsService {
     }
     const deletedProduct = await prisma.products.delete({
       where: {
-        id: product.id,
+        id: productId,
       },
+      select:{name:true}
     });
     return {
-      data: deletedProduct,
-      message: "Product deleted",
+      
+      message: `product ${deletedProduct.name} deleted`,
     };
   }
 }

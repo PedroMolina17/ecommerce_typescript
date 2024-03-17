@@ -10,7 +10,6 @@ const router = Router();
 router.get(
   "/",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
   getTechnicalDetailsProduct
 );
 router.post(

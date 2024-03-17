@@ -9,6 +9,7 @@ import TableHeader from "../../../ui/table/TableHeader";
 
 import ButtonsActionTable from "./ButtonsActionTable";
 import { queryClient } from "../../../../main";
+import { formatDate } from "../../../../utils/fomatDate";
 
 interface TableUserProps {
   data: Users;
@@ -32,29 +33,23 @@ const TableUser = ({ data }: TableUserProps) => {
     {
       accessorKey: "userName",
       header: "NAME",
+      cell: ({ cell }: any) => {
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={cell.row.original.image}
+              className="w-10 h-10 rounded-full"
+            />{" "}
+            <span>{cell.getValue()}</span>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "email",
       header: "EMAIL",
     },
 
-    {
-      accessorKey: "googleId",
-      header: "GOOGLE ID",
-      cell: ({ cell }: any) => (
-        <span>
-          {!cell.getValue() ? (
-            <span className="text-red-400">SIN ESPECIFICAR</span>
-          ) : (
-            cell.getValue()
-          )}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "role",
-      header: "ROLE",
-    },
     {
       accessorKey: "phone",
       header: "PHONE",
@@ -80,6 +75,13 @@ const TableUser = ({ data }: TableUserProps) => {
           )}
         </span>
       ),
+    },
+    {
+      accessorKey: "createAt",
+      header: "CREATED AT",
+      cell: (cell: any) => {
+        return <span>{formatDate(cell.getValue())}</span>;
+      },
     },
     {
       accessorKey: "action",

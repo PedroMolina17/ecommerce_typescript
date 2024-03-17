@@ -13,13 +13,7 @@ const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   // Logic to get all products
 };
 
-const getProductById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // Logic to get a product by ID
-};
+
 
 const createProduct = async (
   req: Request,
@@ -64,8 +58,10 @@ const deleteProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = req.body as IProductDelete;
-    const data = await ProductsService.deleteProduct(product);
+    
+    const {id}=req.params
+    const productId = Number(id)
+    const data = await ProductsService.deleteProduct(productId);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
@@ -73,8 +69,6 @@ const deleteProduct = async (
 };
 
 export {
-  getProducts,
-  getProductById,
   createProduct,
   updateProduct,
   deleteProduct,

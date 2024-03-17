@@ -23,5 +23,14 @@ const getAllProductsPaginated: fnCtrl = async (req, res, next) => {
     registrationError(error, res, next);
   }
 };
-
-export { getAllProductsPaginated }
+const getProductById: fnCtrl = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const productId = Number(id);
+    const data = await ProductsService.getProductById(productId);
+    return sendResponse(res, HTTP_STATUS.OK, {...data});
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+};
+export { getAllProductsPaginated,getProductById };

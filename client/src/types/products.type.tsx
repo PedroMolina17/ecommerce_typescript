@@ -1,3 +1,5 @@
+import { IResponse } from "./response.type";
+
 export interface Product {
   error: boolean;
   info: Info;
@@ -30,7 +32,7 @@ export interface Data {
   categoryId: number;
   brandId: number;
 }
-export interface IcreateProduct {
+export interface ICreateProduct {
   name: string;
   categoryId: number;
   price: number;
@@ -45,5 +47,15 @@ export interface IcreateProduct {
 }
 export interface IResponseCreateProduct extends Response {
   data: Data;
+  message: string;
+}
+export interface IDUpdateProduct {
+  id: number;
+}
+
+export interface IDeleteProduct {
+  id: number;
+}
+export interface IResponseDeleteProduct extends IResponse {
   message: string;
 }
