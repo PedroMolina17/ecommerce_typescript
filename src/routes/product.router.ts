@@ -16,23 +16,42 @@ router.get(
   verifyJwt,
   getAllProductsPaginated
 );
-router.get("/:id", verifyJwt,getProductById)
+
 router.post(
   "/create-product",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  upload.single("image"),
+  upload.fields([
+    {
+      name: "image",
+      
+    },
+    {
+      name: "variantsImage",
+    }
+  ]),
   (req: Request, res: Response, next: NextFunction) => {
-    req.body.image = req.file?.path;
+  
+    
     next();
-  },
-  validateFieldCreateProduct,
+  }, 
   createProduct
 );
+router.get("/:id", verifyJwt,getProductById)
 router.put(
-  "/update-product/:id",
+  "/update-product/:productId",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN]),
+  verifyAuthRole([ROLE.ADMIN]),upload.fields([
+    {
+      name: "image",
+    }
+  ]),
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log("Files------>",req.files)
+    console.log("Body------>",req.body)
+    next();
+  }
+  ,
   updateProduct
 );
 router.delete(

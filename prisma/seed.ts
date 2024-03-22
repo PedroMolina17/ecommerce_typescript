@@ -2,9 +2,10 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs-extra";
 import bcryp from "bcrypt";
 const prisma = new PrismaClient();
+const url = __dirname + "/../users.json";
 const usersJson = JSON.parse(
   fs.readFileSync(
-    "/home/santiago/Escritorio/proyecto/e_commerce/users.json",
+    url,
     "utf-8"
   )
 );
