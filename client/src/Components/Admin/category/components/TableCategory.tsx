@@ -3,15 +3,9 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { deleteCategory } from "../../../../api/category";
 import { queryClient } from "../../../../main";
-import { useMutation } from "@tanstack/react-query";
-import { ToastContainer, toast } from "react-toastify";
-
-import { deleteCategory } from "../../../../api/category";
-import { queryClient } from "../../../../main";
 import { ICategory } from "../../../../types/category.type";
 import { formatDate } from "../../../../utils/fomatDate";
 import ButtonsActionTable from "./ButtonsActionTable";
-
 
 interface ITableCategoryProps {
   data: ICategory[];
@@ -25,7 +19,6 @@ interface ITableRow extends ICategory {
   action?: string;
   cell?: any;
 }
-
 
 const TableCategory = ({ data }: ITableCategoryProps) => {
   const columns: ITableColumns[] = [
@@ -49,17 +42,6 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
       header: "Action",
     },
   ];
-
-  const notify = (message: string) => toast(message);
-
-  const mutation = useMutation({
-    mutationFn: async (id: number) => await deleteCategory(id),
-    onSuccess: (data) => {
-      notify(data.message);
-      queryClient.refetchQueries({ queryKey: ["categories"] });
-    },
-  });
-
 
   const notify = (message: string) => toast(message);
 

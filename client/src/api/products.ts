@@ -26,11 +26,7 @@ const createProduct = async (
       dataProduct
     );
     return data;
-    const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
-      "product/create-product",
-      dataProduct
-    );
-    return data;
+  
   } catch (error) {
     console.error("Error al crear el producto:", error);
     throw new Error(
