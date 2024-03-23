@@ -5,10 +5,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { getAllCategory } from "../../../api/category";
 import { getAllBrands } from "../../../api/brands";
 import { createProduct } from "../../../api/products";
-import {
-  IResponseCreateProduct,
-  IcreateProduct,
-} from "../../../types/products.type";
+
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 
 interface FormularioProductoProps {
@@ -45,6 +42,7 @@ const Products = () => {
     queryFn: async () => await getAllBrands(),
   });
   const brands = brandsData?.data || [];
+
   //Registrar Productos
   const createProductMutation = useMutation({
     mutationFn: async (data) => await createProduct(data),
@@ -66,7 +64,6 @@ const Products = () => {
     formData.append("promotionPrice", data.promotionPrice.toString());
     formData.append("promotionDescription", data.promotionDescription || "");
     formData.append("brandId", data.brandId.toString());
-    // Llamar a la función de creación de producto usando la mutación de React Query
     createProductMutation.mutate(formData);
     setOpenForm("create");
   };

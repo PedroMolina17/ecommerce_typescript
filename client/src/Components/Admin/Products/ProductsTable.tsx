@@ -27,6 +27,8 @@ import { useMutation } from "@tanstack/react-query";
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
+  const [productIdToDelete, setProductIdToDelete] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   interface ProductRow {
     id: number;
@@ -62,7 +64,15 @@ const ProductsTable = () => {
   const deleteProductMutation = useMutation({
     mutationFn: deleteProduct,
   });
-
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await deleteProductMutation.mutate(productId);
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+    } finally {
+      setShowDeleteConfirmation(false);
+    }
+  };
   const { data } = useQuery({
     queryKey: ["product", pagination],
     queryFn: async () =>
@@ -111,7 +121,6 @@ const ProductsTable = () => {
           Agregar Producto
         </button>
       </div>
-
       <table className="w-full">
         <thead className=" text-slate-600  bg-slate-200 font-bold">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -153,9 +162,10 @@ const ProductsTable = () => {
                       >
                         <MdDeleteOutline
                           className="text-xl"
-                          onClick={() =>
-                            deleteProductMutation.mutate(row.original.id)
-                          }
+                          onClick={() => {
+                            setProductIdToDelete(row.original.id);
+                            setShowDeleteConfirmation(true);
+                          }}
                         />
                       </button>
                       <button
@@ -194,6 +204,12 @@ const ProductsTable = () => {
           </div>
         )}
       </div>
+      {showDeleteConfirmation && (
+        <DeleteProduct
+          onDelete={() => handleDeleteProduct(productIdToDelete)}
+          show={showDeleteConfirmation}
+        />
+      )}
     </div>
   );
 };
