@@ -15,44 +15,43 @@ enum typeRoleEnum {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  userName String
-  email    String    @unique
-  image    String?
+  id            Int       @id @default(autoincrement())
+  userName      String
+  email         String    @unique
+  image         String?
   publicIdImage String?
-  password String?
-  address  String?
-  phone    String?
-  googleId String?
-  createAt DateTime  @default(now())
-  tokens   Token?
-  comment  Comment[]
+  password      String?
+  address       String?
+  phone         String?
+  googleId      String?
+  createAt      DateTime  @default(now())
+  tokens        Token?
+  comment       Comment[]
 }
 
 model Admin {
-  id       Int          @id @default(autoincrement())
-  userName String
-  email    String       @unique
+  id            Int          @id @default(autoincrement())
+  userName      String
+  email         String       @unique
   publicIdImage String?
-  password String?
-  address  String?
-  phone    String?
-  image    String?
-  createAt DateTime     @default(now())
-  role     typeRoleEnum @default(admin)
-  tokens   Token?
+  password      String?
+  address       String?
+  phone         String?
+  image         String?
+  createAt      DateTime     @default(now())
+  role          typeRoleEnum @default(admin)
+  tokens        Token?
 }
 
 model Token {
   id        Int      @id @default(autoincrement())
   userId    Int?     @unique
   adminId   Int?     @unique
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  admin     Admin?    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: Cascade)
   token     String
   createAt  DateTime @default(now())
   expiredAt DateTime
-  
 }
 
 model Products {
@@ -62,9 +61,9 @@ model Products {
   price                   Float
   stock                   Int
   status                  Boolean                   @default(true)
-  image                   String
-  promotion               Boolean
-  promotionPrice          Float
+  active                  Boolean                   @default(true)
+  promotion               Boolean                   @default(false)
+  promotionPrice          Float?
   promotionDescription    String?
   categoryId              Int
   brandId                 Int
@@ -73,6 +72,25 @@ model Products {
   category                Category                  @relation(fields: [categoryId], references: [id])
   brand                   Brand                     @relation(fields: [brandId], references: [id])
   technicalDetailsProduct TechnicalDetailsProduct[]
+  ImageProduct            ImageProduct[]
+}
+
+model ImageProduct {
+  id            Int      @id @default(autoincrement())
+  productId     Int
+  imageProduct  String
+  publicIdImage String?
+  createAt      DateTime @default(now())
+  product       Products @relation(fields: [productId], references: [id])
+}
+
+model VariantImageProduct {
+  id             Int      @id @default(autoincrement())
+  imageProductId Int
+  productId      Int
+  variantImage   String
+  publicIdImage  String
+  createAt       DateTime @default(now())
 }
 
 model TechnicalDetailsProduct {
