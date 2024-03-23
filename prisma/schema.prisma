@@ -15,44 +15,43 @@ enum typeRoleEnum {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  userName String
-  email    String    @unique
-  image    String?
+  id            Int       @id @default(autoincrement())
+  userName      String
+  email         String    @unique
+  image         String?
   publicIdImage String?
-  password String?
-  address  String?
-  phone    String?
-  googleId String?
-  createAt DateTime  @default(now())
-  tokens   Token?
-  comment  Comment[]
+  password      String?
+  address       String?
+  phone         String?
+  googleId      String?
+  createAt      DateTime  @default(now())
+  tokens        Token?
+  comment       Comment[]
 }
 
 model Admin {
-  id       Int          @id @default(autoincrement())
-  userName String
-  email    String       @unique
+  id            Int          @id @default(autoincrement())
+  userName      String
+  email         String       @unique
   publicIdImage String?
-  password String?
-  address  String?
-  phone    String?
-  image    String?
-  createAt DateTime     @default(now())
-  role     typeRoleEnum @default(admin)
-  tokens   Token?
+  password      String?
+  address       String?
+  phone         String?
+  image         String?
+  createAt      DateTime     @default(now())
+  role          typeRoleEnum @default(admin)
+  tokens        Token?
 }
 
 model Token {
   id        Int      @id @default(autoincrement())
   userId    Int?     @unique
   adminId   Int?     @unique
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  admin     Admin?    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: Cascade)
   token     String
   createAt  DateTime @default(now())
   expiredAt DateTime
-  
 }
 
 model Products {
