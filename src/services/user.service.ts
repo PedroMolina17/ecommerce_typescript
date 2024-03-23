@@ -4,12 +4,15 @@ import { EmailUser, IdUser } from "../types/types";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
 import { CloudinaryService } from "./cloudinary/cloudinary.service";
-import fs from "fs-extra";
-import { optimizeImage } from "../utils/optimizeImage.util";
-const prisma = new PrismaClient();
+// import fs from "fs-extra";
+// import { optimizeImage } from "../utils/optimizeImage.util";
+
 interface UserData {
   [key: string]: any; // Define the index signature for acc
 }
+
+const prisma = new PrismaClient();
+
 export class UserService {
   static async createUser() {}
   static async updateUser() {}
@@ -50,6 +53,15 @@ export class UserService {
 
   static async getUserById(id: IdUser) {
     const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    return user;
+  }
+
+  static async getAdminById(id: IdUser) {
+    const user = await prisma.admin.findUnique({
       where: {
         id,
       },

@@ -1,8 +1,10 @@
-import { useForm } from "react-hook-form";
-import { CiSearch } from "react-icons/ci";
 import { FiSettings } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
+// import { useForm } from "react-hook-form";
+// import { CiSearch } from "react-icons/ci";
 
+import { useJwtDecodeStore } from "../../../layouts/store/useJwtDecodeStore";
+import { Notifications, Settings } from "./components";
 import { useOpenItemStorNavBar } from "./store/useOpenItemStorNavBar";
 
 interface NavBarProps {
@@ -10,11 +12,10 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
-  const { register } = useForm({ defaultValues: { search: "" } });
-
+  const imageUrl = useJwtDecodeStore((state) => state.imageUrl);
   const { openItem, setOpenItem } = useOpenItemStorNavBar((state) => state);
 
-  // console.log(openItem);
+  // const { register } = useForm({ defaultValues: { search: "" } });
 
   return (
     <nav className="bg-bg fixed flex flex-1 container h-16 z-30 top-0 border-b border-gray-800 text-white mx-8">
@@ -23,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
           isOpen ? "ml-64" : "ml-12"
         } duration-150 flex h-full w-full items-center pr-16`}
       >
-        <div className="relative w-[27em] h-fit">
+        {/* <div className="relative w-[27em] h-fit">
           <input
             {...register}
             placeholder="Search here..."
@@ -32,32 +33,43 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
           <span className="absolute top-1/2 left-2 transform -translate-y-1/2">
             <CiSearch className="text-xl" />
           </span>
-        </div>
+        </div> */}
 
-        <div className="flex flex-1 justify-end items-center space-x-2">
-          <IoIosNotificationsOutline
-            className="text-3xl"
+        <div className="flex flex-1 justify-end items-center space-x-4">
+          <button
+            className="inline-block relative outline-none"
             onClick={() => setOpenItem("notifications")}
-          />
-          <FiSettings
-            className="text-2xl"
+          >
+            <IoIosNotificationsOutline className="text-3xl" />
+            <span className="animate-ping absolute top-1 right-0.5 block h-1 w-1 rounded-full ring-2 ring-red-400 bg-red-600"></span>
+          </button>
+
+          <button
+            className="outline-none"
             onClick={() => setOpenItem("settings")}
-          />
+          >
+            <FiSettings className="text-2xl" />
+          </button>
+
+          {imageUrl && (
+            <button className="outline-none">
+              <img src={imageUrl} className="w-8 rounded-full" alt="img-user" />
+            </button>
+          )}
         </div>
 
         {openItem.notifications && (
-          <div className="absolute white right-14 top-14 h-40 w-60 rounded-md text-bg bg-white">
-            Notifications
+          <div className="absolute white right-36 top-14 h-80 w-60 rounded-md bg-bg text-white border border-slate-600">
+            <Notifications />
           </div>
         )}
 
         {openItem.settings && (
           <div className="absolute white right-14 top-14 h-40 w-60 rounded-md text-bg bg-white">
-            Settings
+            <Settings />
           </div>
         )}
       </div>
-      <div></div>
     </nav>
   );
 };
