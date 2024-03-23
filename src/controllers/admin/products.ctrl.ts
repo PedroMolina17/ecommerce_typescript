@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from "express";
 import {
+  ICreateProduct,
   IDataProduct,
   IDataProductUpdate,
   IProductDelete,
@@ -28,15 +29,25 @@ const createProduct = async (
 ) => {
   try {
     const productRequest = req.body;
-    productRequest.brandId = Number(productRequest.brandId);
-    productRequest.categoryId = Number(productRequest.categoryId);
-    productRequest.stock = Number(productRequest.stock);
-    productRequest.price = Number(productRequest.price);
-    productRequest.status = productRequest.status === "true" ? true : false;
-    productRequest.promotion =
-      productRequest.promotion === "true" ? true : false;
-    productRequest.promotionPrice = Number(productRequest.promotionPrice);
-    productRequest.active = productRequest.active === "true" ? true : false;
+    
+    for (const key in productRequest) {
+      if (typeof productRequest[key] === "string") {
+        productRequest[key] = productRequest[key].trim();
+      }
+      if (
+        key === "brandId" ||
+        key === "categoryId" ||
+        key === "stock" ||
+        key === "price" ||
+        key === "promotionPrice"
+      ) {
+        productRequest[key] = Number(productRequest[key]);
+      }
+      if (key === "active" || key === "promotion" || key === "status") {
+        productRequest[key] = productRequest[key] === "true" ? true : false;
+    }
+  }
+   
     const files = processFiles(req.files);
     const product = {
       product: { ...productRequest },
@@ -57,19 +68,19 @@ const updateProduct = async (
   next: NextFunction
 ) => {
   try {
-    const { product, idImageOlds } =
-      req.body;
+    const { product, idImageOlds } = req.body;
     const files = req.files as {
       image: Express.Multer.File[];
     };
-    
-    const pathImages : Omit<IDataProductUpdate, "product" | "idImageOlds"> = processFiles(files);
+
+    const pathImages: Omit<IDataProductUpdate, "product" | "idImageOlds"> =
+      processFiles(files);
     console.log("pathImages--->", pathImages.image);
     const dataproduct = {
-      product:JSON.parse(product),
-      idImageOlds:JSON.parse(idImageOlds).map((id:string)=>Number(id)),
+      product: JSON.parse(product),
+      idImageOlds: JSON.parse(idImageOlds).map((id: string) => Number(id)),
       image: pathImages.image,
-    }
+    };
     const { productId } = req.params;
     const productIdNumber = Number(productId);
     console.log("productAndFiles--->", dataproduct);
