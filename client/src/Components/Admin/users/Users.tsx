@@ -1,15 +1,16 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getAllUsers, getUserByName } from "../../../api/user";
-import TableUser from "./components/TableUser";
-import SearchInput from "../SearchInput";
-import ResponsivePagination from "react-responsive-pagination";
-import usePagination from "../../../hooks/usePagination";
-import RowSelector from "./components/RowSelector";
 import { useForm } from "react-hook-form";
+import ResponsivePagination from "react-responsive-pagination";
+
+import { getAllUsers, getUserByName } from "../../../api/user";
 import { useDebounce } from "../../../hooks/useDebounce";
+import usePagination from "../../../hooks/usePagination";
+import SearchInput from "../SearchInput";
 import FormUpdateUser from "./components/FormUpdateUser";
-import { useOpenFormStore } from "./store/useOpenForm.store";
+import RowSelector from "./components/RowSelector";
 import TableSkeleton from "./components/TableSkeleton";
+import TableUser from "./components/TableUser";
+import { useOpenFormStore } from "./store/useOpenForm.store";
 
 const Users = () => {
   const { handlePagination, pagination } = usePagination();
@@ -38,20 +39,20 @@ const Users = () => {
 
   return (
     <>
-      <div className="relative flex bg-bg w-full flex-col ">
+      <div className="relative flex bg-bg w-full flex-col">
         <div className="flex items-center justify-between bg-bg z-20 sticky top-16 pt-3">
-          <h2 className="font-semibold text-white">List of users</h2>
+          <h2 className="font-semibold text-white text-2xl">List of users</h2>
           <SearchInput
             register={register("search")}
             placeholder="Search user..."
           />
         </div>
 
-        <section className=" w-full  bg-bg relative flex flex-col gap-2">
+        <section className=" w-full bg-bg relative flex flex-col gap-2">
           {data ? <TableUser data={data} /> : <TableSkeleton />}
 
-          <div className="flex items-center justify-between gap-1">
-            <div className=" ">
+          <div className="flex items-center justify-between gap-1 mb-7">
+            <div>
               <RowSelector
                 pagination={pagination}
                 handlePagination={handlePagination}
@@ -59,7 +60,7 @@ const Users = () => {
             </div>
 
             {data && (
-              <div className="flex  items-center gap-1">
+              <div className="flex items-center gap-1">
                 <span className="text-sm text-slate-500">
                   showing {`${data.info.totalItems} of ${data.info.count}`}{" "}
                   users
@@ -79,6 +80,7 @@ const Users = () => {
           </div>
         </section>
       </div>
+
       {openForm && (
         <div className="absolute  top-0 left-0 w-full h-screen bg-[#00000080] z-50 flex items-center justify-center">
           <FormUpdateUser />

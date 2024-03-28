@@ -1,16 +1,15 @@
-import Brands from "../../Components/Admin/brand/Brands"; // ruta a mi componente brand
-
+import ProductsTable from "../../Components/Admin/Products/ProductsTable";
 import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
+import Brands from "../../Components/Admin/brand/Brands";
+import Category from "../../Components/Admin/category/Category";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-import ProductsTable from "../../Components/Admin/Products/ProductsTable";
-import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
   console.log("selectNav-->", selectNav);
-  console.log("hola");
+
   const renderContent = (value: string) => {
     switch (value) {
       case "Categories":
@@ -30,8 +29,8 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className="container mx-auto  flex w-full relative min-h-screen">
-      <div className=" w-full mx-8">{renderContent(selectNav)}</div>
+    <section className="container mx-auto flex w-full relative min-h-[calc(100vh - 4rem)]">
+      <div className="w-full mx-8">{renderContent(selectNav)}</div>
     </section>
   );
 };

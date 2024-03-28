@@ -5,11 +5,11 @@ export default {
     extend: {
       colors: {
         primary: "#139dba",
-        secondary: "#f97f63",
+        secondary: "#141824",
         tertiary: "#8892b0",
         quaternary: "#a8b2d1",
-        bg: "#111827",
-        bgHover:"#1F2937"
+        bg: "#0F111A",
+        bgHover: "#1F2937",
       },
     },
   },
