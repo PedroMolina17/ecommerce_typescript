@@ -12,11 +12,10 @@ export interface IResponseAuth extends IResponse {
   exp: number;
 }
 
-
-
 export interface IUser {
   id: number;
   role: string;
+  image: string;
 }
 
 export interface IAuthError extends IResponse {

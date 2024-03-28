@@ -4,12 +4,15 @@ import { EmailUser, IdUser } from "../types/types";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
 import { CloudinaryService } from "./cloudinary/cloudinary.service";
-import fs from "fs-extra";
-import { optimizeImage } from "../utils/optimizeImage.util";
-const prisma = new PrismaClient();
+// import fs from "fs-extra";
+// import { optimizeImage } from "../utils/optimizeImage.util";
+
 interface UserData {
   [key: string]: any; // Define the index signature for acc
 }
+
+const prisma = new PrismaClient();
+
 export class UserService {
   static async createUser() {}
   static async updateUser() {}
@@ -57,6 +60,15 @@ export class UserService {
     return user;
   }
 
+  static async getAdminById(id: IdUser) {
+    const user = await prisma.admin.findUnique({
+      where: {
+        id,
+      },
+    });
+    return user;
+  }
+
   static async getUserByEmail(email: EmailUser) {
     const user = await prisma.user.findUnique({
       where: {
@@ -97,23 +109,23 @@ export class UserService {
       {}
     );
     if (filteredUserData.image && existingUser.image === null) {
-      const { public_id, secure_url } =
-        await CloudinaryService.uploadProfilePicture(
+      /* const { public_id, secure_url } =
+        await CloudinaryService.uploadImage(
           filteredUserData.image,
           undefined
         );
       filteredUserData.image = secure_url;
-      filteredUserData.publicIdImage = public_id;
+      filteredUserData.publicIdImage = public_id; */
       console.log("----->>>>> image no existe");
     }
     if (filteredUserData.image && existingUser.image !== null) {
-      const { secure_url, public_id } =
-        await CloudinaryService.uploadProfilePicture(
+      /* const { secure_url, public_id } =
+        await CloudinaryService.uploadImage(
           filteredUserData.image,
           existingUser.publicIdImage!
         );
       filteredUserData.image = secure_url;
-      filteredUserData.publicIdImage = public_id;
+      filteredUserData.publicIdImage = public_id; */
       console.log("----->>>>> image existe");
     }
     const updatedUser = await prisma.user.update({

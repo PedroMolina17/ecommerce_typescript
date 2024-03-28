@@ -1,16 +1,18 @@
-import { FaUser } from "react-icons/fa";
-import { TbCategoryFilled } from "react-icons/tb";
+import { useMutation } from "@tanstack/react-query";
 import { BsArrowLeftShort } from "react-icons/bs";
-import { FaDollarSign, FaCartShopping } from "react-icons/fa6";
-import ButonSideBar from "./ButonSideBar";
-import ContainerButton from "./ContainerButton";
-import logo from "/images/logo-Celeste.png";
-import { useSelectNavStore } from "./store/useSelectNav";
+import { FaUser } from "react-icons/fa";
+import { FaCartShopping, FaDollarSign } from "react-icons/fa6";
 import { IoExit } from "react-icons/io5";
 import { SiBrandfolder } from "react-icons/si";
-import { useMutation } from "@tanstack/react-query";
-import { logout } from "../../../api/auth";
+import { TbCategoryFilled } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+
+import { logout } from "../../../api/auth";
+import ButonSideBar from "./ButonSideBar";
+import ContainerButton from "./ContainerButton";
+import { useSelectNavStore } from "./store/useSelectNav";
+import logo from "/images/logo-Celeste.png";
+
 const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
       <BsArrowLeftShort
         className={`${
           !isOpen && "rotate-180"
-        } text-pretty text-[24px] bg-white absolute -right-4 top-3 text-[#139dba] border border-[#139dba] rounded-full cursor-pointer`}
+        } text-pretty text-[24px] bg-white absolute -right-3 top-5 text-[#139dba] border border-[#139dba] rounded-full cursor-pointer`}
         onClick={() => setIsOpen(!isOpen)}
       />
       <div className=" h-full w-full flex flex-col gap-1">
@@ -39,7 +41,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           <img
             src={logo}
             alt=""
-            className=" w-12 h-12 object-contain bg-white "
+            className={`w-12 h-12 object-contain bg-white`}
           />
           <h2 className="text-primary text-lg whitespace-nowrap  text-ellipsis font-medium ">
             Bienvenido a Celeste

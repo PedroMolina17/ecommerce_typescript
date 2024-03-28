@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
+
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+
+import NavBar from "../Components/Admin/Navbar/NavBar";
 import Sidebar from "../Components/Admin/sideBar/Sidebar";
 import { checkAuth } from "../api/auth";
+import { useJwtDecodeStore } from "./store/useJwtDecodeStore";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -12,7 +16,14 @@ const DashboardLayout = () => {
     queryFn: async () => await checkAuth(),
     retry: 0,
   });
-  
+
+  useEffect(() => {
+    if (data) {
+      const imageUrl = data.user.image;
+      useJwtDecodeStore.setState({ imageUrl });
+    }
+  }, [data]);
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <Navigate to={"/admin-login"} replace />;
   const authenticate = data?.authenticate;
@@ -20,9 +31,10 @@ const DashboardLayout = () => {
   return (
     <>
       {authenticate ? (
-        <div className="relative grid grid-cols-12 grid-rows-12  w-full  bg-bg ">
-          <nav className="col-span-12 bg-bg row-span-1  fixed w-[calc(100%-64px)] ml-16 h-16 z-30 top-0 border-b border-gray-800  "></nav>
+        <div className="relative grid grid-cols grid-rows-12 w-full bg-bg">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+          <NavBar isOpen={isOpen} />
+
           <main
             className={`${
               isOpen ? "ml-64" : "ml-12"

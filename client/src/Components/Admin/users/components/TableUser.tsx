@@ -39,6 +39,7 @@ const TableUser = ({ data }: TableUserProps) => {
             <img
               src={cell.row.original.image}
               className="w-10 h-10 rounded-full"
+              alt="img-user"
             />{" "}
             <span>{cell.getValue()}</span>
           </div>

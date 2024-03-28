@@ -8,6 +8,7 @@ interface IOpenForm {
   };
   setOpenForm: (nameForm: "edit" | "delete" | "create") => void;
 }
+
 export const useOpenFormStoreCategory = create<IOpenForm>((set) => ({
   openForm: {
     edit: false,
