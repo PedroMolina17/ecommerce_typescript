@@ -99,21 +99,18 @@ export class ProductService {
           },
         });
 
-      }
-
-      const updatedProduct = await this.prisma.products.update({
-        where: {
-          id: productId,
-        },
-        data: {
-          name,
-        },
-      });
-      return {
-        data: updatedProduct,
-        message: "Product updated",
-      };
+      }    
     }
+    const updatedProduct = await this.prisma.products.update({
+      where: {
+        id: productId,
+      },
+      data: {...product},
+    });
+    return {
+      data: updatedProduct,
+      message: "Product updated",
+    };
   }
   static async deleteProduct(productId: number) {
     /* const existsProduct = await prisma.products.findUnique({
