@@ -41,7 +41,9 @@ const Category = () => {
   return (
     <div className="relative flex flex-col gap-3">
       <div className="sticky top-16 bg-bg z-20">
-        <h2 className=" font-bold text-white">Categories</h2>
+        <h2 className=" font-semibold text-white text-2xl mb-2 mt-3">
+          Categories
+        </h2>
 
         <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
           <SearchInput
@@ -49,7 +51,6 @@ const Category = () => {
             placeholder="Search category..."
             register={register("category")}
           />
-
           <button
             onClick={() => {
               setOpenForm("create");
@@ -62,14 +63,14 @@ const Category = () => {
         </div>
       </div>
 
-      <div className="flex flex-col    rounded-md shadow-md">
-        <div className="  flex flex-col justify-center items-center">
+      <div className="flex flex-col rounded-md shadow-md">
+        <div className="flex flex-col justify-center items-center">
           {paginateData ? (
             <TableCategory data={paginateData} />
           ) : (
             <TableSkeleton />
           )}
-          <div className="m-2 w-full flex justify-center">
+          <div className="mt-4 w-full flex justify-center mb-10">
             {paginateData && (
               <ResponsivePagination
                 current={pagination.pageIndex}
