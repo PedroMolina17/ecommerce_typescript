@@ -46,7 +46,10 @@ const Products = () => {
   //Registrar Productos
   const createProductMutation = useMutation({
     mutationFn: async (data) => await createProduct(data),
-    onSuccess: (data) => console.log(data),
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries("product"); // Invalidar la consulta existente
+    },
   });
 
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {

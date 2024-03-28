@@ -11,8 +11,7 @@ import { SiBrandfolder } from "react-icons/si";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "../../../api/auth";
 import { useNavigate } from "react-router-dom";
-const Sidebar = ({isOpen,setIsOpen}:any) => {
-  
+const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
   const navigate = useNavigate();
   const mutation = useMutation({
@@ -25,7 +24,9 @@ const Sidebar = ({isOpen,setIsOpen}:any) => {
   });
   return (
     <aside
-      className={`${isOpen ? "w-64" : "w-12"} duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
+      className={`${
+        isOpen ? "w-64" : "w-12"
+      } duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
     >
       <BsArrowLeftShort
         className={`${

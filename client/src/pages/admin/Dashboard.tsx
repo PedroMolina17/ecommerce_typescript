@@ -1,4 +1,4 @@
-import Brands from "../../Components/Admin/brand/Brands"; // ruta a mi componente brand
+import Brands from "../../Components/Admin/brand/Brands";
 
 import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
@@ -9,8 +9,6 @@ import Category from "../../Components/Admin/category/Category";
 
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
-  console.log("selectNav-->", selectNav);
-  console.log("hola");
   const renderContent = (value: string) => {
     switch (value) {
       case "Categories":

@@ -64,6 +64,7 @@ const ProductsTable = () => {
   const deleteProductMutation = useMutation({
     mutationFn: deleteProduct,
   });
+
   const handleDeleteProduct = async (productId) => {
     try {
       await deleteProductMutation.mutate(productId);
@@ -73,6 +74,7 @@ const ProductsTable = () => {
       setShowDeleteConfirmation(false);
     }
   };
+  
   const { data } = useQuery({
     queryKey: ["product", pagination],
     queryFn: async () =>
