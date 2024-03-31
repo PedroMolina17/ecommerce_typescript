@@ -28,32 +28,27 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-64" : "w-12"
-      } duration-150 fixed z-40 bg-bg col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800`}
+      } duration-150 fixed z-40 bg-primary col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800 py-8 pl-4 font-bold`}
     >
       <BsArrowLeftShort
         className={`${
           !isOpen && "rotate-180"
-        } text-pretty text-[24px] bg-white absolute -right-3 top-5 text-[#139dba] border border-[#139dba] rounded-full cursor-pointer`}
+        } text-pretty text-[24px] bg-white absolute -right-3 top-5  border border-primary rounded-full cursor-pointer  `}
         onClick={() => setIsOpen(!isOpen)}
       />
       <div className=" h-full w-full flex flex-col gap-1">
-        <div className="h-12 overflow-hidden flex items-center gap-1">
-          <img
-            src={logo}
-            alt=""
-            className={`w-12 h-12 object-contain bg-white`}
-          />
-          <h2 className="text-primary text-lg whitespace-nowrap  text-ellipsis font-medium ">
+        <div className="h-12 overflow-hidden flex items-center gap-1 justify-center my-4">
+          <h2 className=" text-lg whitespace-nowrap  text-ellipsis font-medium ">
             Bienvenido a Celeste
           </h2>
         </div>
         <ContainerButton
-          title="costo y presupuestos"
+          title="Costo y presupuestos"
           name="Sales"
           onClick={() => setSelectNav("Sales")}
         >
           <ButonSideBar
-            icon={<FaDollarSign className="text-primary" />}
+            icon={<FaDollarSign />}
             onClick={() => setSelectNav("Sales")}
           />
         </ContainerButton>
@@ -63,7 +58,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           onClick={() => setSelectNav("Users")}
         >
           <ButonSideBar
-            icon={<FaUser className="text-primary" />}
+            icon={<FaUser />}
             onClick={() => setSelectNav("Users")}
           />
         </ContainerButton>
@@ -73,7 +68,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           onClick={() => setSelectNav("Categories")}
         >
           <ButonSideBar
-            icon={<TbCategoryFilled className="text-primary" />}
+            icon={<TbCategoryFilled />}
             onClick={() => setSelectNav("Categories")}
           />
         </ContainerButton>
@@ -83,7 +78,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           onClick={() => setSelectNav("Products")}
         >
           <ButonSideBar
-            icon={<FaCartShopping className="text-primary" />}
+            icon={<FaCartShopping />}
             onClick={() => setSelectNav("Products")}
           />
         </ContainerButton>
@@ -96,7 +91,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           onClick={() => setSelectNav("Brands")}
         >
           <ButonSideBar
-            icon={<SiBrandfolder className="text-primary" />}
+            icon={<SiBrandfolder />}
             onClick={() => setSelectNav("Brands")}
           />
         </ContainerButton>
@@ -105,7 +100,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           name="Exit"
           onClick={() => mutation.mutate()}
         >
-          <ButonSideBar icon={<IoExit className="text-secondary text-2xl" />} />
+          <ButonSideBar icon={<IoExit className=" text-2xl" />} />
         </ContainerButton>
       </div>
     </aside>

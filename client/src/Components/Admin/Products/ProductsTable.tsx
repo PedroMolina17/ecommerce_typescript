@@ -74,7 +74,7 @@ const ProductsTable = () => {
       setShowDeleteConfirmation(false);
     }
   };
-  
+
   const { data } = useQuery({
     queryKey: ["product", pagination],
     queryFn: async () =>
@@ -102,7 +102,7 @@ const ProductsTable = () => {
   });
 
   return (
-    <div className="mx-2">
+    <div className="">
       <h2 className="text-3xl font-bold text-slate-600">Lista de Productos</h2>
       <div className="flex justify-between items-center ">
         <div className="flex items-center w-96 focus-within:border-2 gap-5 px-4  my-4 rounded-md focus-within:border-[#139dba] bg-[#ffffff] border">

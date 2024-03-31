@@ -25,7 +25,8 @@ interface FormularioProductoProps {
 }
 
 const Products = () => {
-  const { handleSubmit, register, reset } = useForm<FormularioProductoProps>();
+  const { handleSubmit, register, reset, watch } =
+    useForm<FormularioProductoProps>();
   const { setOpenForm } = useOpenFormStoreProduct();
   const queryClient = useQueryClient();
 
@@ -51,14 +52,17 @@ const Products = () => {
       queryClient.invalidateQueries("product"); // Invalidar la consulta existente
     },
   });
-
+  console.log(watch("image"));
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("categoryId", data.categoryId.toString());
     formData.append("price", data.price.toString());
+
     if (data.image) {
-      formData.append("image", data.image[0]);
+      for (let i = 0; i < data.image.length; i++) {
+        formData.append("image", data.image[i]);
+      }
     }
     formData.append("description", data.description);
     formData.append("stock", data.stock.toString());
@@ -146,6 +150,7 @@ const Products = () => {
             Imagen:
             <input
               type="file"
+              multiple
               {...register("image")}
               className="border border-[#455591] mx-4 rounded-md"
             />
