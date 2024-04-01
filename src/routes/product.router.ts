@@ -6,16 +6,15 @@ import {
 } from "../controllers/admin/products.ctrl";
 import { upload } from "../configs/multer.config";
 import { validateFieldCreateProduct } from "../validators/fieldCreateProduct.validator";
-import { getAllProductsPaginated, getProductById } from "../controllers/product.ctrl";
+import {
+  getAllProductsPaginated,
+  getProductById,
+} from "../controllers/product.ctrl";
 import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { verifyJwt } from "../middlewares/verifyJwt.mdl";
 import { ROLE } from "../constants/roleUser.constants";
 const router = Router();
-router.get(
-  "/products",
-  verifyJwt,
-  getAllProductsPaginated
-);
+router.get("/products", verifyJwt, getAllProductsPaginated);
 
 router.post(
   "/create-product",
@@ -24,34 +23,32 @@ router.post(
   upload.fields([
     {
       name: "image",
-      
     },
     {
       name: "variantsImage",
-    }
+    },
   ]),
   (req: Request, res: Response, next: NextFunction) => {
-  
-    
+    console.log(req.files);
     next();
-  }, 
+  },
   createProduct
 );
-router.get("/:id", verifyJwt,getProductById)
+router.get("/:id", verifyJwt, getProductById);
 router.put(
   "/update-product/:productId",
   verifyJwt,
-  verifyAuthRole([ROLE.ADMIN]),upload.fields([
+  verifyAuthRole([ROLE.ADMIN]),
+  upload.fields([
     {
       name: "image",
-    }
+    },
   ]),
   (req: Request, res: Response, next: NextFunction) => {
-    console.log("Files------>",req.files)
-    console.log("Body------>",req.body)
+    console.log("Files------>", req.files);
+    console.log("Body------>", req.body);
     next();
-  }
-  ,
+  },
   updateProduct
 );
 router.delete(

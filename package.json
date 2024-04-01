@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "reset-db":"dotenv -e environments/.env.development -- npx prisma migrate reset",
+    "reset-db": "dotenv -e environments/.env.development -- npx prisma migrate reset",
     "seed": "dotenv -e environments/.env.development -- npx prisma db seed",
     "migrate": "dotenv -e environments/.env.development -- npx prisma migrate dev ",
     "migrate:docker": "dotenv -e environments/.env.docker.dev -- npx prisma migrate dev",
