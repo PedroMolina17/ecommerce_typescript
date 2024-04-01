@@ -16,10 +16,11 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   // const { register } = useForm({ defaultValues: { search: "" } });
 
   return (
-    <nav className="bg-secondary fixed flex flex-1 container h-16 z-30 top-0 border-b border-gray-700 text-white mx-8">
+    <nav className=" bg-darkw fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
+
       <div
         className={`${
-          isOpen ? "ml-64" : "ml-12"
+          isOpen ? "ml-0" : "ml-12"
         } duration-150 flex h-full w-full items-center pr-16`}
       >
         {/* <div className="relative w-[27em] h-fit">

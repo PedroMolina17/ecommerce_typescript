@@ -2,7 +2,7 @@ import {
   NavLink,
   useLocation,
   useNavigate,
-  useRouteError
+  useRouteError,
 } from "react-router-dom";
 interface ErrorResponse404 {
   status: number;
@@ -71,4 +71,7 @@ const PageNotFoundClient = () => {
     </div>
   );
 };
-export { PageNotFoundAdmin as PageNotFound, PageNotFoundClient as PageNotFoundAdmin };
+export {
+  PageNotFoundAdmin as PageNotFound,
+  PageNotFoundClient as PageNotFoundAdmin,
+};
