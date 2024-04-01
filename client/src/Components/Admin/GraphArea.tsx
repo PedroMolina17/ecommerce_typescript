@@ -44,8 +44,8 @@ const data = {
     {
       label: "Total de Compra por Mes",
       data: user.map((item) => item.totalCompra),
-      backgroundColor: "rgba(69, 85, 145, 0.4)",
-      borderColor: "rgba(69, 85, 145, 1)",
+      backgroundColor: "#62d6a6",
+      borderColor: "#62d6a6",
       borderWidth: 1,
       fill: true,
     },
@@ -54,8 +54,12 @@ const data = {
 
 const GraphArea = () => {
   return (
-    <div className=" h-96 p-8 text-black flex items-center justify-center">
-      <Line data={data} options={options} className="bg-white rounded-xl p-2" />
+    <div className=" h-96 p-8 text-white flex items-center justify-center">
+      <Line
+        data={data}
+        options={options}
+        className="bg-darkSecondary rounded-xl p-2"
+      />
     </div>
   );
 };
