@@ -198,6 +198,7 @@ const ProductsTable = () => {
             table.setPageIndex(e);
           }}
         />
+
         {openForm.create && (
           <div className="fixed inset-0  flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
             <div className="rounded-md bg-[#111827]">
@@ -206,12 +207,14 @@ const ProductsTable = () => {
           </div>
         )}
       </div>
+
       {showDeleteConfirmation && (
         <DeleteProduct
           onDelete={() => handleDeleteProduct(productIdToDelete)}
           show={showDeleteConfirmation}
         />
       )}
+
     </div>
   );
 };
