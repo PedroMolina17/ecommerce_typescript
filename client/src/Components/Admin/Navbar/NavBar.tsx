@@ -18,7 +18,9 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   // const { register } = useForm({ defaultValues: { search: "" } });
 
   return (
-    <nav className=" bg-dark fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
+
+    <nav className=" bg-darkPrimary fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
+
       <div
         className={`${
           isOpen ? "ml-0" : "ml-12"

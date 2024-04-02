@@ -44,8 +44,10 @@ const data = {
     {
       label: "Total de Compra por Mes",
       data: user.map((item) => item.totalCompra),
-      backgroundColor: "#62d6a6",
-      borderColor: "#62d6a6",
+
+      backgroundColor: "rgba(106, 216, 167, 0.1)",
+      borderColor: "rgba(106, 216, 167, 1)",
+
       borderWidth: 1,
       fill: true,
     },
@@ -54,11 +56,13 @@ const data = {
 
 const GraphArea = () => {
   return (
-    <div className=" h-96 p-8 text-white flex items-center justify-center">
+
+    <div className="flex">
       <Line
         data={data}
         options={options}
-        className="bg-darkSecondary rounded-xl p-2"
+        className="bg-darkThird  rounded-xl "
+
       />
     </div>
   );
