@@ -28,8 +28,8 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className=" flex w-full  h-screen overflow-hidden  bg-darkw">
-      <div className=" w-full px-8">{renderContent(selectNav)}</div>
+    <section className="flex w-full  h-screen overflow-hidden  bg-darkPrimary">
+      <div className="w-full px-8">{renderContent(selectNav)}</div>
     </section>
   );
 };

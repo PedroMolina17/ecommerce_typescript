@@ -13,7 +13,7 @@ const ContainerButton = ({ title, name, onClick, children }: Props) => {
     <div
       onClick={onClick}
       className={`${
-        selectNav === name ? "bg-darkw text-primary" : "text-white"
+        selectNav === name ? "bg-darkPrimary text-primary" : "text-white"
       } hover:bg-darkw h-12 overflow-hidden flex items-center gap-1 cursor-pointer rounded-bl-md  rounded-tl-md`}
     >
       <div className="w-12 ">{children}</div>

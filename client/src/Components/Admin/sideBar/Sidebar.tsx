@@ -11,7 +11,6 @@ import { logout } from "../../../api/auth";
 import ButonSideBar from "./ButonSideBar";
 import ContainerButton from "./ContainerButton";
 import { useSelectNavStore } from "./store/useSelectNav";
-import logo from "/images/logo-Celeste.png";
 
 const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
@@ -28,12 +27,12 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-64" : "w-12"
-      } duration-150 fixed z-40 bg-primary col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800 py-8 pl-4 font-bold`}
+      } duration-150 fixed z-40 bg-primary col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  py-8 pl-4 font-bold`}
     >
       <BsArrowLeftShort
         className={`${
           !isOpen && "rotate-180"
-        } text-pretty text-[24px] bg-white absolute -right-3 top-5  border border-primary rounded-full cursor-pointer  `}
+        } text-pretty text-[24px] bg-white absolute -right-3 top-5   rounded-full cursor-pointer  `}
         onClick={() => setIsOpen(!isOpen)}
       />
       <div className=" h-full w-full flex flex-col gap-1">
