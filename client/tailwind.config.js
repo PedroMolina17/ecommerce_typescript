@@ -8,6 +8,7 @@ export default {
         secondary: "#f97f63",
         tertiary: "#8892b0",
         quaternary: "#a8b2d1",
+
         darkPrimary: "#272743",
         darkSecondary: "#efebff",
         darkThird: "#353453",
@@ -15,6 +16,8 @@ export default {
         lightSecondary: "#9086f7",
         lightThird: "#8a8aa6",
         light: "#f9f8f6",
+        lightSecondary: "#fffff",
+        lightTertiary: "#353453",
         bg: "#111827",
         bgHover: "#1F2937",
       },

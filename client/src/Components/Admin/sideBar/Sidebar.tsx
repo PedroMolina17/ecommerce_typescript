@@ -27,7 +27,9 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-64" : "w-12"
+
       } duration-150 fixed z-40 bg-primary col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  py-8 pl-4 font-bold`}
+
     >
       <BsArrowLeftShort
         className={`${
