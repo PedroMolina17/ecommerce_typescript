@@ -4,7 +4,6 @@ import Login from "../Components/Admin/login/Login";
 import Dashboard from "../pages/admin/Dashboard";
 import Slider from "../Components/Slider";
 import { PageNotFound, PageNotFoundAdmin } from "../pages/admin/PageNotFound";
-import Products from "../Components/Products";
 
 const router = createBrowserRouter([
   {
@@ -13,9 +12,6 @@ const router = createBrowserRouter([
     element: <Slider />,
   },
   { path: "/admin-login", element: <Login /> },
-
-  { path: "/products", element: <Products /> },
-
   {
     path: "/dashboard",
     element: <DashboardLayout />,
