@@ -98,6 +98,7 @@ export class ProductService {
             publicIdImage: public_id,
           },
         });
+
       }
     }
     const updatedProduct = await this.prisma.products.update({
