@@ -1,7 +1,13 @@
-import { BsArrowLeftShort } from "react-icons/bs";
-import { FaGithub, FaUser } from "react-icons/fa";
-import { FaCartShopping, FaDollarSign } from "react-icons/fa6";
-import { SiBrandfolder } from "react-icons/si";
+import { useState } from "react";
+import { FaDollarSign } from "react-icons/fa6";
+import Brands from "./Brands";
+import Categories from "./Categories";
+import ProductsTable from "./Products/ProductsTable";
+import Sales from "./Sales/Sales";
+import Suppliers from "./Suppliers";
+import Users from "./users/Users";
+import Products from "./Products/Products";
+import { FaUser } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 
 import ButonSideBar from "./ButonSideBar";
