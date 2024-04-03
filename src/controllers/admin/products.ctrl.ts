@@ -86,7 +86,7 @@ const deleteProduct = async (
   try {
     const { id } = req.params;
     const productId = Number(id);
-    const data = await ProductService.deleteProduct(productId);
+    const data = await productService.deleteProduct(productId);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);

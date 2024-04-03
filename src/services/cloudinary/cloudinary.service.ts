@@ -44,4 +44,12 @@ export class CloudinaryService {
       throw error
     }
   }
+
+  async deleteImg(publicId: string) {
+    try {
+      const result = await cloudinary.api.delete_resources([publicId]);
+    } catch (error) {
+      throw error
+    }
+  }
 }
