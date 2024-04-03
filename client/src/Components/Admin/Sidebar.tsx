@@ -3,7 +3,7 @@ import { FaDollarSign } from "react-icons/fa6";
 import Brands from "./Brands";
 import Categories from "./Categories";
 import ProductsTable from "./Products/ProductsTable";
-import Sales from "./Sales";
+import Sales from "./Sales/Sales";
 import Suppliers from "./Suppliers";
 import Users from "./users/Users";
 import Products from "./Products/Products";

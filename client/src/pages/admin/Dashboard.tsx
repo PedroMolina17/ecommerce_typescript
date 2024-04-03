@@ -1,6 +1,6 @@
 import Brands from "../../Components/Admin/brand/Brands";
 
-import Sales from "../../Components/Admin/Sales";
+import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
