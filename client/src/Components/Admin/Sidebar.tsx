@@ -9,92 +9,117 @@ import Users from "./users/Users";
 import Products from "./Products/Products";
 import { FaUser } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
-const Sidebar = () => {
-  const [selectedNav, setSelectedNav] = useState("Sales");
-  const renderContent = () => {
-    switch (selectedNav) {
-      case "Categories":
-        return <Categories />;
-      case "Sales":
-        return <Sales />;
-      case "Products":
-        return <Products />;
-      case "Brands":
-        return <Brands />;
-      case "Users":
-        return <Users />;
-      case "Suppliers":
-        return <Suppliers />;
-      default:
-        return null;
-    }
-  };
+
+import ButonSideBar from "./ButonSideBar";
+import ContainerButton from "./ContainerButton";
+import { useSelectNavStore } from "./store/useSelectNav";
+import logo from "/images/logo-Celeste.png";
+
+const Sidebar = ({ isOpen, setIsOpen }: any) => {
+  const { setSelectNav } = useSelectNavStore((state) => state);
 
   return (
-    <div className="flex h-screen ">
-      <div className="relative h-screen ">
-        <ul className="shadow-lg flex flex-col col bg-[#455591] text-white py-3 h-screen  fixed top-0 left-0 bottom-0 w-96 ">
-          <p className="text-xl font-bold text-center">Dashboard</p>
-          <p className="mx-8 font-bold text-xl py-4">Menu</p>
-          <button
-            onClick={() => setSelectedNav("Sales")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md mt-2 ${
-              selectedNav === "Sales" ? " bg-[#5b6aa1]" : ""
-            }`}
-          >
-            <FaDollarSign />
-            <p>Costos y presupuestos</p>
-          </button>
-          <button
-            onClick={() => setSelectedNav("Users")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md ${
-              selectedNav === "Users" ? " bg-[#5b6aa1]" : ""
-            }`}
-          >
-            <FaUser />
-            <p>Users</p>
-          </button>
-          <button
-            onClick={() => setSelectedNav("Categories")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md ${
-              selectedNav === "Categories" ? " bg-[#5b6aa1]" : ""
-            }`}
-          >
-            <TbCategoryFilled />
-            <p>Categorias</p>
-          </button>
-          <button
-            onClick={() => setSelectedNav("Products")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md ${
-              selectedNav === "Products" ? " bg-[#5b6aa1] " : ""
-            }`}
-          >
-            <p> Productos </p>
-          </button>
-          <button
-            onClick={() => setSelectedNav("Brands")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md ${
-              selectedNav === "Brands" ? " bg-[#5b6aa1] text-white" : ""
-            }`}
-          >
-            Marcashadow-lg
-          </button>
-          <button
-            onClick={() => setSelectedNav("Suppliers")}
-            className={`flex gap-2 items-center mx-8 px-2 py-4 rounded-md ${
-              selectedNav === "Suppliers" ? " bg-[#5b6aa1] text-white" : ""
-            }`}
-          >
-            Proveedor
-          </button>
-        </ul>
+    <aside
+      className={`${
+
+        isOpen ? "w-64" : "w-12"
+      } duration-150 fixed z-40 bg-primary col-span-2 text-white row-span-12   left-0 top-0  min-h-screen  border-r border-gray-800 py-8 pl-4 font-bold`}
+
+    >
+      <BsArrowLeftShort
+        className={`${
+          !isOpen && "rotate-180"
+        } text-pretty text-[24px] bg-white absolute -right-3 top-5  border border-primary rounded-full cursor-pointer  `}
+        onClick={() => setIsOpen(!isOpen)}
+      />
+      <div className=" h-full w-full flex flex-col gap-1">
+
+        <div className="h-12 overflow-hidden flex items-center gap-1 justify-center my-4">
+          <h2 className=" text-lg whitespace-nowrap  text-ellipsis font-medium ">
+
+            Bienvenido a Celeste
+          </h2>
+        </div>
+
+        <ContainerButton
+          title="Costo y presupuestos"
+          name="Sales"
+          isOpen={isOpen}
+          onClick={() => setSelectNav("Sales")}
+        >
+
+          <ButonSideBar
+            icon={<FaDollarSign />}
+            onClick={() => setSelectNav("Sales")}
+          />
+
+        </ContainerButton>
+        <ContainerButton
+          title="Customers"
+          name="Users"
+          isOpen={isOpen}
+          onClick={() => setSelectNav("Users")}
+        >
+
+          <ButonSideBar
+            icon={<FaUser />}
+            onClick={() => setSelectNav("Users")}
+          />
+
+        </ContainerButton>
+        <ContainerButton
+          title="Categories"
+          name="Categories"
+          isOpen={isOpen}
+          onClick={() => setSelectNav("Categories")}
+        >
+
+          <ButonSideBar
+            icon={<TbCategoryFilled />}
+            onClick={() => setSelectNav("Categories")}
+          />
+
+        </ContainerButton>
+        <ContainerButton
+          title="Products"
+          name="Products"
+          isOpen={isOpen}
+          onClick={() => setSelectNav("Products")}
+        >
+
+          <ButonSideBar
+            icon={<FaCartShopping />}
+            onClick={() => setSelectNav("Products")}
+          />
+
+        </ContainerButton>
+
+        <ContainerButton
+          title="Brands"
+          name="Brands"
+          isOpen={isOpen}
+          onClick={() => setSelectNav("Brands")}
+        >
+
+          <ButonSideBar
+            icon={<SiBrandfolder />}
+            onClick={() => setSelectNav("Brands")}
+          />
+
+        </ContainerButton>
+
+        <a
+          href="https://github.com/santiagoweb212/e_commerce"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <ButonSideBar icon={<IoExit className=" text-2xl" />} />
+        </ContainerButton>
+
       </div>
-      <div className="  ml-96 justify-around bg-[#f2f2f2] w-full">
-        {" "}
-        {renderContent()}
-      </div>
-    </div>
+    </aside>
   );
 };
 
-export default Sidebar;
+export default Sidebar;

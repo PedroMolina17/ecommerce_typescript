@@ -6,17 +6,20 @@ import { IoExit } from "react-icons/io5";
 import Circle from "./Circle";
 const Sales = () => {
   return (
+
     <div className=" w-full text-darkSecondary">
       <div className="flex p-8 items-center text-xl gap-10  ">
         <label className="flex bg-darkThird rounded-md items-center gap-1  py-1 focus-within:border-[#f97f63] w-full px-4">
           <input
             type="text "
             className="p-2 outline-none w-full bg-darkThird"
+
             placeholder="Buscar"
           />
           <FaSearch />
         </label>
         <div className="flex items-center justify-end gap-5 ">
+
           <div className="bg-darkThird p-4 rounded-md">
             <FaMoon />
           </div>{" "}
@@ -59,13 +62,16 @@ const Sales = () => {
               <p className="text-md">Productos Totales</p>
               <p className="text-2xl font-bold">$278</p>
               <p className="text-md">+ 50% nuevos productos</p>
+
             </div>
             <FaCartShopping className="text-2xl text-darkSecondary" />
           </div>
         </div>
+
         <div className="grid grid-cols-4 justify-between py-8 mx-8 gap-4">
           <div className="col-span-3">
             <GraphArea />
+
           </div>
           <div className="bg-darkThird rounded-md col-span-1 relative">
             <div className="rounded-full h-40 w-40 blur-2xl  opacity-20 bg-blue-300 absolute"></div>
