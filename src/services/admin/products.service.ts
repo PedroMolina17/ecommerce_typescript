@@ -143,7 +143,7 @@ export class ProductService {
       select: { name: true },
     });
     return {
-      message: `product ${deletedProduct.name} deleted completamente`,
+      message: `product ${deletedProduct.name} deleted`,
     };
   }
 }
