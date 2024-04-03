@@ -98,7 +98,6 @@ export class ProductService {
             publicIdImage: public_id,
           },
         });
-
       }
     }
     const updatedProduct = await this.prisma.products.update({
@@ -143,6 +142,7 @@ export class ProductService {
       },
       select: { name: true },
     });
+
     return {
       message: `product ${deletedProduct.name} deleted`,
     };
