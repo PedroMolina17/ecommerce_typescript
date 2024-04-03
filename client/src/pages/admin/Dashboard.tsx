@@ -1,7 +1,4 @@
-
-import Brands from "../../Components/Admin/brand/Brands";
-
-
+import ProductsTable from "../../Components/Admin/Products/ProductsTable";
 import Sales from "../../Components/Admin/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Brands from "../../Components/Admin/brand/Brands";
@@ -11,7 +8,7 @@ import Users from "../../Components/Admin/users/Users";
 
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
-
+  console.log("selectNav-->", selectNav);
 
   const renderContent = (value: string) => {
     switch (value) {
@@ -32,10 +29,8 @@ const Dashboard = () => {
     }
   };
   return (
-
-    <section className=" flex w-full  h-screen overflow-hidden  bg-darkw">
-      <div className=" w-full px-8">{renderContent(selectNav)}</div>
-
+    <section className="container mx-auto flex w-full relative min-h-[calc(100vh - 4rem)]">
+      <div className="w-full mx-8">{renderContent(selectNav)}</div>
     </section>
   );
 };
