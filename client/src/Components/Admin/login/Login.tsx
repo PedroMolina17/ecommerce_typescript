@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import Logo from "../../../assets/logo.jpeg"; // importo la imagen a este archivo tsx
-import { Input } from "./Input";
-import { ILogin } from "../../../types/auth.type"; // importo la interface de ILogin
-import { login } from "../../../api/auth"; // importo la funcion que realiza la peticion post con los datos
-import { ToastContainer, toast } from "react-toastify"; // sirve para mostra rmensajes de alerta o success
-import { useNavigate } from "react-router-dom"; // sirve para la navegacion entre rutas
+
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+
+import Logo from "@/assets/logo.jpeg";
+import { Input } from "./Input";
+import { ILogin } from "@/types/auth.type";
+import { login } from "@/api/auth";
 
 const Login = () => {
   const [valueForm, setValueForm] = useState<ILogin>({
-    email: "",
-    password: "",
+    email: "admin@example.com",
+    password: "password",
   });
 
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
 
   const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -46,20 +48,13 @@ const Login = () => {
         toast.success("Iniciando sesión con éxito!", {
           position: "top-center",
         });
-
-        // Espera 3 segundos antes de redirigir
-        setTimeout(() => {
-          // Redirige al usuario a la página deseada
-          navigate("/dashboard");
-        }, 3000);
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error(error);
     }
   };
 
- 
-  // datos devueltos
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center w-full ">
       <ToastContainer />
