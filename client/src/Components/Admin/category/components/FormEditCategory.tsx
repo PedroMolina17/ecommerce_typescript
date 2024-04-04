@@ -70,13 +70,17 @@ const FormEditCategory = () => {
 
         <div className="flex gap-2 justify-center">
           <button
+            type="button"
             onClick={() => setOpenForm("edit")}
             className="px-6 py-1  rounded-md border border-red-400 text-red-400 hover:border-red-500 hover:text-red-500"
           >
             Cancel
           </button>
 
-          <button className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-700 text-white">
+          <button
+            type="submit"
+            className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-700 text-white"
+          >
             Update
           </button>
         </div>
@@ -84,4 +88,5 @@ const FormEditCategory = () => {
     </div>
   );
 };
+
 export default FormEditCategory;

@@ -35,7 +35,7 @@ const DashboardLayout = () => {
       {authenticate ? (
         <div className="relative grid grid-cols grid-rows-12 w-full bg-bg">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-          <NavBar isOpen={isOpen} />
+          <NavBar />
           <main
             className={`${
               isOpen ? "ml-64" : "ml-16"
