@@ -16,7 +16,6 @@ export default {
         lightSecondary: "#9086f7",
         lightThird: "#8a8aa6",
         light: "#f9f8f6",
-        lightSecondary: "#fffff",
         lightTertiary: "#353453",
         bg: "#111827",
         bgHover: "#1F2937",
