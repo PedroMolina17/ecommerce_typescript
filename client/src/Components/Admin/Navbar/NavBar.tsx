@@ -1,7 +1,5 @@
 import { FiSettings } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
-// import { useForm } from "react-hook-form";
-// import { CiSearch } from "react-icons/ci";
 
 import { useJwtDecodeStore } from "../../../layouts/store/useJwtDecodeStore";
 import { Notifications, Settings } from "./components";
@@ -18,12 +16,10 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   // const { register } = useForm({ defaultValues: { search: "" } });
 
   return (
-
     <nav className=" bg-darkPrimary fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
-
       <div
         className={`${
-          isOpen ? "ml-0" : "ml-12"
+          isOpen ? "ml-64" : "ml-12"
         } duration-150 flex h-full w-full items-center pr-16`}
       >
         {/* <div className="relative w-[27em] h-fit">
@@ -75,4 +71,5 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
     </nav>
   );
 };
+
 export default NavBar;
