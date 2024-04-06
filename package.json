@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "reset-db":"dotenv -e environments/.env.development -- npx prisma migrate reset",
+    "reset-db": "dotenv -e environments/.env.development -- npx prisma migrate reset",
     "seed": "dotenv -e environments/.env.development -- npx prisma db seed",
     "migrate": "dotenv -e environments/.env.development -- npx prisma migrate dev ",
     "migrate:docker": "dotenv -e environments/.env.docker.dev -- npx prisma migrate dev",
@@ -48,6 +48,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "1.4.5-lts.1",
     "nodemon": "^3.0.3",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "socket.io": "^4.7.5"
   }
 }
