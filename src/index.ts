@@ -1,11 +1,13 @@
 // Importaciones
-import express, { Request,Response,NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import http from "http";
+import { Server as SocketServer } from "socket.io";
 import { sendErrorResponse } from "./utils/sendErrorResponse.util";
 export const ENV =
   process.env.NODE_ENV === "DEVELOPMENT"
@@ -17,15 +19,16 @@ export const ENV =
       }).parsed;
 
 const app = express();
-
-app.use(express.json()); 
+app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
- 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use("/api", router);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -33,8 +36,21 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log("--->", err);
   sendErrorResponse(res, statusCode, message);
 });
+const server = http.createServer(app);
+const io = new SocketServer(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  },
+});
 
+io.on("connection", (socket) => {
+  console.log("a user connected");
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
 
-app.listen(ENV?.NODE_PORT, () =>
+server.listen(ENV?.NODE_PORT, () =>
   console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );

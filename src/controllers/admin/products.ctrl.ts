@@ -14,10 +14,12 @@ import { CloudinaryService } from "../../services/cloudinary/cloudinary.service"
 import { PrismaClient } from "@prisma/client";
 import { processFiles } from "../../utils/processFIles.util";
 import { parseProduct } from "../../utils/parseProduct.util";
+import { NotificationsService } from "../../services/admin/notifications.service";
 
 const prisma = new PrismaClient();
 const cloudinaryService = new CloudinaryService();
-const productService = new ProductService(cloudinaryService, prisma);
+const notificationService = new NotificationsService()
+const productService = new ProductService(cloudinaryService, prisma, notificationService);
 
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   
