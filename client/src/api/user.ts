@@ -43,4 +43,17 @@ const deleteUserById = async (id: number): Promise<ResponseDeleteUser> => {
   return data;
 };
 
-export { getAllUsers, getUserByName, updateUserById, deleteUserById };
+const updateAdmin = async ({ userId, userData }: any) => {
+  return new Promise((resolve) => {
+    const updatedUser = { id: userId, ...userData };
+    resolve(updatedUser);
+  });
+};
+
+export {
+  getAllUsers,
+  getUserByName,
+  updateUserById,
+  deleteUserById,
+  updateAdmin,
+};

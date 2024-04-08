@@ -1,27 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import {
-  ICreateProduct,
   IDataProduct,
   IDataProductUpdate,
-  IProductDelete,
-  IProductUpdate,
 } from "../../types/product.type";
 import ClientError from "../../errors/clientError.error";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
-import fs from "fs-extra";
-import {
-  ICreateImageProduct,
-  IUpdateImageProduct,
-} from "../../types/imageProduct.type";
+import { NotificationsService } from "./notifications.service";
 
 export class ProductService {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
-    private readonly prisma: PrismaClient
+    private readonly prisma: PrismaClient,
+    private readonly notificationService:NotificationsService
   ) {
     this.cloudinaryService = cloudinaryService;
     this.prisma = prisma;
+    this.notificationService = notificationService
   }
   async createProduct(dataProduct: IDataProduct) {
     const { product, image, variantsImage } = dataProduct;

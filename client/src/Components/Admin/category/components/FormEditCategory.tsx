@@ -4,9 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 
-import { updateCategory } from "../../../../api/category";
-import { queryClient } from "../../../../main";
-import Input from "../../../ui/Input";
+import { updateCategory } from "@/api/category";
+import { queryClient } from "@/main";
+import Input from "@ui/Input";
 import { useOpenFormStoreCategory } from "../store/useOpenForm.store";
 import { useRowValueStore } from "../store/useRowValue.store";
 import { MySwal } from "./ButtonsActionTable";
@@ -19,11 +19,16 @@ const FormEditCategory = () => {
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
   const { rowValue } = useRowValueStore((state) => state);
 
-  const { register, handleSubmit, setFocus } = useForm<FormValue>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm<FormValue>({
     defaultValues: { name: rowValue.name },
   });
 
-  const mutation = useMutation({
+  const updateCatemutation = useMutation({
     mutationFn: async (data: { id: number; name: FormValue }) => {
       return await updateCategory(data.id, data.name);
     },
@@ -39,8 +44,8 @@ const FormEditCategory = () => {
     },
   });
 
-  const onSubmit = handleSubmit((name) => {
-    mutation.mutate({ id: rowValue.id, name });
+  const onSubmit = handleSubmit((values) => {
+    updateCatemutation.mutate({ id: rowValue.id, name: values });
   });
 
   React.useEffect(() => {
@@ -59,24 +64,35 @@ const FormEditCategory = () => {
         </button>
       </div>
 
-      <form onSubmit={onSubmit} className="gap-11 flex flex-col">
+      <form onSubmit={onSubmit} className="flex flex-col">
         <Input
           type="text"
-          className="bg-gray-50 border border-gray-400 rounded-md focus:ring-2 focus:ring-blue-300 focus:border-blue-300 block w-full py-1 px-2 outline-none"
+          className="bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2"
           labelText="Name"
           labelClass="text-slate-600 text-sm"
-          register={register("name")}
+          register={register("name", {
+            required: { value: true, message: "Please fill out this field" },
+            validate: (value) => rowValue.name !== value || "Field not edited",
+          })}
+          error={Boolean(errors?.name?.message)}
         />
+        {errors.name && (
+          <span className="text-red-500">{errors.name.message}</span>
+        )}
 
-        <div className="flex gap-2 justify-center">
+        <div className="flex gap-2 justify-center mt-6">
           <button
+            type="button"
             onClick={() => setOpenForm("edit")}
-            className="px-6 py-1  rounded-md border border-red-400 text-red-400 hover:border-red-500 hover:text-red-500"
+            className="px-6 py-1 rounded-md border border-gray-500 text-gray-500 hover:border-gray-700 hover:text-gray-700"
           >
             Cancel
           </button>
 
-          <button className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-700 text-white">
+          <button
+            type="submit"
+            className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-700 text-white"
+          >
             Update
           </button>
         </div>
@@ -84,4 +100,5 @@ const FormEditCategory = () => {
     </div>
   );
 };
+
 export default FormEditCategory;
