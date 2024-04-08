@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet } from "react-router-dom";
+
 import Footer from "../Components/Admin/Footer";
 import NavBar from "../Components/Admin/Navbar/NavBar";
 import Sidebar from "../Components/Admin/sideBar/Sidebar";
@@ -31,13 +33,13 @@ const DashboardLayout = () => {
   return (
     <>
       {authenticate ? (
-        <div className="relative grid grid-cols grid-rows-12 w-full bg-darkPrimary">
+        <div className="relative grid grid-cols grid-rows-12 w-full bg-bg">
           <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
           <NavBar />
           <main
             className={`${
-              isOpen ? "ml-80" : "ml-12"
-            } duration-150 relative  col-span-12   mt-16 row-span-12  `}
+              isOpen ? "ml-64" : "ml-16"
+            } duration-150 relative col-span-12 mt-16 row-span-12`}
           >
             <Outlet />
           </main>
