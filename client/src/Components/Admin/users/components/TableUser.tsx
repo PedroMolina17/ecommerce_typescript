@@ -14,6 +14,7 @@ import { formatDate } from "../../../../utils/fomatDate";
 interface TableUserProps {
   data: Users;
 }
+
 const TableUser = ({ data }: TableUserProps) => {
   const notify = (message: string) => toast(message);
 
@@ -25,6 +26,7 @@ const TableUser = ({ data }: TableUserProps) => {
       queryClient.refetchQueries({ queryKey: ["users"] });
     },
   });
+
   const columns: TableColumn[] = [
     {
       accessorKey: "id",
@@ -92,23 +94,24 @@ const TableUser = ({ data }: TableUserProps) => {
       ),
     },
   ];
+
   return (
     <>
       <Table
-        tableClass="w-full rounded-md "
+        tableClass="w-full rounded-md"
         columns={columns}
         data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full sticky top-[108px] bg-bg   before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs "
-              thClass="py-4 px-2 "
+              theadClass="w-full sticky top-[108px] bg-bg before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs"
+              thClass="py-4 px-2"
               trClass=""
             />
             <TableBody
               rows={table.getRowModel}
-              tbodyClass="table-body  text-gray-500 text-sm "
+              tbodyClass="table-body text-gray-500 text-sm"
               tdClass="py-4 px-2"
             />
           </>

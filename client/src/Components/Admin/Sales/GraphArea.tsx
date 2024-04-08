@@ -56,13 +56,11 @@ const data = {
 
 const GraphArea = () => {
   return (
-
     <div className="flex">
       <Line
         data={data}
         options={options}
-        className="bg-darkThird  rounded-xl "
-
+        className="bg-darkThird  rounded-xl p-6 "
       />
     </div>
   );

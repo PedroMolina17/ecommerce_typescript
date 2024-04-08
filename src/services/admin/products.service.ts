@@ -1,27 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import {
-  ICreateProduct,
   IDataProduct,
   IDataProductUpdate,
-  IProductDelete,
-  IProductUpdate,
 } from "../../types/product.type";
 import ClientError from "../../errors/clientError.error";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
-import fs from "fs-extra";
-import {
-  ICreateImageProduct,
-  IUpdateImageProduct,
-} from "../../types/imageProduct.type";
+import { NotificationsService } from "./notifications.service";
 
 export class ProductService {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
-    private readonly prisma: PrismaClient
+    private readonly prisma: PrismaClient,
+    private readonly notificationService:NotificationsService
   ) {
     this.cloudinaryService = cloudinaryService;
     this.prisma = prisma;
+    this.notificationService = notificationService
   }
   async createProduct(dataProduct: IDataProduct) {
     const { product, image, variantsImage } = dataProduct;
@@ -99,38 +94,52 @@ export class ProductService {
           },
         });
       }
-
-      const updatedProduct = await this.prisma.products.update({
-        where: {
-          id: productId,
-        },
-        data: {
-          name,
-        },
-      });
-      return {
-        data: updatedProduct,
-        message: "Product updated",
-      };
     }
-  }
-  static async deleteProduct(productId: number) {
-    /* const existsProduct = await prisma.products.findUnique({
+    const updatedProduct = await this.prisma.products.update({
       where: {
         id: productId,
+      },
+      data: { ...product },
+    });
+    return {
+      data: updatedProduct,
+      message: "Product updated",
+    };
+  }
+  async deleteProduct(productId: number) {
+    const existsProduct = await this.prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+      include: {
+        ImageProduct: true,
       },
     });
     if (!existsProduct) {
       throw new ClientError("Product not found", HTTP_STATUS.NOT_FOUND);
     }
-    const deletedProduct = await prisma.products.delete({
+    console.log("--->producto existente", existsProduct.ImageProduct.length, {
+      existsProduct: existsProduct.ImageProduct,
+    });
+    await Promise.all(existsProduct.ImageProduct.map(async (image) => {
+      if(image.publicIdImage) {
+        await this.cloudinaryService.deleteImg(image.publicIdImage)
+        await this.prisma.imageProduct.delete({
+          where:{
+            id: image.id
+          }
+        })
+      }
+    }))
+    const deletedProduct = await this.prisma.products.delete({
       where: {
         id: productId,
       },
-      select: { name: true }, 
-    }); */
+      select: { name: true },
+    });
+
     return {
-      message: "", //`product ${deletedProduct.name} deleted`,
+      message: `product ${deletedProduct.name} deleted`,
     };
   }
 }

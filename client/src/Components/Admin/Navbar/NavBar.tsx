@@ -1,29 +1,32 @@
-import { FiSettings } from "react-icons/fi";
-import { IoIosNotificationsOutline } from "react-icons/io";
-// import { useForm } from "react-hook-form";
-// import { CiSearch } from "react-icons/ci";
+import { useEffect } from "react";
+import io from "socket.io-client";
+import { Notifications, Settings, UserProfile } from "./components";
+interface NavBarProps {}
 
-import { useJwtDecodeStore } from "../../../layouts/store/useJwtDecodeStore";
-import { Notifications, Settings } from "./components";
-import { useOpenItemStorNavBar } from "./store/useOpenItemStorNavBar";
+const NavBar: React.FC<NavBarProps> = () => {
+  // const [socket, setSocket] = useState<Socket | null>(null);
 
-interface NavBarProps {
-  isOpen: boolean;
-}
+  useEffect(() => {
+    const socket = io("http://localhost:3500");
 
-const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
-  const imageUrl = useJwtDecodeStore((state) => state.imageUrl);
-  const { openItem, setOpenItem } = useOpenItemStorNavBar((state) => state);
+    socket.on("connect", () => {
+      console.log("Connection established.");
+    });
 
-  // const { register } = useForm({ defaultValues: { search: "" } });
+    socket.on("message", (data) => {
+      console.log("Message:", data);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Closed connection.");
+    });
+  }, []);
 
   return (
-
-    <nav className=" bg-darkPrimary fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
-
+    <nav className="bg-darkThird fixed flex flex-1  h-16 z-30 top-0 left-0 right-0  border-b border-gray-700 text-white ">
       <div
         className={`${
-          isOpen ? "ml-0" : "ml-12"
+          isOpen ? "ml-64" : "ml-12"
         } duration-150 flex h-full w-full items-center pr-16`}
       >
         {/* <div className="relative w-[27em] h-fit">
@@ -41,17 +44,18 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
           <button
             className="inline-block relative outline-none"
             onClick={() => setOpenItem("notifications")}
+            aria-label="Abrir notificaciones"
           >
             <IoIosNotificationsOutline className="text-3xl" />
             <span className="animate-ping absolute top-1 right-0.5 block h-1 w-1 rounded-full ring-2 ring-red-400 bg-red-600"></span>
           </button>
 
-          <button
+          <label
             className="outline-none"
             onClick={() => setOpenItem("settings")}
           >
             <FiSettings className="text-2xl" />
-          </button>
+          </label>
 
           {imageUrl && (
             <button className="outline-none">
@@ -75,4 +79,5 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
     </nav>
   );
 };
+
 export default NavBar;

@@ -23,12 +23,11 @@ import DeleteProduct from "./DeleteProduct";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useMutation } from "@tanstack/react-query";
+import CreateProduct from "./CreateProduct";
 
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
-  const [productIdToDelete, setProductIdToDelete] = useState(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   interface ProductRow {
     id: number;
@@ -65,16 +64,6 @@ const ProductsTable = () => {
     mutationFn: deleteProduct,
   });
 
-  const handleDeleteProduct = async (productId) => {
-    try {
-      await deleteProductMutation.mutate(productId);
-    } catch (error) {
-      console.error("Error al eliminar el producto:", error);
-    } finally {
-      setShowDeleteConfirmation(false);
-    }
-  };
-
   const { data } = useQuery({
     queryKey: ["product", pagination],
     queryFn: async () =>
@@ -102,7 +91,7 @@ const ProductsTable = () => {
   });
 
   return (
-    <div className="">
+    <div className="mx-2">
       <h2 className="text-3xl font-bold text-slate-600">Lista de Productos</h2>
       <div className="flex justify-between items-center ">
         <div className="flex items-center w-96 focus-within:border-2 gap-5 px-4  my-4 rounded-md focus-within:border-[#139dba] bg-[#ffffff] border">
@@ -123,6 +112,7 @@ const ProductsTable = () => {
           Agregar Producto
         </button>
       </div>
+
       <table className="w-full">
         <thead className=" text-slate-600  bg-slate-200 font-bold">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -164,10 +154,9 @@ const ProductsTable = () => {
                       >
                         <MdDeleteOutline
                           className="text-xl"
-                          onClick={() => {
-                            setProductIdToDelete(row.original.id);
-                            setShowDeleteConfirmation(true);
-                          }}
+                          onClick={() =>
+                            deleteProductMutation.mutate(row.original.id)
+                          }
                         />
                       </button>
                       <button
@@ -198,20 +187,18 @@ const ProductsTable = () => {
             table.setPageIndex(e);
           }}
         />
+
         {openForm.create && (
-          <div className="fixed inset-0  flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
+          <div className="fixed inset-0  flex h-screen w-screen m-4 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
             <div className="rounded-md bg-[#111827]">
-              <Products />
+              <CreateProduct />
             </div>
           </div>
         )}
       </div>
-      {showDeleteConfirmation && (
-        <DeleteProduct
-          onDelete={() => handleDeleteProduct(productIdToDelete)}
-          show={showDeleteConfirmation}
-        />
-      )}
+
+      {/* Delete after adding products */}
+      <div className="h-[500px]" />
     </div>
   );
 };
