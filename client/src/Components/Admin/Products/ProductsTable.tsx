@@ -23,7 +23,6 @@ import DeleteProduct from "./DeleteProduct";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useMutation } from "@tanstack/react-query";
-import CreateProduct from "./CreateProduct";
 
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
@@ -189,9 +188,9 @@ const ProductsTable = () => {
         />
 
         {openForm.create && (
-          <div className="fixed inset-0  flex h-screen w-screen m-4 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
+          <div className="fixed inset-0  flex justify-center items-center left-0 top-0 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
             <div className="rounded-md bg-[#111827]">
-              <CreateProduct />
+              <Products />
             </div>
           </div>
         )}
