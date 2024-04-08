@@ -27,7 +27,7 @@ export class categoryService {
       data: { name: category.name },
     });
 
-    return { message: "category created" };
+    return { message: "category created", data: newCategory };
   }
 
   static async updateCategory(category: IUpdateCategory) {    

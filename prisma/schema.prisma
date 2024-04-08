@@ -15,18 +15,19 @@ enum typeRoleEnum {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   userName      String
-  email         String    @unique
+  email         String         @unique
   image         String?
   publicIdImage String?
   password      String?
   address       String?
   phone         String?
   googleId      String?
-  createAt      DateTime  @default(now())
+  createAt      DateTime       @default(now())
   tokens        Token?
   comment       Comment[]
+  Notification  Notification[]
 }
 
 model Admin {
@@ -124,4 +125,13 @@ model Comment {
   product   Products @relation(fields: [productId], references: [id])
   comment   String
   createAt  DateTime @default(now())
+}
+
+model Notification {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message  String
+  read     Boolean  @default(false)
+  createAt DateTime @default(now())
 }

@@ -18,7 +18,7 @@ import { NotificationsService } from "../../services/admin/notifications.service
 
 const prisma = new PrismaClient();
 const cloudinaryService = new CloudinaryService();
-const notificationService = new NotificationsService()
+const notificationService = new NotificationsService(prisma)
 const productService = new ProductService(cloudinaryService, prisma, notificationService);
 
 const getProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -40,6 +40,7 @@ const createProduct = async (
     };
 
     const data = await productService.createProduct(product);
+
     console.log("productAndFiles--->", product);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
