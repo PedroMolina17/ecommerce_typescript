@@ -16,7 +16,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   // const { register } = useForm({ defaultValues: { search: "" } });
 
   return (
-    <nav className=" bg-darkPrimary fixed top-0 right-0  left-0 h-16 z-30  border-b border-gray-800 text-white ">
+    <nav className="bg-darkThird fixed flex flex-1  h-16 z-30 top-0 left-0 right-0  border-b border-gray-700 text-white ">
       <div
         className={`${
           isOpen ? "ml-64" : "ml-12"
@@ -37,17 +37,18 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
           <button
             className="inline-block relative outline-none"
             onClick={() => setOpenItem("notifications")}
+            aria-label="Abrir notificaciones"
           >
             <IoIosNotificationsOutline className="text-3xl" />
             <span className="animate-ping absolute top-1 right-0.5 block h-1 w-1 rounded-full ring-2 ring-red-400 bg-red-600"></span>
           </button>
 
-          <button
+          <label
             className="outline-none"
             onClick={() => setOpenItem("settings")}
           >
             <FiSettings className="text-2xl" />
-          </button>
+          </label>
 
           {imageUrl && (
             <button className="outline-none">

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet } from "react-router-dom";
-
 import Footer from "../Components/Admin/Footer";
 import NavBar from "../Components/Admin/Navbar/NavBar";
 import Sidebar from "../Components/Admin/sideBar/Sidebar";

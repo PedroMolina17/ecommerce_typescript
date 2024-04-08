@@ -45,7 +45,7 @@ const options: ChartOptions<"doughnut"> = {
 };
 const Circle = () => {
   return (
-    <div className="flex flex-col  ">
+    <div className="flex flex-col p-6 ">
       <p className="text-2xl pb-4">Area</p>
       <Doughnut data={data} options={options} />
     </div>
