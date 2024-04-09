@@ -1,5 +1,5 @@
 import ProductsTable from "../../Components/Admin/Products/ProductsTable";
-import Sales from "../../Components/Admin/Sales";
+import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Brands from "../../Components/Admin/brand/Brands";
 import Category from "../../Components/Admin/category/Category";
@@ -29,8 +29,8 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className="container mx-auto flex w-full relative min-h-[calc(100vh - 4rem)]">
-      <div className="w-full mx-8">{renderContent(selectNav)}</div>
+    <section className="flex w-full  h-screen overflow-hidden  bg-darkPrimary">
+      <div className="w-full px-8">{renderContent(selectNav)}</div>
     </section>
   );
 };
