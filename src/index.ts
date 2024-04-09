@@ -37,7 +37,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   sendErrorResponse(res, statusCode, message);
 });
 const server = http.createServer(app);
-const io = new SocketServer(server, {
+export const io = new SocketServer(server, {
   cors: {
     origin: "http://localhost:5173",
     credentials: true,
@@ -45,7 +45,7 @@ const io = new SocketServer(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("a user connected",socket.id);
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
