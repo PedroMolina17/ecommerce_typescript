@@ -10,11 +10,16 @@ import { categoryService } from "../../services/category.service";
 import registrationError from "../../utils/registrationError.util";
 import { sendResponse } from "../../utils/sendResponse.util";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
+import { io } from "../..";
+import { NotificationsService } from "../../services/admin/notifications.service";
+import { PrismaClient } from "@prisma/client";
+import { CustomRequest } from "../../middlewares/verifyAuthRole.mdt";
 type fnCtrl = (
-  req: Request,
+  req: CustomRequest,
   res: Response,
   next: NextFunction
 ) => Promise<void>;
+const notificationService = new NotificationsService(new PrismaClient());
 const getCategories: fnCtrl = async (req, res, next) => {
   // Logic to get all categories
 };
@@ -26,8 +31,14 @@ const getCategoryById: fnCtrl = async (req, res, next) => {
 const createCategory: fnCtrl = async (req, res, next) => {
   try {
     const category = req.body as ICreateCategory;
-    const data = await categoryService.createCategory(category);
-    sendResponse(res, HTTP_STATUS.OK, { message: data.message });
+    const data = await categoryService.createCategory(category);0
+    const notification = await notificationService.createNotification({
+      message: `A new category ${data.data.name} has been created`,
+      userId: req.user.user.id,
+    });
+   
+   io.emit("notification",notification) 
+   sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);
   }
