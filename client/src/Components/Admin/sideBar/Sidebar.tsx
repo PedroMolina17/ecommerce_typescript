@@ -1,6 +1,11 @@
 import { BsArrowLeftShort } from "react-icons/bs";
 import { FaGithub, FaUser } from "react-icons/fa";
-import { FaCartShopping, FaDollarSign } from "react-icons/fa6";
+import {
+  FaCartShopping,
+  FaDollarSign,
+  FaHeadphones,
+  FaBookOpen,
+} from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategoryFilled } from "react-icons/tb";
 
@@ -24,13 +29,12 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
         } text-pretty text-[24px] bg-darkPrimary absolute -right-3 top-5   rounded-full cursor-pointer  `}
         onClick={() => setIsOpen(!isOpen)}
       />
-      <div className=" h-full w-full flex flex-col gap-1 ">
+      <div className=" h-full w-full flex flex-col gap-1">
         <div className="h-12 overflow-hidden flex items-center gap-1 mb-6">
           <h2 className=" text-lg whitespace-nowrap  text-ellipsis font-medium ">
             Bienvenido a Celeste
           </h2>
         </div>
-
         <ContainerButton
           title="Costo y presupuestos"
           name="Sales"
@@ -63,7 +67,6 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
         >
           <ButonSideBar icon={<FaCartShopping className="text-darkText" />} />
         </ContainerButton>
-
         <ContainerButton
           title="Brands"
           name="Brands"
@@ -73,12 +76,27 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           <ButonSideBar icon={<SiBrandfolder className="text-darkText" />} />
         </ContainerButton>
 
+        <div className="mt-16 flex flex-col gap-8">
+          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-36 w-48 rounded-md  text-slate-400  mx-auto">
+            <FaBookOpen className="text-3xl" />
+            <div className="flex flex-col gap-2">
+              <small>¿ Nesecitas Ayuda ?</small>
+              <small>Lee Nuestra documentacion</small>
+            </div>
+          </button>
+
+          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-28 w-48 rounded-md  text-slate-400  mx-auto">
+            <FaHeadphones className="text-3xl" />
+            <p>Soporte al Cliente</p>
+          </button>
+        </div>
+
         <a
           href="https://github.com/santiagoweb212/e_commerce"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div className="hover:bg-bgHover overflow-hidden flex items-center gap-1 cursor-pointer absolute bottom-0 h-16 w-full border-t border-gray-700 outline-none">
+          <div className="hover:bg-bgHover overflow-hidden flex items-center gap-1 cursor-pointer absolute bottom-0 h-16 w-full border-t border-gray-700 outline-none ">
             <div className="w-12">
               <ButonSideBar icon={<FaGithub className="text-2xl" />} />
             </div>

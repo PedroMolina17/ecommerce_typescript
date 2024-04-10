@@ -5,7 +5,7 @@ import Brands from "../../Components/Admin/brand/Brands";
 import Category from "../../Components/Admin/category/Category";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-
+import CreateProduct from "@/Components/Admin/Products/CreateProduct";
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
   console.log("selectNav-->", selectNav);
@@ -17,7 +17,7 @@ const Dashboard = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <ProductsTable />;
+        return <CreateProduct />;
       case "Brands":
         return <Brands />;
       case "Users":
