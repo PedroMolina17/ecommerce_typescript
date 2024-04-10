@@ -50,6 +50,11 @@ const updateCategory: fnCtrl = async (req, res, next) => {
     const { id } = req.params;
     const category = { id: Number(id), name } as IUpdateCategory;
     const data = await categoryService.updateCategory(category);
+    const notification = await notificationService.createNotification({
+      message: `The category ${data.data.name} has been updated`,
+      userId: req.user.user.id,
+    })
+    io.emit("notification",notification)
     return sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);
@@ -61,6 +66,10 @@ const deleteCategory: fnCtrl = async (req, res, next) => {
     const { id } = req.params;
     const category = { id: Number(id) } as IDeleteCategory;
     const data = await categoryService.deleteCategory(category);
+    const notification = await notificationService.createNotification({
+      message: `The category ${data.data.name} has been deleted`,
+      userId: req.user.user.id,
+    })
     sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);

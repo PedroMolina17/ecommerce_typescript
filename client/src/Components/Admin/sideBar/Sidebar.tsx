@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
         } text-pretty text-[24px] bg-darkPrimary absolute -right-3 top-5   rounded-full cursor-pointer  `}
         onClick={() => setIsOpen(!isOpen)}
       />
-      <div className=" h-full w-full flex flex-col gap-1">
+      <div className=" h-full w-full flex flex-col gap-1 ">
         <div className="h-12 overflow-hidden flex items-center gap-1 mb-6">
           <h2 className=" text-lg whitespace-nowrap  text-ellipsis font-medium ">
             Bienvenido a Celeste
