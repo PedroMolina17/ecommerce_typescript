@@ -1,5 +1,6 @@
 import { FaImage } from "react-icons/fa";
 import { useRef, useState } from "react";
+
 import { getAllCategory } from "../../../api/category";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -37,6 +38,10 @@ const CreateProduct = () => {
   const brands = brandsData?.data || [];
 
   //Leer y Mostar imagen
+=======
+
+const CreateProduct = () => {
+
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
   const handleButtonClick = () => {
@@ -51,6 +56,7 @@ const CreateProduct = () => {
     };
     reader.readAsDataURL(file);
   };
+
 
   //Enviar Datos
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
@@ -194,11 +200,14 @@ const CreateProduct = () => {
                   </button>
                 </label>
               </div>
+
             </div>
           </div>
         </div>
       </div>
+
     </form>
+
   );
 };
 

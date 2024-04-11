@@ -8,11 +8,9 @@ import {
 } from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategoryFilled } from "react-icons/tb";
-
 import ButonSideBar from "./ButonSideBar";
 import ContainerButton from "./ContainerButton";
 import { useSelectNavStore } from "./store/useSelectNav";
-import logo from "/images/logo-Celeste.png";
 
 const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
