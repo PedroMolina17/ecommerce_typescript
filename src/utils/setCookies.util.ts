@@ -5,6 +5,14 @@ interface ICookie {
     refreshToken: string
 }
 export const setCookies = (res: Response, data: ICookie):void => {
-    res.cookie(AUTH.REFRESHTOKEN, data.refreshToken);
-    res.cookie(AUTH.ACCESSTOKEN, data.accessToken);
+    res.cookie(AUTH.REFRESHTOKEN, data.refreshToken,{
+        httpOnly: true,
+        maxAge: 7 * 60 * 60 * 1000,
+        
+    });
+    res.cookie(AUTH.ACCESSTOKEN, data.accessToken,{
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000,
+        
+    });
 };
