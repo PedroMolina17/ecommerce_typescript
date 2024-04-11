@@ -27,7 +27,7 @@ export class categoryService {
       data: { name: category.name },
     });
 
-    return { message: "category created" };
+    return { message: "category created", data: newCategory };
   }
 
   static async updateCategory(category: IUpdateCategory) {    
@@ -42,16 +42,19 @@ export class categoryService {
       data: { name: category.name },
     });
     return {
+      data: updatedCategory,
       message: "category updated",
     };
   }
 
   static async deleteCategory(category: IDeleteCategory) {
     // Logic to delete a category
-    await prisma.category.delete({
+     
+    const data = await prisma.category.delete({
       where: { id: category.id },
     });
     return {
+      data,
       message: "category deleted",
     };
   }

@@ -36,8 +36,10 @@ const DashboardLayout = () => {
           <NavBar />
           <main
             className={`${
-              isOpen ? "ml-80" : "ml-12"
-            } duration-150 relative  col-span-12   mt-16 row-span-12  `}
+
+              isOpen ? "ml-80" : "ml-16"
+            } duration-150 relative col-span-12 mt-16 row-span-12`}
+
           >
             <Outlet />
           </main>

@@ -1,13 +1,12 @@
+import { PrismaClient } from "@prisma/client";
 export class NotificationsService {
-    constructor() {}
+  constructor(private readonly prisma: PrismaClient) {}
 
-    createNotification(data: {}) {
-         
-    }
+  async createNotification(data: { message: string; userId: number }) {
+    const notification = await this.prisma.notification.create({ data });
 
-    sendNotification(data: {}) {
-        
-    }
+    return notification;
+  }
 
-    
+  sendNotification() {}
 }

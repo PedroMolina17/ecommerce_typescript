@@ -9,6 +9,10 @@ import cookieParser from "cookie-parser";
 import http from "http";
 import { Server as SocketServer } from "socket.io";
 import { sendErrorResponse } from "./utils/sendErrorResponse.util";
+import cron from "node-cron";
+import { InventoryCheckerService } from "./services/admin/InventoryChecker.service";
+import { PrismaClient } from "@prisma/client";
+import { NotificationsService } from "./services/admin/notifications.service";
 export const ENV =
   process.env.NODE_ENV === "DEVELOPMENT"
     ? dotenv.config({
@@ -37,7 +41,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   sendErrorResponse(res, statusCode, message);
 });
 const server = http.createServer(app);
-const io = new SocketServer(server, {
+export const io = new SocketServer(server, {
   cors: {
     origin: "http://localhost:5173",
     credentials: true,
@@ -45,7 +49,7 @@ const io = new SocketServer(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("a user connected", socket.id);
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
@@ -54,3 +58,22 @@ io.on("connection", (socket) => {
 server.listen(ENV?.NODE_PORT, () =>
   console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );
+
+const inventoryCheckerService = new InventoryCheckerService(
+  new PrismaClient(),
+  new NotificationsService(new PrismaClient())
+);
+cron.schedule("*/1 * * * *", async () => {
+  try {
+    // Verificar el stock de los productos
+    const productos = await inventoryCheckerService.checkStockProducts();
+    if (productos.length > 0) {
+      const notification = await inventoryCheckerService.sendNotification(
+        productos
+      );
+      console.log("notificación enviada:", notification);
+    }
+  } catch (error) {
+    console.error("Error al verificar el inventario:", error);
+  }
+});
