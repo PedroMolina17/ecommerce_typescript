@@ -1,18 +1,17 @@
 import { ICreateImageProduct } from "./imageProduct.type";
 
-
 export interface IDataProduct {
- product:ICreateProduct
- image:string[]
- variantsImage:string[]
+  product: ICreateProduct;
+  image: string[];
+  productCoverImage: string[];
 }
 
-export interface IDataProductUpdate{
-  product:ICreateProduct
-  idImageOlds:number[]
-  image:string[]
+export interface IDataProductUpdate {
+  product: ICreateProduct;
+  idImageOlds: number[];
+  image: string[];
 }
-export interface ICreateProduct{
+export interface ICreateProduct {
   name: string;
   description: string;
   price: number;
@@ -23,7 +22,7 @@ export interface ICreateProduct{
   promotionDescription?: string;
   categoryId: number;
   brandId: number;
- active?:boolean
+  active?: boolean;
 }
 
 export interface IProductUpdate extends ICreateProduct {}
@@ -31,5 +30,3 @@ export interface IProductUpdate extends ICreateProduct {}
 export interface IProductDelete {
   id: number;
 }
-  
-

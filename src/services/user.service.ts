@@ -89,7 +89,7 @@ export class UserService {
 
   static async updateUserById(
     id: IdUser,
-    userData: IUpdateUserById
+    userData: IUpdateUserById,
   ): Promise<{ message: string }> {
     const existingUser = await prisma.user.findUnique({
       where: { id },
@@ -106,7 +106,7 @@ export class UserService {
         }
         return acc;
       },
-      {}
+      {},
     );
     if (filteredUserData.image && existingUser.image === null) {
       /* const { public_id, secure_url } =

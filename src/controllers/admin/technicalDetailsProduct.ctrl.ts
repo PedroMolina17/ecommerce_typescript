@@ -7,14 +7,14 @@ import { ICreateTechnicalDetailsProduct } from "../../types/technicalDetailsProd
 type fnCtrl = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 const createTechnicalDetailsProduct: fnCtrl = async (req, res, next) => {
   try {
     const technicalDetailsProduct: ICreateTechnicalDetailsProduct[] = req.body;
     const data =
       await TechnicalDetailsProductService.createTechnicalDetailsProduct(
-        technicalDetailsProduct
+        technicalDetailsProduct,
       );
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
@@ -23,10 +23,11 @@ const createTechnicalDetailsProduct: fnCtrl = async (req, res, next) => {
 };
 const getTechnicalDetailsProduct: fnCtrl = async (req, res, next) => {
   try {
-    const data = await TechnicalDetailsProductService.getTechnicalDetailsProduct();
+    const data =
+      await TechnicalDetailsProductService.getTechnicalDetailsProduct();
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
   }
-}
-export {createTechnicalDetailsProduct,getTechnicalDetailsProduct}
+};
+export { createTechnicalDetailsProduct, getTechnicalDetailsProduct };

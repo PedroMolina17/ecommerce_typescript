@@ -14,6 +14,6 @@ export const useSelectNavStore = create<ISelectNav>()(
     }),
     {
       name: "selectNav",
-    }
-  )
+    },
+  ),
 );

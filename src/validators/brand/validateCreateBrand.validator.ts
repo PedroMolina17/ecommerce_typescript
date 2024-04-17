@@ -8,7 +8,9 @@ export const validateCreateBrand = [
     .withMessage("name is required")
     .isString()
     .withMessage("name must be a string")
-    .not().isNumeric().withMessage("The name cannot be a number"),
+    .not()
+    .isNumeric()
+    .withMessage("The name cannot be a number"),
 
   (req: Request, res: Response, next: NextFunction) => {
     validateResult(req, res, next);

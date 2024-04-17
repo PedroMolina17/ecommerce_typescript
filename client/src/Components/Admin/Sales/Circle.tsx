@@ -35,7 +35,7 @@ const options: ChartOptions<"doughnut"> = {
           console.log(`Clic en la leyenda: ${legendItem.text}`);
           console.log(`Índice de la leyenda: ${legendItem.index}`);
           console.log(
-            `Estado de la leyenda: ${legendItem.hidden ? "oculto" : "visible"}`
+            `Estado de la leyenda: ${legendItem.hidden ? "oculto" : "visible"}`,
           );
           console.log(`Lista de todas las leyendas:`, legend.legendItems);
         }

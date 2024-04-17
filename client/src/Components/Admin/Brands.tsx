@@ -14,7 +14,7 @@ const Brands: React.FC = () => {
     try {
       const response = await axios.post(
         "http://localhost:3500/api/brand/create-brand",
-        data
+        data,
       );
       console.log(response);
       toast.success("Producto añadido!");

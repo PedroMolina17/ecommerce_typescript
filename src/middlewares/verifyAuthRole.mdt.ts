@@ -11,7 +11,7 @@ export const verifyAuthRole =
   (role: string[]) =>
   (req: CustomRequest, res: Response, next: NextFunction) => {
     try {
-      const user:DecodeTokenAdmin = req.user;
+      const user: DecodeTokenAdmin = req.user;
       if (!role.includes(user.user.role)) {
         throw new ClientError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
       }
