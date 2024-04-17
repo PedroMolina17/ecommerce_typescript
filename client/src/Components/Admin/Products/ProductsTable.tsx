@@ -125,7 +125,7 @@ const ProductsTable = () => {
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext()
+                    header.getContext(),
                   )}
                   {header.column.getIsSorted() !== null &&
                   header.column.getIsSorted() !== false

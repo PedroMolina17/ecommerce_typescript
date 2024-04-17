@@ -1,4 +1,4 @@
 export interface IResponse {
-    error: boolean;
-    statusCode: number;
+  error: boolean;
+  statusCode: number;
 }

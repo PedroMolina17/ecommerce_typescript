@@ -6,7 +6,7 @@ import { ProductService } from "../services/product.service";
 type fnCtrl = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 const getAllProductsPaginated: fnCtrl = async (req, res, next) => {
   try {
@@ -15,7 +15,7 @@ const getAllProductsPaginated: fnCtrl = async (req, res, next) => {
     const pageSizeNumber = Number(pageSize);
     const data = await ProductService.getAllProductsPaginated(
       pageNumber,
-      pageSizeNumber
+      pageSizeNumber,
     );
 
     sendResponse(res, HTTP_STATUS.OK, data);
@@ -28,9 +28,9 @@ const getProductById: fnCtrl = async (req, res, next) => {
     const { id } = req.params;
     const productId = Number(id);
     const data = await ProductService.getProductById(productId);
-    return sendResponse(res, HTTP_STATUS.OK, {...data});
+    return sendResponse(res, HTTP_STATUS.OK, { ...data });
   } catch (error) {
     registrationError(error, res, next);
   }
 };
-export { getAllProductsPaginated,getProductById };
+export { getAllProductsPaginated, getProductById };

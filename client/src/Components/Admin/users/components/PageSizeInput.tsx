@@ -1,16 +1,18 @@
-import { PaginationState } from '@tanstack/react-table';
-import React from 'react';
+import { PaginationState } from "@tanstack/react-table";
+import React from "react";
 interface PageSizeInputProps {
-    pagination: PaginationState
-    handlePagination: (pagination: PaginationState) => void
+  pagination: PaginationState;
+  handlePagination: (pagination: PaginationState) => void;
 }
-const PageSizeInput = ({ pagination, handlePagination }: PageSizeInputProps) => {
+const PageSizeInput = ({
+  pagination,
+  handlePagination,
+}: PageSizeInputProps) => {
   return (
     <div>
       <label htmlFor="">Rows</label>
       <input
         type="number"
-       
         value={pagination.pageSize}
         onChange={(e) =>
           handlePagination({

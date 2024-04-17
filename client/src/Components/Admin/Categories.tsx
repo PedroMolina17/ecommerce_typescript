@@ -31,7 +31,7 @@ const Categories: React.FC = () => {
       .then((response) => {
         const responseData = response.data;
         const sortedCategories = responseData.data.sort(
-          (a: Category, b: Category) => a.id - b.id
+          (a: Category, b: Category) => a.id - b.id,
         );
         setCategories(sortedCategories);
       })
@@ -42,7 +42,7 @@ const Categories: React.FC = () => {
     try {
       const response = await axios.post(
         "http://localhost:3500/api/category/create-category",
-        data
+        data,
       );
       console.log("Server response:", response.data);
       toast.success("Categoria añadida");
@@ -58,7 +58,7 @@ const Categories: React.FC = () => {
   const handleDelete = async (categoryId: number) => {
     try {
       await axios.delete(
-        `http://localhost:3500/api/category/delete-category/${categoryId}`
+        `http://localhost:3500/api/category/delete-category/${categoryId}`,
       );
       toast.success("Categoria eliminada");
       fetchCategories();

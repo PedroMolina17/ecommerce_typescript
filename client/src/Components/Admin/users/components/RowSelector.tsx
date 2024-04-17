@@ -15,13 +15,17 @@ const RowSelector = ({ handlePagination, pagination }: RowSelectorProps) => {
 
   return (
     <select
-    className="p-2 bg-white rounded-md text-blue-600"
+      className="p-2 bg-white rounded-md text-blue-600"
       onChange={(e) =>
         handlePagination({ ...pagination, pageSize: Number(e.target.value) })
       }
     >
       {options.map((option) => (
-        <option key={option.value} value={option.value} className="text-sm text-slate-600">
+        <option
+          key={option.value}
+          value={option.value}
+          className="text-sm text-slate-600"
+        >
           {option.label}
         </option>
       ))}

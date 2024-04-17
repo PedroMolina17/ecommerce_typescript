@@ -35,7 +35,7 @@ const SingUp = () => {
           userName: data.userName,
           email: data.email,
           password: data.password,
-        }
+        },
       );
 
       console.log("Registro exitoso:", response.data);

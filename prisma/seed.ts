@@ -6,7 +6,7 @@ import path from "path";
 const prisma = new PrismaClient();
 
 const usersJson = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8")
+  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8"),
 );
 
 const administradores = [
@@ -359,7 +359,7 @@ async function main() {
         cell: string;
         location: { city: string };
       },
-      index: number
+      index: number,
     ) => {
       if (user.login.password.length < 8) {
         let acc = 1;
@@ -373,7 +373,7 @@ async function main() {
         phone: user.cell,
         address: user.location.city,
       };
-    }
+    },
   );
 
   const admins = administradores.map((admin) => ({

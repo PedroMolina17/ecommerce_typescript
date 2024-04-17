@@ -9,7 +9,7 @@ export const sendErrorResponse = (
   res: Response,
   status: number = 500,
   message: string,
-  details?: string
+  details?: string,
 ) => {
   const errorResponse: IErrorResponse = {
     error: true,
