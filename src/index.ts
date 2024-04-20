@@ -71,6 +71,7 @@ cron.schedule("*/1 * * * *", async () => {
       const notification =
         await inventoryCheckerService.sendNotification(productos);
       console.log("notificación enviada:", notification);
+      io.emit("notification", notification);
     }
   } catch (error) {
     console.error("Error al verificar el inventario:", error);
