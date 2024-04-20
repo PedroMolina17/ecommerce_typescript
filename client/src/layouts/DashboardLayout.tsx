@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet } from "react-router-dom";
 
-import Footer from "../Components/Admin/Footer";
 import NavBar from "../Components/Admin/Navbar/NavBar";
 import Sidebar from "../Components/Admin/sideBar/Sidebar";
 import Loader from "../Components/Loader";
@@ -43,7 +42,6 @@ const DashboardLayout = () => {
           >
             <Outlet />
           </main>
-          <Footer isOpen={isOpen} />
         </div>
       ) : (
         <Navigate to="/admin-login" replace />

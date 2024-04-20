@@ -73,10 +73,10 @@ body {
 }
 
 .scroll {
-  width: 240px;
-  height: 200px;
+  /* width: 240px;
+  height: 200px; */
   overflow-y: scroll;
-  background-color: #f6f6f6;
+  /* background-color: #f6f6f6; */
 
   &::-webkit-scrollbar {
     background-color: transparent;

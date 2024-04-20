@@ -1,14 +1,13 @@
-import ProductsTable from "../../Components/Admin/Products/ProductsTable";
+import CreateProduct from "@/Components/Admin/Products/CreateProduct";
 import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Brands from "../../Components/Admin/brand/Brands";
 import Category from "../../Components/Admin/category/Category";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-import CreateProduct from "@/Components/Admin/Products/CreateProduct";
+
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
-  console.log("selectNav-->", selectNav);
 
   const renderContent = (value: string) => {
     switch (value) {
