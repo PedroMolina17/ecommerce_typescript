@@ -21,6 +21,7 @@ export class InventoryCheckerService {
     return await this.notificationService.createNotification({
       message: `Hay ${products.length} productos con stock bajo`,
       userId: 1,
+      typeNotification: "stock"
     });
   }
 }
