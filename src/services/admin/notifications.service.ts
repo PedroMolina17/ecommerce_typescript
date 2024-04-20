@@ -7,6 +7,9 @@ export class NotificationsService {
 
     return notification;
   }
-
+ async getNotifications() {
+   const notifications = await this.prisma.notification.findMany();
+   return notifications
+ }
   sendNotification() {}
 }
