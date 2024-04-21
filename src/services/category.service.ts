@@ -19,7 +19,7 @@ export class categoryService {
     if (categoryExists) {
       throw new ClientError(
         `already exists a category with name ${category.name}, please use another name`,
-        HTTP_STATUS.CONFLICT
+        HTTP_STATUS.CONFLICT,
       );
     }
 
@@ -30,12 +30,12 @@ export class categoryService {
     return { message: "category created", data: newCategory };
   }
 
-  static async updateCategory(category: IUpdateCategory) {    
+  static async updateCategory(category: IUpdateCategory) {
     const existsCategory = await prisma.category.findUnique({
       where: { name: category.name },
-    })
-    if(existsCategory) {
-      throw new ClientError("category already exists", HTTP_STATUS.CONFLICT)
+    });
+    if (existsCategory) {
+      throw new ClientError("category already exists", HTTP_STATUS.CONFLICT);
     }
     const updatedCategory = await prisma.category.update({
       where: { id: category.id },
@@ -49,7 +49,7 @@ export class categoryService {
 
   static async deleteCategory(category: IDeleteCategory) {
     // Logic to delete a category
-     
+
     const data = await prisma.category.delete({
       where: { id: category.id },
     });

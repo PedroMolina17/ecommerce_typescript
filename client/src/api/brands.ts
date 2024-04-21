@@ -14,7 +14,7 @@ const getAllBrands = async (): Promise<IResponseBrand> => {
   return data;
 };
 const createBrand = async (
-  data: ICreateBrand
+  data: ICreateBrand,
 ): Promise<IResponseCreateBrand> => {
   const { data: response }: AxiosResponse<IResponseCreateBrand> =
     await api.post("brand/create-brand", data);
@@ -25,7 +25,7 @@ const deleteBrand = async ({
   id,
 }: IDeletebrand): Promise<IResponseDeleteBrand> => {
   const { data }: AxiosResponse<IResponseDeleteBrand> = await api.delete(
-    `brand/delete-brand/${id}`
+    `brand/delete-brand/${id}`,
   );
   return data;
 };

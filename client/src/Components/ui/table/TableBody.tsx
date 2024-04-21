@@ -1,12 +1,12 @@
 import { flexRender } from "@tanstack/react-table";
 
 interface TableBodyProps {
-    rows: any;
-    tbodyClass?: string;
-    trClass?:string;
-    tdClass?:string
+  rows: any;
+  tbodyClass?: string;
+  trClass?: string;
+  tdClass?: string;
 }
-const TableBody = ({ rows,tbodyClass,trClass,tdClass }: TableBodyProps) => {
+const TableBody = ({ rows, tbodyClass, trClass, tdClass }: TableBodyProps) => {
   return (
     <tbody className={`${tbodyClass}`}>
       {rows().rows.map((row: any) => (

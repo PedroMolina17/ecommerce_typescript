@@ -2,13 +2,10 @@ import cloudinary from "../../configs/cloudinary.config";
 import ClientError from "../../errors/clientError.error";
 import fs from "fs-extra";
 export class CloudinaryService {
-
   constructor() {}
-  
-   async uploadImgProduct(path: string, publicId?: string) {
-    const options = publicId
-      ? { public_id: publicId }
-      : { folder: "products" };
+
+  async uploadImgProduct(path: string, publicId?: string) {
+    const options = publicId ? { public_id: publicId } : { folder: "products" };
     try {
       const result = await cloudinary.uploader.upload(path, {
         ...options,
@@ -21,11 +18,11 @@ export class CloudinaryService {
     } catch (error) {
       console.log(error);
       fs.unlink(path);
-      throw error
+      throw error;
     }
   }
 
-   async uploadImage(pathToFile: string, publicId?: string) {
+  async uploadImage(pathToFile: string, publicId?: string) {
     const options = publicId
       ? { public_id: publicId }
       : { folder: "profile-picture" };
@@ -41,7 +38,7 @@ export class CloudinaryService {
     } catch (error) {
       console.log(error);
       fs.unlink(pathToFile);
-      throw error
+      throw error;
     }
   }
 
@@ -49,7 +46,7 @@ export class CloudinaryService {
     try {
       const result = await cloudinary.api.delete_resources([publicId]);
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

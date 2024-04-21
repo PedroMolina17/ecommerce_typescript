@@ -6,7 +6,7 @@ import { MdLightMode } from "react-icons/md";
 interface NavBarProps {}
 
 const NavBar: React.FC<NavBarProps> = () => {
-  // const [socket, setSocket] = useState<Socket | null>(null);
+  const [notification, setNotification] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
@@ -24,15 +24,22 @@ const NavBar: React.FC<NavBarProps> = () => {
       console.log("Message:", data);
     });
 
-    socket.on("disconnect", () => {
-      console.log("Closed connection.");
+    socket.on("notification", (data) => {
+      setNotification(data);
     });
+
+    // socket.on("disconnect", () => {
+    //   console.log("Closed connection.");
+    // });
   }, []);
 
   return (
     <nav className="text-4xl bg-dark-secondary fixed h-16 z-30 top-0 right-0 left-0 border-b border-gray-700 text-white flex items-center justify-end pr-10 space-x-4">
       <MdLightMode onClick={toggleDarkMode} />
-      <Notifications />
+      <Notifications
+        notification={notification}
+        setNotification={setNotification}
+      />
       <Settings />
       <UserProfile />
     </nav>

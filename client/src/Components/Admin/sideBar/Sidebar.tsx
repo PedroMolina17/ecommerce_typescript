@@ -1,10 +1,10 @@
 import { BsArrowLeftShort } from "react-icons/bs";
-import { FaGithub, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import {
+  FaBookOpen,
   FaCartShopping,
   FaDollarSign,
   FaHeadphones,
-  FaBookOpen,
 } from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategoryFilled } from "react-icons/tb";
@@ -12,7 +12,6 @@ import { TbCategoryFilled } from "react-icons/tb";
 import ButonSideBar from "./ButonSideBar";
 import ContainerButton from "./ContainerButton";
 import { useSelectNavStore } from "./store/useSelectNav";
-import logo from "/images/logo-Celeste.png";
 
 const Sidebar = ({ isOpen, setIsOpen }: any) => {
   const { setSelectNav } = useSelectNavStore((state) => state);
@@ -91,20 +90,20 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
           </button>
         </div>
 
-        <a
-          href="https://github.com/santiagoweb212/e_commerce"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div className="hover:bg-bgHover overflow-hidden flex items-center gap-1 cursor-pointer absolute bottom-0 h-16 w-full border-t border-gray-700 outline-none ">
-            <div className="w-12">
-              <ButonSideBar icon={<FaGithub className="text-2xl" />} />
+        <div className="mt-16 flex flex-col gap-8">
+          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-36 w-48 rounded-md  text-slate-400  mx-auto">
+            <FaBookOpen className="text-3xl" />
+            <div className="flex flex-col gap-2">
+              <small>¿ Nesecitas Ayuda ?</small>
+              <small>Lee Nuestra documentacion</small>
             </div>
-            <h2 className={`${!isOpen && "hidden"} text-sm truncate`}>
-              Repository
-            </h2>
-          </div>
-        </a>
+          </button>
+
+          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-28 w-48 rounded-md  text-slate-400  mx-auto">
+            <FaHeadphones className="text-3xl" />
+            <p>Soporte al Cliente</p>
+          </button>
+        </div>
       </div>
     </aside>
   );

@@ -1,2 +1,2 @@
-export type IdUser = number 
-export type EmailUser= string
+export type IdUser = number;
+export type EmailUser = string;

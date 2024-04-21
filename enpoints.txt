@@ -26,3 +26,6 @@ http://localhost:3500/api/product/:id //producto por id
  
 users
 http://localhost:3500/api/user/users/:name?page=2&pageSize=10 //obtener usaurios por nombre
+
+notifications
+http://localhost:3500/api/notification  //obtener toda las notifications
