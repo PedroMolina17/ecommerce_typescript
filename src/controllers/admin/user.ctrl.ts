@@ -6,7 +6,7 @@ import registrationError from "../../utils/registrationError.util";
 type fnCtrl = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 
 const getAllUsers: fnCtrl = async (req, res, next) => {
@@ -14,7 +14,7 @@ const getAllUsers: fnCtrl = async (req, res, next) => {
     const { page = 1, pageSize = 10 } = req.query;
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
-    console.log(req.cookies)
+    console.log(req.cookies);
     const data = await UserService.getAllUsers(pageNumber, pageSizeNumber);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
@@ -43,6 +43,7 @@ const updateUserById: fnCtrl = async (req, res, netx) => {
   try {
     const { id } = req.params;
     const user = req.body;
+    console.log(user);
     const idUser = Number(id);
     const data = await UserService.updateUserById(idUser, user);
     sendResponse(res, HTTP_STATUS.OK, data);

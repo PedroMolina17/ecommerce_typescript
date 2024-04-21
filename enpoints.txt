@@ -1,3 +1,9 @@
+auth
+http://localhost:3500/api/auth/login-admin
+http://localhost:3500/api/auth/register-admin
+http://localhost:3500/api/auth/login
+http://localhost:3500/api/auth/register
+
 http://localhost:3500/api/brand/brands  //obtener brands methodo get
 http://localhost:3500/api/brand/delete-brand/:id
 http://localhost:3500/api/brand/update-brand/:id
@@ -16,6 +22,10 @@ http://localhost:3500/api/product/create-product
 http://localhost:3500/api/product/update-product/:id
 http://localhost:3500/api/product/delete-product/:id
 http://localhost:3500/api/product/products?page&pageSize //lista de productos
-
+http://localhost:3500/api/product/:id //producto por id 
+ 
 users
 http://localhost:3500/api/user/users/:name?page=2&pageSize=10 //obtener usaurios por nombre
+
+notifications
+http://localhost:3500/api/notification  //obtener toda las notifications

@@ -52,7 +52,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
     const obtenerCategorias = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3500/api/category/categories"
+          "http://localhost:3500/api/category/categories",
         );
         console.log(response);
 
@@ -64,7 +64,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
         } else {
           console.error(
             "La respuesta del servidor no es un array:",
-            response.data
+            response.data,
           );
         }
       } catch (error) {
@@ -76,7 +76,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
     const obtenerMarcas = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3500/api/brand/brands"
+          "http://localhost:3500/api/brand/brands",
         );
 
         if (response.data && Array.isArray(response.data.data)) {
@@ -87,7 +87,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
         } else {
           console.error(
             "La respuesta del servidor no es un array:",
-            response.data
+            response.data,
           );
         }
       } catch (error) {
@@ -109,12 +109,12 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
       "name" in data.image
         ? (data.image as File).name
         : typeof data.image === "string"
-        ? data.image
-        : null;
+          ? data.image
+          : null;
     try {
       const response = await axios.post(
         "http://localhost:3500/api/product/create-product",
-        data
+        data,
       );
 
       console.log("Respuesta del servidor:", response.data);

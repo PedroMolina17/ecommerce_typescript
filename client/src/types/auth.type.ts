@@ -7,10 +7,6 @@ export interface ILogin {
 }
 export interface IResponseAuth extends IResponse {
   authenticate: boolean;
-  user: IAuth;
-}
-
-export interface IAuth {
   user: IUser;
   iat: number;
   exp: number;
@@ -19,6 +15,7 @@ export interface IAuth {
 export interface IUser {
   id: number;
   role: string;
+  image: string;
 }
 
 export interface IAuthError extends IResponse {

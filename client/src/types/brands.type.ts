@@ -15,10 +15,9 @@ export interface IResponseCreateBrand extends IResponse {
   message: string;
 }
 
-export interface IDeletebrand{
-  id: number
-} 
+export interface IDeletebrand {
+  id: number;
+}
 export interface IResponseDeleteBrand extends IResponse {
   message: string;
 }
-

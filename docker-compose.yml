@@ -4,7 +4,7 @@ services:
     image: mysql:oracle
     ports:
       - 3307:3306
-    environment: 
+    environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=ecommerce
   app:

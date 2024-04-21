@@ -1,41 +1,53 @@
 import { Response, Request, NextFunction } from "express";
 import {
-  IProductCreate,
+  ICreateProduct,
+  IDataProduct,
+  IDataProductUpdate,
   IProductDelete,
   IProductUpdate,
 } from "../../types/product.type";
-import { ProductsService } from "../../services/products.service";
+import { ProductService } from "../../services/admin/products.service";
 import registrationError from "../../utils/registrationError.util";
 import { sendResponse } from "../../utils/sendResponse.util";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
+import { CloudinaryService } from "../../services/cloudinary/cloudinary.service";
+import { PrismaClient } from "@prisma/client";
+import { processFiles } from "../../utils/processFIles.util";
+import { parseProduct } from "../../utils/parseProduct.util";
+import { NotificationsService } from "../../services/admin/notifications.service";
 
-const getProducts = async (req: Request, res: Response, next: NextFunction) => {
-  // Logic to get all products
-};
+const prisma = new PrismaClient();
+const cloudinaryService = new CloudinaryService();
+const notificationService = new NotificationsService(prisma);
+const productService = new ProductService(
+  cloudinaryService,
+  prisma,
+  notificationService,
+);
 
-const getProductById = async (
+const getProducts = async (
   req: Request,
   res: Response,
-  next: NextFunction
-) => {
-  // Logic to get a product by ID
-};
+  next: NextFunction,
+) => {};
 
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const product = req.body;
-    product.brandId = Number(product.brandId);
-    product.categoryId = Number(product.categoryId);
-    product.stock = Number(product.stock);
-    product.price = Number(product.price);
-    product.status = product.status === "true" ? true : false;
-    product.promotion = product.promotion === "true" ? true : false;
-    product.promotionPrice = Number(product.promotionPrice);
-    const data = await ProductsService.createProduct(product);
+    const productRequest = req.body;
+    const productParse = parseProduct(productRequest);
+    const files = processFiles(req.files);
+    console.log({ productRequest, productParse, files });
+    const product = {
+      product: { ...productParse },
+      ...files,
+    };
+
+    const data = await productService.createProduct(product);
+
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
@@ -45,13 +57,30 @@ const createProduct = async (
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const {id}=req.params
-    const product = req.body as IProductUpdate;
-    product.id = Number(id);
-    const data = await ProductsService.updateProduct(product);
+    const { product, idImageOlds } = req.body;
+    const files = req.files as {
+      image: Express.Multer.File[];
+    };
+
+    const productParse = parseProduct(JSON.parse(product));
+    const pathImages: Omit<IDataProductUpdate, "product" | "idImageOlds"> =
+      processFiles(files);
+
+    const dataproduct = {
+      product: productParse,
+      idImageOlds: JSON.parse(idImageOlds).map((id: string) => Number(id)),
+      image: pathImages.image,
+    };
+    const { productId } = req.params;
+    const productIdNumber = Number(productId);
+
+    const data = await productService.updateProduct(
+      dataproduct,
+      productIdNumber,
+    );
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
@@ -61,21 +90,16 @@ const updateProduct = async (
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const product = req.body as IProductDelete;
-    const data = await ProductsService.deleteProduct(product);
+    const { id } = req.params;
+    const productId = Number(id);
+    const data = await productService.deleteProduct(productId);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
   }
 };
 
-export {
-  getProducts,
-  getProductById,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-};
+export { createProduct, updateProduct, deleteProduct };

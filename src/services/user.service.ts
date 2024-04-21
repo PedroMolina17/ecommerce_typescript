@@ -3,10 +3,16 @@ import { IUpdateUserById, IUserByNamePaginate } from "../types/user.type";
 import { EmailUser, IdUser } from "../types/types";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
-const prisma = new PrismaClient();
+import { CloudinaryService } from "./cloudinary/cloudinary.service";
+// import fs from "fs-extra";
+// import { optimizeImage } from "../utils/optimizeImage.util";
+
 interface UserData {
   [key: string]: any; // Define the index signature for acc
 }
+
+const prisma = new PrismaClient();
+
 export class UserService {
   static async createUser() {}
   static async updateUser() {}
@@ -54,19 +60,19 @@ export class UserService {
     return user;
   }
 
-  static async getUserByEmail(email: EmailUser) {
-    const user = await prisma.user.findUnique({
+  static async getAdminById(id: IdUser) {
+    const user = await prisma.admin.findUnique({
       where: {
-        email,
+        id,
       },
     });
     return user;
   }
 
-  static async getUserByRole(role: any) {
-    const user = await prisma.user.findMany({
+  static async getUserByEmail(email: EmailUser) {
+    const user = await prisma.user.findUnique({
       where: {
-        role,
+        email,
       },
     });
     return user;
@@ -83,37 +89,54 @@ export class UserService {
 
   static async updateUserById(
     id: IdUser,
-    userData: IUpdateUserById
+    userData: IUpdateUserById,
   ): Promise<{ message: string }> {
     const existingUser = await prisma.user.findUnique({
       where: { id },
     });
-  
+
     if (!existingUser) {
       throw new ClientError("user not found", HTTP_STATUS.NOT_FOUND);
     }
-  
-   
-    const filteredUserData = Object.entries(userData).reduce((acc:UserData, [key, value]) => {
-      if (value !== undefined && value !== "" && value !== null) { 
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
 
-
+    const filteredUserData = Object.entries(userData).reduce(
+      (acc: UserData, [key, value]) => {
+        if (value !== undefined && value !== "" && value !== null) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {},
+    );
+    if (filteredUserData.image && existingUser.image === null) {
+      /* const { public_id, secure_url } =
+        await CloudinaryService.uploadImage(
+          filteredUserData.image,
+          undefined
+        );
+      filteredUserData.image = secure_url;
+      filteredUserData.publicIdImage = public_id; */
+      console.log("----->>>>> image no existe");
+    }
+    if (filteredUserData.image && existingUser.image !== null) {
+      /* const { secure_url, public_id } =
+        await CloudinaryService.uploadImage(
+          filteredUserData.image,
+          existingUser.publicIdImage!
+        );
+      filteredUserData.image = secure_url;
+      filteredUserData.publicIdImage = public_id; */
+      console.log("----->>>>> image existe");
+    }
     const updatedUser = await prisma.user.update({
       where: { id },
       data: filteredUserData,
     });
-  
+
     return {
       message: `user updated successfully`,
     };
   }
-  
-    
-  
 
   static async getUserByName(data: IUserByNamePaginate) {
     const searchTerm = data.userName.toLowerCase(); // Ensure case-insensitive search

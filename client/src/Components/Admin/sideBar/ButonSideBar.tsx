@@ -1,15 +1,15 @@
 interface ButonSideBarProps {
-    name?: string;
-    icon?: any;
-    onClick?: () => void;
-    children?: React.ReactNode;
+  icon: any;
 }
-const ButonSideBar = ({icon,onClick}:ButonSideBarProps) => {
-  
+
+const ButonSideBar = ({ icon }: ButonSideBarProps) => {
   return (
-    <button onClick={onClick}  className={` w-12 cursor-pointer  rounded-md h-12 flex justify-center items-center `}>
+    <div
+      className={`w-16 cursor-pointer rounded-md h-16 flex justify-center items-center`}
+    >
       {icon}
-    </button>
+    </div>
   );
 };
+
 export default ButonSideBar;

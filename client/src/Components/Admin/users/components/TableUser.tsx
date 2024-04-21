@@ -9,10 +9,12 @@ import TableHeader from "../../../ui/table/TableHeader";
 
 import ButtonsActionTable from "./ButtonsActionTable";
 import { queryClient } from "../../../../main";
+import { formatDate } from "../../../../utils/fomatDate";
 
 interface TableUserProps {
   data: Users;
 }
+
 const TableUser = ({ data }: TableUserProps) => {
   const notify = (message: string) => toast(message);
 
@@ -24,6 +26,7 @@ const TableUser = ({ data }: TableUserProps) => {
       queryClient.refetchQueries({ queryKey: ["users"] });
     },
   });
+
   const columns: TableColumn[] = [
     {
       accessorKey: "id",
@@ -32,29 +35,24 @@ const TableUser = ({ data }: TableUserProps) => {
     {
       accessorKey: "userName",
       header: "NAME",
+      cell: ({ cell }: any) => {
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={cell.row.original.image}
+              className="w-10 h-10 rounded-full"
+              alt="img-user"
+            />{" "}
+            <span>{cell.getValue()}</span>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "email",
       header: "EMAIL",
     },
 
-    {
-      accessorKey: "googleId",
-      header: "GOOGLE ID",
-      cell: ({ cell }: any) => (
-        <span>
-          {!cell.getValue() ? (
-            <span className="text-red-400">SIN ESPECIFICAR</span>
-          ) : (
-            cell.getValue()
-          )}
-        </span>
-      ),
-    },
-    {
-      accessorKey: "role",
-      header: "ROLE",
-    },
     {
       accessorKey: "phone",
       header: "PHONE",
@@ -82,6 +80,13 @@ const TableUser = ({ data }: TableUserProps) => {
       ),
     },
     {
+      accessorKey: "createAt",
+      header: "CREATED AT",
+      cell: (cell: any) => {
+        return <span>{formatDate(cell.getValue())}</span>;
+      },
+    },
+    {
       accessorKey: "action",
       header: "ACTION",
       cell: ({ cell }: any) => (
@@ -89,23 +94,24 @@ const TableUser = ({ data }: TableUserProps) => {
       ),
     },
   ];
+
   return (
     <>
       <Table
-        tableClass="w-full rounded-md "
+        tableClass="w-full rounded-md"
         columns={columns}
         data={data.results}
         render={({ table }) => (
           <>
             <TableHeader
               headers={table.getHeaderGroups}
-              theadClass="w-full sticky top-[108px] bg-bg   before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs "
-              thClass="py-4 px-2 "
+              theadClass="w-full sticky top-[108px] bg-bg before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs"
+              thClass="py-4 px-2"
               trClass=""
             />
             <TableBody
               rows={table.getRowModel}
-              tbodyClass="table-body  text-gray-500 text-sm "
+              tbodyClass="table-body text-gray-500 text-sm"
               tdClass="py-4 px-2"
             />
           </>

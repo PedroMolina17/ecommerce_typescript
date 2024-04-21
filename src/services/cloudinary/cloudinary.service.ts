@@ -1,22 +1,52 @@
 import cloudinary from "../../configs/cloudinary.config";
 import ClientError from "../../errors/clientError.error";
-
+import fs from "fs-extra";
 export class CloudinaryService {
-    static async uploadImg(path: string, publicId?: string) {
-        
+  constructor() {}
 
-        if (!path) throw new ClientError("path is required", 400);
+  async uploadImgProduct(path: string, publicId?: string) {
+    const options = publicId ? { public_id: publicId } : { folder: "products" };
+    try {
+      const result = await cloudinary.uploader.upload(path, {
+        ...options,
+      });
+      fs.unlink(path);
+      return {
+        secure_url: result.secure_url,
+        public_id: result.public_id,
+      };
+    } catch (error) {
+      console.log(error);
+      fs.unlink(path);
+      throw error;
+    }
+  }
 
-        const result = await cloudinary.uploader.upload(
-            path,
-            {
-                public_id: publicId && publicId,
-            },
-            function (error, result) {
-                console.log(result);
-            },
-        );
+  async uploadImage(pathToFile: string, publicId?: string) {
+    const options = publicId
+      ? { public_id: publicId }
+      : { folder: "profile-picture" };
+    try {
+      const result = await cloudinary.uploader.upload(pathToFile, {
+        ...options,
+      });
+      fs.unlink(pathToFile);
+      return {
+        secure_url: result.secure_url,
+        public_id: result.public_id,
+      };
+    } catch (error) {
+      console.log(error);
+      fs.unlink(pathToFile);
+      throw error;
+    }
+  }
 
-        return result;
-    };
+  async deleteImg(publicId: string) {
+    try {
+      const result = await cloudinary.api.delete_resources([publicId]);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
