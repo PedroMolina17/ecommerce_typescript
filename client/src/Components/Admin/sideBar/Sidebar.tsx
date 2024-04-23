@@ -20,7 +20,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-80" : "w-12"
-      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   left-0 top-0  min-h-screen  py-8 pl-4 font-bold`}
+      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   l min-h-screen  py-8 pl-4 font-bold`}
     >
       <BsArrowLeftShort
         className={`${
@@ -74,21 +74,6 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
         >
           <ButonSideBar icon={<SiBrandfolder className="text-darkText" />} />
         </ContainerButton>
-
-        <div className="mt-16 flex flex-col gap-8">
-          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-36 w-48 rounded-md  text-slate-400  mx-auto">
-            <FaBookOpen className="text-3xl" />
-            <div className="flex flex-col gap-2">
-              <small>¿ Nesecitas Ayuda ?</small>
-              <small>Lee Nuestra documentacion</small>
-            </div>
-          </button>
-
-          <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-28 w-48 rounded-md  text-slate-400  mx-auto">
-            <FaHeadphones className="text-3xl" />
-            <p>Soporte al Cliente</p>
-          </button>
-        </div>
 
         <div className="mt-16 flex flex-col gap-8">
           <button className=" bg-darkPrimary p-4  flex flex-col  gap-4 justify-center items-center border border-slate-400 h-36 w-48 rounded-md  text-slate-400  mx-auto">
