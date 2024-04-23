@@ -13,17 +13,7 @@ import {
   IResponseCreateProduct,
   IcreateProduct,
 } from "../../../types/products.type";
-import { createProduct } from "../../../api/products";
-import { getAllBrands } from "../../../api/brands";
 
-import { useOpenFormStoreProduct } from "./store/ActionStore";
-import { getAllCategory } from "../../../api/category";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  IResponseCreateProduct,
-  IcreateProduct,
-} from "../../../types/products.type";
 import { createProduct } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 
@@ -72,6 +62,7 @@ const CreateProduct = () => {
   //Leer y Mostar imagen
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
