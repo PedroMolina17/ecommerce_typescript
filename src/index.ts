@@ -68,6 +68,7 @@ cron.schedule("*/1 * * * *", async () => {
     // Verificar el stock de los productos
     const productos = await inventoryCheckerService.checkStockProducts();
     if (productos.length > 0) {
+      console.log(productos.length, "productos con stock bajo");
       const notification =
         await inventoryCheckerService.sendNotification(productos);
       console.log("notificación enviada:", notification);

@@ -31,4 +31,13 @@ const notificationService = new NotificationsService(new PrismaClient());
         registrationError(error, res, next);
     }
  }
-export {getNotifications, markNotificationReadById}
+
+ const markAllNotificationRead: fnCtrl = async (req, res, next) => {
+     try {
+         const data = await notificationService.markAllNotificationRead();
+         sendResponse(res, HTTP_STATUS.OK, data);
+     } catch (error) {
+         registrationError(error, res, next);
+     }
+ }
+export {getNotifications, markNotificationReadById,markAllNotificationRead}
