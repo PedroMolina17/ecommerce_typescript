@@ -1,4 +1,4 @@
-import CreateProduct from "@/Components/Admin/Products/CreateProduct";
+import Product from "../../Components/Admin/Products/Product";
 import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Brands from "../../Components/Admin/brand/Brands";
@@ -15,7 +15,7 @@ const Dashboard = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <CreateProduct />;
+        return <Product />;
       case "Brands":
         return <Brands />;
       case "Users":
