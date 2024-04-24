@@ -14,30 +14,26 @@ import { verifyJwt } from "../middlewares/verifyJwt.mdl";
 import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { ROLE } from "../constants/roleUser.constants";
 const router = Router();
-router.get(
-  "/categories",
-  verifyJwt,
-  getCategories
-);
+router.get("/categories", verifyJwt, getCategories);
 router.post(
   "/create-category",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateCreateCategory,
-  createCategory
+  createCategory,
 );
 router.put(
   "/update-category/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateUpdateCategory,
-  updateCategory
+  updateCategory,
 );
 router.delete(
   "/delete-category/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateDeleteCategory,
-  deleteCategory
+  deleteCategory,
 );
 export default router;

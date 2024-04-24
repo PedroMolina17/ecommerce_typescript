@@ -12,13 +12,13 @@ import {
 
 const getAllCategory = async (): Promise<IResponseCategory> => {
   const { data }: AxiosResponse<IResponseCategory> = await api.get(
-    "category/categories"
+    "category/categories",
   );
   return data;
 };
 
 const createCategory = async (
-  data: IcreateCategory
+  data: IcreateCategory,
 ): Promise<IResponseCreateCategory> => {
   const { data: response }: AxiosResponse<IResponseCreateCategory> =
     await api.post("category/create-category", data);
@@ -27,18 +27,18 @@ const createCategory = async (
 
 const deleteCategory = async (id: number): Promise<IResponseDeleteCategory> => {
   const { data }: AxiosResponse<IResponseDeleteCategory> = await api.delete(
-    `category/delete-category/${id}`
+    `category/delete-category/${id}`,
   );
   return data;
 };
 
 const updateCategory = async (
   id: number,
-  cateData: IUpdateCategory
+  cateData: IUpdateCategory,
 ): Promise<ResponseUpdateCategory> => {
   const { data }: AxiosResponse<ResponseUpdateCategory> = await api.put(
     `category/update-category/${id}`,
-    cateData
+    cateData,
   );
   return data;
 };

@@ -8,17 +8,20 @@ import { CustomRequest } from "./verifyAuthRole.mdt";
 export const verifyJwt = (
   req: CustomRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const {accessToken,refreshToken} = req.cookies
-   
+    const { accessToken, refreshToken } = req.cookies;
+
     console.log(accessToken);
     if (!accessToken || !refreshToken) {
       console.error("no existe token o refresh");
       throw new ClientError("unauthorized", HTTP_STATUS.UNAUTHORIZED);
     }
-    const decodedToken = Jwt.verify(accessToken, process.env.ACCESS_SECRET_TOKEN!);
+    const decodedToken = Jwt.verify(
+      accessToken,
+      process.env.ACCESS_SECRET_TOKEN!,
+    );
     req.user = decodedToken;
     console.log("req--->", decodedToken);
     next();

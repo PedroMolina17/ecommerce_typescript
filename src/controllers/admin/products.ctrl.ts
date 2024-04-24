@@ -18,22 +18,29 @@ import { NotificationsService } from "../../services/admin/notifications.service
 
 const prisma = new PrismaClient();
 const cloudinaryService = new CloudinaryService();
-const notificationService = new NotificationsService(prisma)
-const productService = new ProductService(cloudinaryService, prisma, notificationService);
+const notificationService = new NotificationsService(prisma);
+const productService = new ProductService(
+  cloudinaryService,
+  prisma,
+  notificationService,
+);
 
-const getProducts = async (req: Request, res: Response, next: NextFunction) => {
-  
-};
+const getProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {};
 
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const productRequest = req.body;
-    const productParse = parseProduct(productRequest);   
+    const productParse = parseProduct(productRequest);
     const files = processFiles(req.files);
+    console.log({ productRequest, productParse, files });
     const product = {
       product: { ...productParse },
       ...files,
@@ -41,7 +48,6 @@ const createProduct = async (
 
     const data = await productService.createProduct(product);
 
-    console.log("productAndFiles--->", product);
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
     registrationError(error, res, next);
@@ -51,18 +57,18 @@ const createProduct = async (
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { product, idImageOlds } = req.body;
     const files = req.files as {
       image: Express.Multer.File[];
     };
-    console.log("product-->>product-->",product)
-    const productParse= parseProduct(JSON.parse(product));
+
+    const productParse = parseProduct(JSON.parse(product));
     const pathImages: Omit<IDataProductUpdate, "product" | "idImageOlds"> =
       processFiles(files);
-     
+
     const dataproduct = {
       product: productParse,
       idImageOlds: JSON.parse(idImageOlds).map((id: string) => Number(id)),
@@ -70,10 +76,10 @@ const updateProduct = async (
     };
     const { productId } = req.params;
     const productIdNumber = Number(productId);
-    console.log("productAndFiles--->", dataproduct);
+
     const data = await productService.updateProduct(
       dataproduct,
-      productIdNumber,      
+      productIdNumber,
     );
     sendResponse(res, HTTP_STATUS.OK, data);
   } catch (error) {
@@ -84,7 +90,7 @@ const updateProduct = async (
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { id } = req.params;

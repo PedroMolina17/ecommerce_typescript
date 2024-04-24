@@ -74,6 +74,8 @@ model Products {
   brand                   Brand                     @relation(fields: [brandId], references: [id])
   technicalDetailsProduct TechnicalDetailsProduct[]
   ImageProduct            ImageProduct[]
+
+  ProductCoverImage ProductCoverImage?
 }
 
 model ImageProduct {
@@ -82,6 +84,15 @@ model ImageProduct {
   imageProduct  String
   publicIdImage String?
   createAt      DateTime @default(now())
+  product       Products @relation(fields: [productId], references: [id])
+}
+
+model ProductCoverImage {
+  id            Int       @id @default(autoincrement())
+  productId     Int @unique
+  imageProduct  String
+  publicIdImage String?
+  createAt      DateTime  @default(now())
   product       Products @relation(fields: [productId], references: [id])
 }
 

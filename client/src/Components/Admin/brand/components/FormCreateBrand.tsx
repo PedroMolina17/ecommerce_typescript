@@ -1,15 +1,18 @@
-import Input from "../../../ui/Input";
-import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { MySwal } from "../../users/components/ButtonsActionTable";
-import { queryClient } from "../../../../main";
+import { useForm } from "react-hook-form";
+
+import { queryClient } from "@/main";
+import Input from "@ui/Input";
+import { createBrand } from "../../../../api/brands";
+import { IResponseCreateBrand } from "../../../../types/brands.type";
 import ButtonClose from "../../../ui/ButtonClose";
 import { useOpenFormStoreCategory } from "../../category/store/useOpenForm.store";
-import { IResponseCreateBrand } from "../../../../types/brands.type";
-import { createBrand } from "../../../../api/brands";
+import { MySwal } from "../../users/components/ButtonsActionTable";
+
 interface FormValues {
   name: string;
 }
+
 const FormCreateBrand = () => {
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
   const { register, handleSubmit } = useForm<FormValues>({
@@ -17,6 +20,7 @@ const FormCreateBrand = () => {
       name: "",
     },
   });
+
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => await createBrand(data),
     onSuccess: (data: IResponseCreateBrand) => {
@@ -30,6 +34,7 @@ const FormCreateBrand = () => {
       queryClient.refetchQueries({ queryKey: ["brands"] });
     },
   });
+
   const onSubmit = handleSubmit((data: FormValues) => {
     mutation.mutate(data);
   });
@@ -72,4 +77,5 @@ const FormCreateBrand = () => {
     </div>
   );
 };
+
 export default FormCreateBrand;

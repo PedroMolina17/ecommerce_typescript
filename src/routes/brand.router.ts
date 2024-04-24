@@ -14,30 +14,26 @@ import { verifyJwt } from "../middlewares/verifyJwt.mdl";
 import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { ROLE } from "../constants/roleUser.constants";
 const router = Router();
-router.get(
-  "/brands",
-  verifyJwt,
-  getBrands
-);
+router.get("/brands", verifyJwt, getBrands);
 router.post(
   "/create-brand",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateCreateBrand,
-  createBrand
+  createBrand,
 );
 router.put(
   "/update-brand/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateUpdateBrand,
-  updateBrand
+  updateBrand,
 );
 router.delete(
   "/delete-brand/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
   validateDeleteBrand,
-  deleteBrand
+  deleteBrand,
 );
 export default router;

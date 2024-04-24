@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export class TechnicalDetailsProductService {
   static async createTechnicalDetailsProduct(
-    technicalDetailsProduct: ICreateTechnicalDetailsProduct[]
+    technicalDetailsProduct: ICreateTechnicalDetailsProduct[],
   ) {
     const existingDetails = await prisma.technicalDetailsProduct.findMany({
       where: {
@@ -16,7 +16,7 @@ export class TechnicalDetailsProductService {
 
     const existingDetailNames = existingDetails.map((detail) => detail.name);
     const newDetailsToCreate = technicalDetailsProduct.filter(
-      (detail) => !existingDetailNames.includes(detail.name)
+      (detail) => !existingDetailNames.includes(detail.name),
     );
 
     const createdDetails = await prisma.technicalDetailsProduct.createMany({

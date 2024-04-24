@@ -32,7 +32,7 @@ const Brand = () => {
     filterData &&
     filterData.slice(
       (pagination.pageIndex - 1) * 10,
-      pagination.pageIndex * 10
+      pagination.pageIndex * 10,
     );
 
   return (

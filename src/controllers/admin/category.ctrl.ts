@@ -17,7 +17,7 @@ import { CustomRequest } from "../../middlewares/verifyAuthRole.mdt";
 type fnCtrl = (
   req: CustomRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 const notificationService = new NotificationsService(new PrismaClient());
 const getCategories: fnCtrl = async (req, res, next) => {
@@ -31,14 +31,15 @@ const getCategoryById: fnCtrl = async (req, res, next) => {
 const createCategory: fnCtrl = async (req, res, next) => {
   try {
     const category = req.body as ICreateCategory;
-    const data = await categoryService.createCategory(category);0
+    const data = await categoryService.createCategory(category);
+    0;
     const notification = await notificationService.createNotification({
       message: `A new category ${data.data.name} has been created`,
       userId: req.user.user.id,
     });
-   
-   io.emit("notification",notification) 
-   sendResponse(res, HTTP_STATUS.OK, { message: data.message });
+
+    io.emit("notification", notification);
+    sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);
   }
@@ -53,8 +54,8 @@ const updateCategory: fnCtrl = async (req, res, next) => {
     const notification = await notificationService.createNotification({
       message: `The category ${data.data.name} has been updated`,
       userId: req.user.user.id,
-    })
-    io.emit("notification",notification)
+    });
+    io.emit("notification", notification);
     return sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);
@@ -69,7 +70,7 @@ const deleteCategory: fnCtrl = async (req, res, next) => {
     const notification = await notificationService.createNotification({
       message: `The category ${data.data.name} has been deleted`,
       userId: req.user.user.id,
-    })
+    });
     sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);

@@ -35,8 +35,8 @@ export interface IUserByNamePaginate {
 }
 export interface IUpdateUserById {
   userName: string;
-  image?: File;  
-  address?: string ;
+  image?: File;
+  address?: string;
   phone?: string;
 }
 export interface ResponseUpdateUser {

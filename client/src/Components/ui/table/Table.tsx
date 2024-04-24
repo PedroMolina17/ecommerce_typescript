@@ -13,25 +13,13 @@ interface TableUserProps extends HTMLAttributes<HTMLTableElement> {
   render: ({ table }: any) => React.ReactNode;
   children?: ReactNode;
 }
-const Table = ({
-  columns,
-  data,
-  render,
-  tableClass,
-}: TableUserProps) => {
+const Table = ({ columns, data, render, tableClass }: TableUserProps) => {
   const table = useReactTable({
     data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
-   
-   
   });
-  return (
-    <table className={`${tableClass}`}>
-      {render({ table })}
-           
-    </table>
-  );
+  return <table className={`${tableClass}`}>{render({ table })}</table>;
 };
 
 export default Table;

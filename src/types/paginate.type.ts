@@ -1,4 +1,4 @@
 export interface IPaginate {
-    page: number;
-    pageSize: number;
+  page: number;
+  pageSize: number;
 }

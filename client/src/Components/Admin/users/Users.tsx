@@ -27,7 +27,7 @@ const Users = () => {
         return await getUserByName(
           pagination.pageIndex,
           pagination.pageSize,
-          watchSearch
+          watchSearch,
         );
       }
       if (watchSearch === "") {

@@ -43,7 +43,6 @@ const DashboardLayout = () => {
           >
             <Outlet />
           </main>
-          <Footer isOpen={isOpen} />
         </div>
       ) : (
         <Navigate to="/admin-login" replace />

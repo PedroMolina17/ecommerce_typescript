@@ -50,7 +50,7 @@ export class AuthService {
   static async loginAdmin(user: ILoginAdmin) {
     const existingUser = await prisma.admin.findUnique({
       where: { email: user.email },
-      select: { id: true, password: true,role: true },
+      select: { id: true, password: true, role: true },
     });
 
     if (!existingUser) {
@@ -59,30 +59,34 @@ export class AuthService {
 
     const isPasswordValid = await bcryp.compare(
       user.password,
-      existingUser.password!
+      existingUser.password!,
     );
 
     if (!isPasswordValid) {
       throw new ClientError("password not valid", HTTP_STATUS.UNAUTHORIZED);
     }
 
-    const accessToken = jwt.sign({ user:{id:existingUser.id,role:existingUser.role}}, ACCESS_SECRET_TOKEN!, {
-      expiresIn: "24h",
-    });
+    const accessToken = jwt.sign(
+      { user: { id: existingUser.id, role: existingUser.role } },
+      ACCESS_SECRET_TOKEN!,
+      {
+        expiresIn: "24h",
+      },
+    );
     const refreshToken = jwt.sign(
-      { user: {id:existingUser.id,role:existingUser.role} },
+      { user: { id: existingUser.id, role: existingUser.role } },
       REFRESH_SECRET_TOKEN!,
       {
         expiresIn: "7d",
-      }
+      },
     );
-    const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-    const existingToken= await prisma.token.findFirst({
+    const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const existingToken = await prisma.token.findFirst({
       where: {
-        adminId: existingUser.id
-      }
-    })
-    if(existingToken){
+        adminId: existingUser.id,
+      },
+    });
+    if (existingToken) {
       await prisma.token.update({
         where: { id: existingToken.id },
         data: {
@@ -93,29 +97,27 @@ export class AuthService {
       });
       return { accessToken, refreshToken, message: "login success" };
     }
-  
-   await prisma.token.create({
-     data: {
-       adminId: existingUser.id,
-       token: refreshToken,
-       expiredAt,
-     },
-   })
-   
+
+    await prisma.token.create({
+      data: {
+        adminId: existingUser.id,
+        token: refreshToken,
+        expiredAt,
+      },
+    });
+
     return { accessToken, refreshToken, message: "login success" };
   }
 
   static async logoutAdmin(user: User) {
     console.log("----->>>>>>>", user);
-     await prisma.token.delete({
+    await prisma.token.delete({
       where: { adminId: user.id },
-      
     });
-    return {message:"logout success"};
+    return { message: "logout success" };
   }
 
-  
-/*------------------- auth user(cliente) -----------*/
+  /*------------------- auth user(cliente) -----------*/
   static async register(user: IRegisterUser) {
     const existingUser = await prisma.user.findUnique({
       where: { email: user.email },
@@ -145,7 +147,7 @@ export class AuthService {
 
     const isPasswordValid = await bcryp.compare(
       user.password,
-      existingUser.password!
+      existingUser.password!,
     );
 
     if (!isPasswordValid) {
@@ -189,12 +191,12 @@ export class AuthService {
 
     return { accessToken, refreshToken, message };
   }
-  
+
   static async logout(user: User) {
     console.log("----->>>>>>>", user);
     const deleteToken = await prisma.token.delete({
       where: { userId: user.id },
-      select: {user:true },
+      select: { user: true },
     });
     return deleteToken;
   }

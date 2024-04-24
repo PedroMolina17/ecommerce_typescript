@@ -1,5 +1,5 @@
 export const parseProduct = (product: any) => {
-    console.log("parseProduct--->>>",product)
+  console.log("parseProduct--->>>", product);
   for (const key in product) {
     if (typeof product[key] === "string") {
       product[key] = product[key].trim();

@@ -1,10 +1,10 @@
 import { BsArrowLeftShort } from "react-icons/bs";
-import { FaGithub, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import {
+  FaBookOpen,
   FaCartShopping,
   FaDollarSign,
   FaHeadphones,
-  FaBookOpen,
 } from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategoryFilled } from "react-icons/tb";
@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-80" : "w-12"
-      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   left-0 top-0  min-h-screen  py-8 pl-4 font-bold`}
+      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   l min-h-screen  py-8 pl-4 font-bold`}
     >
       <BsArrowLeftShort
         className={`${
@@ -88,21 +88,6 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
             <p>Soporte al Cliente</p>
           </button>
         </div>
-
-        <a
-          href="https://github.com/santiagoweb212/e_commerce"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div className="hover:bg-bgHover overflow-hidden flex items-center gap-1 cursor-pointer absolute bottom-0 h-16 w-full border-t border-gray-700 outline-none ">
-            <div className="w-12">
-              <ButonSideBar icon={<FaGithub className="text-2xl" />} />
-            </div>
-            <h2 className={`${!isOpen && "hidden"} text-sm truncate`}>
-              Repository
-            </h2>
-          </div>
-        </a>
       </div>
     </aside>
   );

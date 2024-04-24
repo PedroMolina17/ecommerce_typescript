@@ -17,7 +17,7 @@ router.get(
   "/users/:name",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  getUserByName
+  getUserByName,
 );
 router.put(
   "/:id",
@@ -30,14 +30,14 @@ router.put(
         req.file?.path!,
         req.file?.filename!,
         "webp",
-        { width: 100, height: 100 }
+        { width: 100, height: 100 },
       );
       fs.unlink(req.file?.path!);
       req.body.image = imageOptimized?.imageFileToPath;
     }
     next();
   },
-  updateUserById
+  updateUserById,
 );
 router.delete("/:id", verifyJwt, verifyAuthRole([ROLE.ADMIN]), deleteUserById);
 export default router;
