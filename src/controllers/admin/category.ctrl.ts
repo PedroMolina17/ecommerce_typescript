@@ -36,6 +36,7 @@ const createCategory: fnCtrl = async (req, res, next) => {
     const notification = await notificationService.createNotification({
       message: `A new category ${data.data.name} has been created`,
       userId: req.user.user.id,
+      typeNotification: "category"
     });
 
     io.emit("notification", notification);
@@ -54,6 +55,7 @@ const updateCategory: fnCtrl = async (req, res, next) => {
     const notification = await notificationService.createNotification({
       message: `The category ${data.data.name} has been updated`,
       userId: req.user.user.id,
+      typeNotification: "category"
     });
     io.emit("notification", notification);
     return sendResponse(res, HTTP_STATUS.OK, { message: data.message });
@@ -70,6 +72,8 @@ const deleteCategory: fnCtrl = async (req, res, next) => {
     const notification = await notificationService.createNotification({
       message: `The category ${data.data.name} has been deleted`,
       userId: req.user.user.id,
+      typeNotification: "category"
+
     });
     sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
