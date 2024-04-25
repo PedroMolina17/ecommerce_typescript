@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa6";
 import { SiBrandfolder } from "react-icons/si";
 import { TbCategoryFilled } from "react-icons/tb";
-
 import ButonSideBar from "./ButonSideBar";
 import ContainerButton from "./ContainerButton";
 import { useSelectNavStore } from "./store/useSelectNav";
@@ -20,7 +19,7 @@ const Sidebar = ({ isOpen, setIsOpen }: any) => {
     <aside
       className={`${
         isOpen ? "w-80" : "w-12"
-      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   left-0 top-0  min-h-screen  py-8 pl-4 font-bold`}
+      } duration-150 fixed z-40 bg-primary col-span-2 text-darkText row-span-12 rounded-tr-3xl rounded-br-3xl   l min-h-screen  py-8 pl-4 font-bold`}
     >
       <BsArrowLeftShort
         className={`${
