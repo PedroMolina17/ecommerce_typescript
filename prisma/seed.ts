@@ -9,6 +9,10 @@ const usersJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8")
 );
 
+const productsJson = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8")
+);
+
 const administradores = [
   {
     userName: "admin",
@@ -122,30 +126,78 @@ async function main() {
     password: bcryp.hashSync(admin.password, 10),
   }));
 
-  //crear administradores de prueba
+  // create administrators
   await prisma.admin.createMany({
     data: admins,
     skipDuplicates: true,
   });
 
-  // crear usuarios de prueba
+  // create users
   await prisma.user.createMany({
     data: listUsers,
     skipDuplicates: true,
   });
 
-  // crear categorias de prueba
+  // The repeats were not eliminated because skipDuplicates is being used
+  const listCategories = productsJson.products.map((el: any) => {
+    return {
+      name: el.category,
+    };
+  });
+
+  // create categories
   await prisma.category.createMany({
-    data: categories,
+    data: listCategories,
     skipDuplicates: true,
   });
 
-  // crear marcas de prueba
+  // The repeats were not eliminated because skipDuplicates is being used
+  const listBrands = productsJson.products.map((el: any) => {
+    return {
+      name: el.brand,
+    };
+  });
+
+  // create brands
   await prisma.brand.createMany({
-    data: brands,
+    data: listBrands,
+    skipDuplicates: true,
+  });
+
+  const listProducts = await Promise.all(
+    productsJson.products.map(async (el: any) => {
+      const brand = await prisma.brand.findUnique({
+        where: { name: el.brand },
+        select: {
+          id: true,
+        },
+      });
+
+      const category = await prisma.category.findUnique({
+        where: { name: el.category },
+        select: {
+          id: true,
+        },
+      });
+
+      return {
+        name: el.title,
+        description: el.description,
+        price: el.price,
+        stock: el.stock,
+        brandId: brand ? brand.id : null,
+        categoryId: category ? category.id : null,
+      };
+    })
+  );
+
+  // create products
+  await prisma.products.createMany({
+    data: listProducts,
     skipDuplicates: true,
   });
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect();

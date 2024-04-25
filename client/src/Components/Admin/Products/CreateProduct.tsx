@@ -14,16 +14,15 @@ import {
   IResponseCreateProduct,
   IcreateProduct,
 } from "../../../types/products.type";
-
 import { createProduct } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
-
 import { useOpenFormStoreProduct } from "./store/ActionStore";
-
+import useProductStore from "./store/ProductStore";
 const CreateProduct = () => {
   const { handleSubmit, register, reset } = useForm<FormularioProductoProps>();
   const { setOpenForm } = useOpenFormStoreProduct();
   const queryClient = useQueryClient();
+  const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
     name: string;
@@ -82,6 +81,11 @@ const CreateProduct = () => {
   };
 
 
+  //Cambiar vista
+  const toggleView = (operation: string) => {
+    setOperation(operation);
+  };
+
   //Enviar Datos
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
     const formData = new FormData();
@@ -98,6 +102,7 @@ const CreateProduct = () => {
     formData.append("brandId", data.brandId.toString());
     // Llamar a la función de creación de producto usando la mutación de React Query
     createProductMutation.mutate(formData);
+    reset();
   };
 
   return (
@@ -113,7 +118,10 @@ const CreateProduct = () => {
             >
               Agregar
             </button>
-            <button className="bg-red-600 p-6 h-8 rounded-md flex items-center">
+            <button
+              className="bg-red-600 p-6 h-8 rounded-md flex items-center"
+              onClick={() => toggleView("ViewProduct")}
+            >
               Cancelar
             </button>
           </div>

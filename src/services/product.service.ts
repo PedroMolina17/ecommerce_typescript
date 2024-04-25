@@ -47,11 +47,19 @@ export class ProductService {
     };
   }
   static async getProductById(productId: number) {
-    const existingProduct = "hola"; /* await prisma.products.findUnique({
-          where: {
-            id: productId,
-          },
-        }) */
+    const existingProduct = await prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+      include: {
+        ImageProduct: true,
+        ProductCoverImage: true,
+        technicalDetailsProduct: true,
+        category: { select: { name: true } },
+        brand: { select: { name: true } },
+        comment: true,
+      },
+    });
 
     if (!existingProduct) {
       throw new ClientError("product not found", HTTP_STATUS.NOT_FOUND);
