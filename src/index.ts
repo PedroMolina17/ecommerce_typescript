@@ -30,7 +30,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  }),
+  })
 );
 
 app.use("/api", router);
@@ -56,12 +56,12 @@ io.on("connection", (socket) => {
 });
 
 server.listen(ENV?.NODE_PORT, () =>
-  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`),
+  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );
 
 const inventoryCheckerService = new InventoryCheckerService(
   new PrismaClient(),
-  new NotificationsService(new PrismaClient()),
+  new NotificationsService(new PrismaClient())
 );
 cron.schedule("*/1 * * * *", async () => {
   try {
@@ -69,8 +69,9 @@ cron.schedule("*/1 * * * *", async () => {
     const productos = await inventoryCheckerService.checkStockProducts();
     if (productos.length > 0) {
       console.log(productos.length, "productos con stock bajo");
-      const notification =
-        await inventoryCheckerService.sendNotification(productos);
+      const notification = await inventoryCheckerService.sendNotification(
+        productos
+      );
       console.log("notificación enviada:", notification);
       io.emit("notification", notification);
     }
