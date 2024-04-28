@@ -1,8 +1,9 @@
 import useProductStore from "./store/ProductStore";
 import CreateProduct from "./CreateProduct";
 import ProductsTable from "./ProductsTable";
+import UpdateProduct from "./UpdateProduct";
 const Product = () => {
-  const { operation, setOperation } = useProductStore();
+  const { operation, productId } = useProductStore();
   return (
     <div>
       {operation === "CreateProduct" ? (
@@ -11,6 +12,8 @@ const Product = () => {
         </div>
       ) : operation === "ViewProduct" ? (
         <ProductsTable />
+      ) : operation === "UpdateProduct" ? (
+        <UpdateProduct productId={productId} />
       ) : (
         <div>
           <CreateProduct />
