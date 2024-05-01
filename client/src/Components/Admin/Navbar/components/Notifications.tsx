@@ -1,18 +1,18 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 
 import { Menu, Transition } from "@headlessui/react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 
-type NotificationType = {
-  id: number;
-  userId: number;
-  message: string;
-  read: boolean;
-  createAt: string;
-};
+// type NotificationType = {
+//   id: number;
+//   userId: number;
+//   message: string;
+//   read: boolean;
+//   createAt: string;
+// };
 
 interface NavBarProps {
-  notification: NotificationType | null;
+  notification: any;
   setNotification: any;
 }
 
@@ -20,16 +20,6 @@ const Notifications: React.FC<NavBarProps> = ({
   notification,
   setNotification,
 }) => {
-  const [notificationData, setNotificationData] = useState<NotificationType[]>(
-    []
-  );
-
-  useEffect(() => {
-    if (notification) {
-      setNotificationData([notification, ...notificationData]);
-    }
-  }, [notification]);
-
   return (
     <Menu as="div" className="relative">
       {({ open }) => (
@@ -37,7 +27,7 @@ const Notifications: React.FC<NavBarProps> = ({
           <div className="flex">
             <Menu.Button className="inline-block relative outline-none">
               <IoIosNotificationsOutline className="text-3xl" />
-              {notification && (
+              {notification.length != 0 && (
                 <span className="animate-ping absolute top-1 right-0.5 block h-1 w-1 rounded-full ring-2 ring-red-400 bg-red-600"></span>
               )}
             </Menu.Button>
@@ -61,8 +51,7 @@ const Notifications: React.FC<NavBarProps> = ({
                       <h4
                         className="text-xs text-blue-400 hover:text-blue-500 hover:underline transition-all"
                         onClick={() => {
-                          setNotification(null);
-                          setNotificationData([]);
+                          setNotification([]);
                         }}
                       >
                         Mark all as read
@@ -70,8 +59,8 @@ const Notifications: React.FC<NavBarProps> = ({
                     </div>
 
                     <div className="flex-1 w-full overflow-y-auto">
-                      {notificationData &&
-                        notificationData.map((notif) => (
+                      {notification.length != 0 &&
+                        notification.map((notif: any) => (
                           <div key={notif.id} className="hover:bg-[#222834]">
                             {notif.message}
                           </div>
