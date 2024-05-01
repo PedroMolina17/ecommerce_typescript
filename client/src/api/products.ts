@@ -52,7 +52,7 @@ const getProductById = async (productId: number): Promise<Product> => {
     const { data }: AxiosResponse<Product> = await api.get(
       `product/${productId}`
     );
-    return data.product;
+    return data;
   } catch (error) {
     console.error("Error al obtener el producto:", error);
     throw new Error(
