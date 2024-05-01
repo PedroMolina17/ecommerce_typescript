@@ -50,9 +50,9 @@ const deleteProduct = async (
 const getProductById = async (productId: number): Promise<Product> => {
   try {
     const { data }: AxiosResponse<Product> = await api.get(
-      `product/products/${productId}`
+      `product/${productId}`
     );
-    return data;
+    return data.product;
   } catch (error) {
     console.error("Error al obtener el producto:", error);
     throw new Error(
@@ -70,4 +70,4 @@ const getProductById = async (productId: number): Promise<Product> => {
 //   return data;
 // };
 
-export { getAllProducts, createProduct, deleteProduct };
+export { getAllProducts, createProduct, deleteProduct, getProductById };
