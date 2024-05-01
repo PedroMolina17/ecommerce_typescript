@@ -5,11 +5,28 @@ import path from "path";
 
 const prisma = new PrismaClient();
 
+export interface ListProducts {
+  products: Product[];
+}
+
+export interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}
 const usersJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8")
 );
 
-const productsJson = JSON.parse(
+const productsJson: ListProducts = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8")
 );
 
@@ -164,38 +181,87 @@ async function main() {
     skipDuplicates: true,
   });
 
-  const listProducts = await Promise.all(
-    productsJson.products.map(async (el: any) => {
-      const brand = await prisma.brand.findUnique({
-        where: { name: el.brand },
-        select: {
-          id: true,
-        },
-      });
-
-      const category = await prisma.category.findUnique({
-        where: { name: el.category },
-        select: {
-          id: true,
-        },
-      });
-
-      return {
-        name: el.title,
-        description: el.description,
-        price: el.price,
-        stock: el.stock,
-        brandId: brand ? brand.id : null,
-        categoryId: category ? category.id : null,
-      };
-    })
-  );
-
-  // create products
-  await prisma.products.createMany({
-    data: listProducts,
-    skipDuplicates: true,
+  const listProducts = productsJson.products.map(async (product: Product) => {
+    const brandId = await prisma.brand.findFirst({
+      where: {
+        name: product.brand,
+      },
+      select: {
+        id: true,
+      },
+    });
+    const categoryId = await prisma.category.findFirst({
+      where: {
+        name: product.category,
+      },
+      select: {
+        id: true,
+      },
+    });
+    return {
+      name: product.title,
+      description: product.description,
+      price: product.price,
+      stock: product.stock,
+      status: true,
+      active: true,
+      promotion: false,
+      promotionPrice: 0,
+      promotionDescription: "",
+      categoryId: categoryId?.id!,
+      brandId: brandId?.id!,
+      images: product.images,
+      imageCover: product.thumbnail,
+    };
   });
+
+  // create products y imagen de producto y imagen de  portada
+  for (let i:number = 0; i < listProducts.length; i++) {
+    const {
+      name,
+      description,
+      price,
+      stock,
+      status,
+      active,
+      promotion,
+      promotionPrice,
+      promotionDescription,
+      categoryId,
+      brandId,
+      images,
+      imageCover,
+    } = await listProducts[i];
+    const newProduct = await prisma.products.create({
+      data: {
+        name,
+        description,
+        price,
+        stock,
+        status,
+        active,
+        promotion,
+        promotionPrice,
+        promotionDescription,
+        categoryId,
+        brandId,
+      },
+    });
+    const newImageCover = await prisma.productCoverImage.create({
+      data: {
+        productId: newProduct.id,
+        imageProduct: imageCover,
+      },
+    });
+    for (let j:number = 0; j < images.length; j++) {
+      const newImage = await prisma.imageProduct.create({
+        data: {
+          productId: newProduct.id,
+          imageProduct: images[j],
+        },
+      });
+    }
+  }
 }
 
 main()
