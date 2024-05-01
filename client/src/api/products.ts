@@ -50,7 +50,7 @@ const deleteProduct = async (
 const getProductById = async (productId: number): Promise<Product> => {
   try {
     const { data }: AxiosResponse<Product> = await api.get(
-      `product/products/${productId}`
+      `product/${productId}`
     );
     return data;
   } catch (error) {
@@ -70,4 +70,4 @@ const getProductById = async (productId: number): Promise<Product> => {
 //   return data;
 // };
 
-export { getAllProducts, createProduct, deleteProduct };
+export { getAllProducts, createProduct, deleteProduct, getProductById };

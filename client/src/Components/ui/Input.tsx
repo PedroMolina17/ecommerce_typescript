@@ -7,9 +7,8 @@ interface InputProps
   > {
   labelText?: string;
   labelFor?: string;
-  register?: any;
   labelClass?: string;
-  error?: boolean;
+  register?: any;
 }
 
 const Input = ({
@@ -17,8 +16,6 @@ const Input = ({
   labelClass,
   labelFor,
   register,
-  error,
-  className,
   ...props
 }: InputProps) => {
   return (
@@ -26,15 +23,7 @@ const Input = ({
       <label htmlFor={labelFor} className={`${labelClass}`}>
         {labelText}
       </label>
-      <input
-        {...props}
-        className={`${className} ${
-          error
-            ? "focus:border-red-300 focus:ring-red-300"
-            : "focus:ring-blue-300 focus:border-blue-300"
-        } `}
-        {...register}
-      />
+      <input {...props} {...register} />
     </div>
   );
 };

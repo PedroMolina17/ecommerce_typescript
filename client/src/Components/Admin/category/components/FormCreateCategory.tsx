@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
-import { createCategory } from "../../../../api/category";
-import { queryClient } from "../../../../main";
-import { IResponseCreateCategory } from "../../../../types/category.type";
-import ButtonClose from "../../../ui/ButtonClose";
-import Input from "../../../ui/Input";
+import { createCategory } from "@/api/category";
+import { queryClient } from "@/main";
+import { IResponseCreateCategory } from "@/types/category.type";
+import ButtonClose from "@ui/ButtonClose";
+import Input from "@ui/Input";
 import { MySwal } from "../../users/components/ButtonsActionTable";
 import { useOpenFormStoreCategory } from "../store/useOpenForm.store";
 
@@ -15,11 +15,16 @@ interface FormValues {
 
 const FormCreateCategory = () => {
   const { setOpenForm } = useOpenFormStoreCategory((state) => state);
-  const { register, handleSubmit } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
       name: "",
     },
   });
+
   const mutation = useMutation({
     mutationFn: async (data: FormValues) => await createCategory(data),
     onSuccess: (data: IResponseCreateCategory) => {
@@ -33,6 +38,7 @@ const FormCreateCategory = () => {
       queryClient.refetchQueries({ queryKey: ["categories"] });
     },
   });
+
   const onSubmit = handleSubmit((data: FormValues) => {
     mutation.mutate(data);
   });
@@ -56,9 +62,22 @@ const FormCreateCategory = () => {
           placeholder="name category"
           labelText="Name category"
           labelClass="text-white"
-          className="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-2.5 py-1.5 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 "
-          register={register("name")}
+          className={`relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-2.5 py-1.5 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 ${
+            errors.name
+              ? "focus:border-red-300 focus:ring-red-300"
+              : "focus:ring-blue-300 focus:border-blue-300"
+          }`}
+          register={register("name", {
+            required: {
+              value: true,
+              message: "Please fill out this field",
+            },
+          })}
         />
+        {errors.name && (
+          <span className="text-white">{errors.name.message}</span>
+        )}
+
         <div className="flex gap-2 justify-end mt-4">
           <button
             type="button"
@@ -75,4 +94,5 @@ const FormCreateCategory = () => {
     </div>
   );
 };
+
 export default FormCreateCategory;

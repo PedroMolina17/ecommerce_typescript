@@ -5,7 +5,7 @@ import {
   MdLocalOffer,
   MdOutlineLocalOffer,
 } from "react-icons/md";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllCategory } from "../../../api/category";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,14 +13,14 @@ import { useForm, SubmitHandler } from "react-hook-form";
 //   IResponseCreateProduct,
 //   IcreateProduct,
 // } from "../../../types/products.type";
-import { createProduct } from "../../../api/products";
+import { createProduct, getProductById } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
+
 const UpdateProduct = ({ productId }) => {
-  const { handleSubmit, register, reset } = useForm<FormularioProductoProps>();
-  const { setOpenForm } = useOpenFormStoreProduct();
   const queryClient = useQueryClient();
+
   const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
@@ -44,6 +44,13 @@ const UpdateProduct = ({ productId }) => {
     mutationFn: async (data) => await createProduct(data),
     onSuccess: (data) => console.log(data),
   });
+
+  //Obtener product por Id
+  const { data: productById, isLoading } = useQuery({
+    queryKey: ["productById"],
+    queryFn: () => getProductById(productId),
+  });
+
   //Obtener Categoria
   const { data: categoriesData } = useQuery({
     queryKey: ["categories"],
@@ -98,18 +105,39 @@ const UpdateProduct = ({ productId }) => {
     reset();
   };
 
-  return (
+  useEffect(() => {
+    if (!isLoading && productById && productById.product) {
+      reset({
+        name: productById.product.name,
+        description: productById.product.description,
+        price: productById.product.price,
+        stock: productById.product.stock,
+      });
+    }
+  }, [productById, isLoading]);
+
+  const { handleSubmit, register, reset } = useForm<FormularioProductoProps>({
+    defaultValues: {
+      name: isLoading || !productById ? "" : productById.product.name,
+    },
+  });
+  const { setOpenForm } = useOpenFormStoreProduct();
+
+  return isLoading ? (
+    <div>cargando</div>
+  ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl block my-4">Update Product {productId}</h1>
+          <h1 className="text-4xl block my-4">Update Product</h1>
+
           <div className="flex gap-4 items-center justify-center font-bold">
             <button
               className="bg-blue-600 p-6  h-8 rounded-md flex items-center "
               type="submit"
               onClick={() => setOpenForm("create")}
             >
-              Agregar
+              Actualizar
             </button>
             <button
               className="bg-red-600 p-6 h-8 rounded-md flex items-center"

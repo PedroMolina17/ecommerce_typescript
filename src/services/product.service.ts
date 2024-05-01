@@ -54,11 +54,7 @@ export class ProductService {
       include: {
         ImageProduct: true,
         ProductCoverImage: true,
-        technicalDetailsProduct: true,
-        category: { select: { name: true } },
-        brand: { select: { name: true } },
-        comment: true,
-      },
+      }
     });
 
     if (!existingProduct) {
