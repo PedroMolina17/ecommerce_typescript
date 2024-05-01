@@ -29,6 +29,7 @@ router.post(
     },
   ]),
   (req: Request, res: Response, next: NextFunction) => {
+    console.log("Files------>", req.files);
     next();
   },
   createProduct,

@@ -17,6 +17,7 @@ export class ProductService {
   }
   async createProduct(dataProduct: IDataProduct) {
     const { product, image, productCoverImage } = dataProduct;
+    console.log("--->dataProduct", dataProduct);
     const existingProduct = await this.prisma.products.findUnique({
       where: {
         name: product.name,
@@ -26,11 +27,16 @@ export class ProductService {
     if (existingProduct) {
       throw new ClientError("Product already exists", HTTP_STATUS.CONFLICT);
     }
-    console.log("--->prodco", product);
+   
     const newProduct = await this.prisma.products.create({
       data: {
         ...product,
       },
+      include: {
+        ImageProduct: true,
+        ProductCoverImage: true,
+        technicalDetailsProduct: true,
+      }
     });
 
     if (image && productCoverImage) {

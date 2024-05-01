@@ -40,7 +40,7 @@ const createProduct = async (
     const productRequest = req.body;
     const productParse = parseProduct(productRequest);
     const files = processFiles(req.files);
-    console.log({ productRequest, productParse, files });
+    
     const product = {
       product: { ...productParse },
       ...files,
