@@ -51,6 +51,10 @@ export class ProductService {
       where: {
         id: productId,
       },
+      include: {
+        ImageProduct: true,
+        ProductCoverImage: true,
+      }
     });
 
     if (!existingProduct) {
