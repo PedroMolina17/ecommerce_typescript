@@ -67,14 +67,17 @@ const FormEditCategory = () => {
       <form onSubmit={onSubmit} className="flex flex-col">
         <Input
           type="text"
-          className="bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2"
+          className={`bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2 ${
+            errors.name
+              ? "focus:border-red-300 focus:ring-red-300"
+              : "focus:ring-blue-300 focus:border-blue-300"
+          }`}
           labelText="Name"
           labelClass="text-slate-600 text-sm"
           register={register("name", {
             required: { value: true, message: "Please fill out this field" },
             validate: (value) => rowValue.name !== value || "Field not edited",
           })}
-          error={Boolean(errors?.name?.message)}
         />
         {errors.name && (
           <span className="text-red-500">{errors.name.message}</span>

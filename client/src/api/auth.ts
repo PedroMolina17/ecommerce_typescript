@@ -3,14 +3,8 @@ import { api } from "./axios.config";
 
 import { ILogin, IResponseAuth } from "../types/auth.type";
 
-// funcion para realizar la peticion de usuarios
 async function login(user: ILogin) {
-  // hago una peticion post al login con los datos del usuario
   const result = await api.post("/auth/login-admin", user);
-
-  // console.log(result);
-
-  // envio los datos del usuario
   return result;
 }
 
@@ -20,10 +14,10 @@ async function logout() {
 }
 
 async function checkAuth(): Promise<IResponseAuth> {
-  const result: AxiosResponse<IResponseAuth> =
-    await api.get("/auth/check-admin");
+  const result: AxiosResponse<IResponseAuth> = await api.get(
+    "/auth/check-admin"
+  );
   return result.data;
 }
 
-// exportar mas de una funcion, en este caso la login
 export { checkAuth, login, logout };
