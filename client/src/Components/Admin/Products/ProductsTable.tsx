@@ -10,7 +10,6 @@ import {
   //Cell,
 } from "@tanstack/react-table";
 import { Row } from "@tanstack/react-table";
-
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import { useState } from "react";
 //import { useForm } from "react-hook-form";
@@ -28,7 +27,8 @@ import useProductStore from "./store/ProductStore";
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
-  const { operation, setOperation } = useProductStore();
+
+  const { operation, setOperation, setProductId } = useProductStore();
   interface ProductRow {
     id: number;
     name: string;
@@ -63,6 +63,11 @@ const ProductsTable = () => {
   const deleteProductMutation = useMutation({
     mutationFn: deleteProduct,
   });
+
+  const UpdateProductVIew = (id: number) => {
+    setOperation("UpdateProduct");
+    setProductId(id);
+  };
 
   const { data } = useQuery({
     queryKey: ["product", pagination],
@@ -160,7 +165,7 @@ const ProductsTable = () => {
                         />
                       </button>
                       <button
-                        onClick={() => setOpenForm("delete")}
+                        onClick={() => UpdateProductVIew(row.original.id)}
                         className="text-yellow-500 text-2xl focus:outline-none "
                         aria-label="Eliminar producto"
                       >
