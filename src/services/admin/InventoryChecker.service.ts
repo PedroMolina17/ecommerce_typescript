@@ -14,18 +14,18 @@ export class InventoryCheckerService {
         },
       },
     });
-    console.log("--->>>", products);
+    
     return products;
   }
 
   async sendNotification(products: { id: number; name: string }[]) {
-    console.log(products.length, "--->productos con stock bajo");
+  
     const notification = {
       message: `Hay ${products.length} productos con stock bajo`,
       userId: 1,
       typeNotification: "stock",
     };
-    console.log("--->notification",notification)
+   
     return await this.notificationService.createNotification(notification);
   }
 }

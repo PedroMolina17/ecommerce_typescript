@@ -201,7 +201,8 @@ async function main() {
     return {
       name: product.title,
       description: product.description,
-      price: product.price,
+      salePrice: product.price,
+      purchasePrice:product.price - (product.price * 0.15),
       stock: product.stock,
       status: true,
       active: true,
@@ -220,7 +221,8 @@ async function main() {
     const {
       name,
       description,
-      price,
+      salePrice,
+      purchasePrice,
       stock,
       status,
       active,
@@ -236,7 +238,8 @@ async function main() {
       data: {
         name,
         description,
-        price,
+        salePrice,
+        purchasePrice,
         stock,
         status,
         active,

@@ -9,7 +9,7 @@ export class ProductService {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
     private readonly prisma: PrismaClient,
-    private readonly notificationService: NotificationsService,
+    private readonly notificationService: NotificationsService
   ) {
     this.cloudinaryService = cloudinaryService;
     this.prisma = prisma;
@@ -27,7 +27,7 @@ export class ProductService {
     if (existingProduct) {
       throw new ClientError("Product already exists", HTTP_STATUS.CONFLICT);
     }
-   
+
     const newProduct = await this.prisma.products.create({
       data: {
         ...product,
@@ -36,7 +36,7 @@ export class ProductService {
         ImageProduct: true,
         ProductCoverImage: true,
         technicalDetailsProduct: true,
-      }
+      },
     });
 
     if (image && productCoverImage) {
@@ -70,55 +70,22 @@ export class ProductService {
   }
 
   async updateProduct(dataProduct: IDataProductUpdate, productId: number) {
-    const { product, image, idImageOlds } = dataProduct;
-    const { name } = product;
+    const { product,updateImage } = dataProduct;
+
     const existingProduct = await this.prisma.products.findUnique({
       where: {
         id: productId,
       },
+      include: {
+        ImageProduct: true,
+        ProductCoverImage: true,
+      }
     });
-
+    
     if (!existingProduct) {
       throw new ClientError("Product not found", HTTP_STATUS.NOT_FOUND);
     }
-
-    if (image.length > 0 && idImageOlds.length > 0) {
-      for (let i = 0; i < idImageOlds.length; i++) {
-        const existingImage = await this.prisma.imageProduct.findUnique({
-          where: {
-            id: idImageOlds[i],
-          },
-        });
-        if (!existingImage) {
-          throw new ClientError("image not found", HTTP_STATUS.NOT_FOUND);
-        }
-
-        const { public_id, secure_url } =
-          await this.cloudinaryService.uploadImgProduct(
-            image[i],
-            existingImage?.publicIdImage!,
-          );
-        await this.prisma.imageProduct.update({
-          where: {
-            id: idImageOlds[i],
-          },
-          data: {
-            imageProduct: secure_url,
-            publicIdImage: public_id,
-          },
-        });
-      }
-    }
-    const updatedProduct = await this.prisma.products.update({
-      where: {
-        id: productId,
-      },
-      data: { ...product },
-    });
-    return {
-      data: updatedProduct,
-      message: "Product updated",
-    };
+    return existingProduct
   }
   async deleteProduct(productId: number) {
     const existsProduct = await this.prisma.products.findUnique({
@@ -145,7 +112,7 @@ export class ProductService {
             },
           });
         }
-      }),
+      })
     );
     const deletedProduct = await this.prisma.products.delete({
       where: {
