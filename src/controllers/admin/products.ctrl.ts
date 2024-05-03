@@ -22,25 +22,25 @@ const notificationService = new NotificationsService(prisma);
 const productService = new ProductService(
   cloudinaryService,
   prisma,
-  notificationService,
+  notificationService
 );
 
 const getProducts = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {};
 
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const productRequest = req.body;
     const productParse = parseProduct(productRequest);
     const files = processFiles(req.files);
-    console.log({ productRequest, productParse, files });
+
     const product = {
       product: { ...productParse },
       ...files,
@@ -57,31 +57,15 @@ const createProduct = async (
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
-    const { product, idImageOlds } = req.body;
-    const files = req.files as {
-      image: Express.Multer.File[];
-    };
-
-    const productParse = parseProduct(JSON.parse(product));
-    const pathImages: Omit<IDataProductUpdate, "product" | "idImageOlds"> =
-      processFiles(files);
-
-    const dataproduct = {
-      product: productParse,
-      idImageOlds: JSON.parse(idImageOlds).map((id: string) => Number(id)),
-      image: pathImages.image,
-    };
-    const { productId } = req.params;
-    const productIdNumber = Number(productId);
-
-    const data = await productService.updateProduct(
-      dataproduct,
-      productIdNumber,
-    );
-    sendResponse(res, HTTP_STATUS.OK, data);
+   const productId= Number(req.params.productId)
+   const product=JSON.parse(req.body.product)
+   const files = processFiles(req.files);
+   console.log("files-->", files);
+   const data = parseProduct(product)
+  sendResponse(res, HTTP_STATUS.OK, productId);
   } catch (error) {
     registrationError(error, res, next);
   }
@@ -90,7 +74,7 @@ const updateProduct = async (
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;

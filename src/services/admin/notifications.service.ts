@@ -16,11 +16,11 @@ export class NotificationsService {
       },
     });
     if (!existingNotification) {
-      console.log("esty aca creando la nueva notification")
+     
       const notification = await this.prisma.notification.create({ data });
       return notification;
     }
-    console.log("notification ya existente",existingNotification)
+    
   return existingNotification
   }
   async getNotifications() {

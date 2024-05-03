@@ -15,7 +15,7 @@ const notificationService = new NotificationsService(new PrismaClient());
   const getNotifications: fnCtrl = async (req, res, next) => {
     try {
         const allNotifications = await notificationService.getNotifications();
-        console.log("-->",allNotifications);
+        
         sendResponse(res, HTTP_STATUS.OK, allNotifications);
     } catch (error) {
         registrationError(error, res, next);

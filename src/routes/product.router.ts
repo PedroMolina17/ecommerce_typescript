@@ -29,6 +29,7 @@ router.post(
     },
   ]),
   (req: Request, res: Response, next: NextFunction) => {
+    console.log("Files------>", req.files);
     next();
   },
   createProduct,
@@ -40,12 +41,12 @@ router.put(
   verifyAuthRole([ROLE.ADMIN]),
   upload.fields([
     {
-      name: "image",
+      name: "updateImage",
     },
   ]),
   (req: Request, res: Response, next: NextFunction) => {
     console.log("Files------>", req.files);
-    console.log("Body------>", req.body);
+    
     next();
   },
   updateProduct,
