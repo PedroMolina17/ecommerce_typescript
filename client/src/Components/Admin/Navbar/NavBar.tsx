@@ -39,7 +39,7 @@ const NavBar: React.FC<NavBarProps> = () => {
     socket.on("notification", (data) => {
       setNotification((prev) => {
         const isDuplicate = prev.some(
-          (notif) => JSON.stringify(notif) === JSON.stringify(data)
+          (notif) => JSON.stringify(notif) === JSON.stringify(data),
         );
         if (!isDuplicate) {
           return [data, ...prev];

@@ -7,6 +7,7 @@ import {
   IDeleteProduct,
   IResponseDeleteProduct,
 } from "../types/products.type";
+
 const getAllProducts = async (
   page: number = 1,
   pageSize: number = 10

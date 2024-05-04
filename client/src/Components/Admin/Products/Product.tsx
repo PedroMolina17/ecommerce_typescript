@@ -4,6 +4,7 @@ import ProductsTable from "./ProductsTable";
 import UpdateProduct from "./UpdateProduct";
 const Product = () => {
   const { operation, productId } = useProductStore();
+
   return (
     <div>
       {operation === "CreateProduct" ? (

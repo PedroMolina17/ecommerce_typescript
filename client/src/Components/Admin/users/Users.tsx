@@ -27,7 +27,7 @@ const Users = () => {
         return await getUserByName(
           pagination.pageIndex,
           pagination.pageSize,
-          watchSearch,
+          watchSearch
         );
       }
       if (watchSearch === "") {
@@ -39,16 +39,18 @@ const Users = () => {
 
   return (
     <>
-      <div className="relative flex bg-bg w-full flex-col">
-        <div className="flex items-center justify-between bg-bg z-20 sticky top-16 pt-3">
-          <h2 className="font-semibold text-white text-2xl">List of users</h2>
-          <SearchInput
-            register={register("search")}
-            placeholder="Search user..."
-          />
+      <div className=" w-full">
+        <div className="flex flex-col w-full sticky top-16 z-50">
+          <div className="flex items-center justify-between bg-bg w-full h-16 ">
+            <h2 className="font-semibold text-white text-2xl">List of users</h2>
+            <SearchInput
+              register={register("search")}
+              placeholder="Search user..."
+            />
+          </div>
         </div>
 
-        <section className=" w-full bg-bg relative flex flex-col gap-2">
+        <section className=" w-full bg-bg flex-col gap-2 ">
           {data ? <TableUser data={data} /> : <TableSkeleton />}
 
           <div className="flex items-center justify-between gap-1 mb-7">

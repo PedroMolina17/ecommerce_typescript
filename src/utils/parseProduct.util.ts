@@ -8,7 +8,8 @@ export const parseProduct = (product: any) => {
       key === "brandId" ||
       key === "categoryId" ||
       key === "stock" ||
-      key === "price" ||
+      key === "purchasePrice" ||
+      key === "salePrice" ||
       key === "promotionPrice"
     ) {
       product[key] = Number(product[key]);
