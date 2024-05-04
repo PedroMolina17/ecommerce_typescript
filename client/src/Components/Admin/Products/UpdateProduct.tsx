@@ -107,12 +107,7 @@ const UpdateProduct = ({ productId }) => {
 
   useEffect(() => {
     if (!isLoading && productById && productById.product) {
-      reset({
-        name: productById.product.name,
-        description: productById.product.description,
-        price: productById.product.price,
-        stock: productById.product.stock,
-      });
+      reset({ name: productById.product.name });
     }
   }, [productById, isLoading]);
 
@@ -137,7 +132,7 @@ const UpdateProduct = ({ productId }) => {
               type="submit"
               onClick={() => setOpenForm("create")}
             >
-              Actualizar
+              Agregar
             </button>
             <button
               className="bg-red-600 p-6 h-8 rounded-md flex items-center"

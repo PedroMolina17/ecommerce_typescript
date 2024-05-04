@@ -8,6 +8,7 @@
 /* css react responsive pagination */
 body {
   @apply h-screen w-full;
+  background-color: #272743;
 }
 .pagination {
   display: flex;
@@ -17,25 +18,14 @@ body {
 }
 .text-shadown {
   color: #ebe9e2;
-  font-family:
-    Arial Black,
-    Gadget,
-    sans-serif;
-  text-shadow:
-    0px 0px 0 rgb(230, 228, 221),
-    1px 1px 0 rgb(226, 224, 217),
-    2px 2px 0 rgb(221, 219, 212),
-    3px 3px 0 rgb(217, 215, 208),
-    4px 4px 0 rgb(212, 210, 203),
-    5px 5px 0 rgb(207, 205, 198),
-    6px 6px 0 rgb(203, 201, 194),
-    7px 7px 0 rgb(198, 196, 189),
-    8px 8px 0 rgb(194, 192, 185),
-    9px 9px 0 rgb(189, 187, 180),
-    10px 10px 0 rgb(184, 182, 175),
-    11px 11px 10px rgba(0, 0, 0, 0.34),
-    11px 11px 1px rgba(0, 0, 0, 0.5),
-    0px 0px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial Black, Gadget, sans-serif;
+  text-shadow: 0px 0px 0 rgb(230, 228, 221), 1px 1px 0 rgb(226, 224, 217),
+    2px 2px 0 rgb(221, 219, 212), 3px 3px 0 rgb(217, 215, 208),
+    4px 4px 0 rgb(212, 210, 203), 5px 5px 0 rgb(207, 205, 198),
+    6px 6px 0 rgb(203, 201, 194), 7px 7px 0 rgb(198, 196, 189),
+    8px 8px 0 rgb(194, 192, 185), 9px 9px 0 rgb(189, 187, 180),
+    10px 10px 0 rgb(184, 182, 175), 11px 11px 10px rgba(0, 0, 0, 0.34),
+    11px 11px 1px rgba(0, 0, 0, 0.5), 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .page-item .page-link {
   display: flex;
@@ -124,92 +114,32 @@ body {
 @keyframes l2 {
   0%,
   25% {
-    background-size:
-      8px 0,
-      8px 4px,
-      8px 4px,
-      8px 0,
-      8px 4px,
-      8px 4px,
-      8px 0,
-      8px 4px,
-      8px 4px;
-    background-position:
-      0 50%,
-      0 calc(50% - 2px),
-      0 calc(50% + 2px),
-      50% 50%,
-      50% calc(50% - 2px),
-      50% calc(50% + 2px),
-      100% 50%,
-      100% calc(50% - 2px),
+    background-size: 8px 0, 8px 4px, 8px 4px, 8px 0, 8px 4px, 8px 4px, 8px 0,
+      8px 4px, 8px 4px;
+    background-position: 0 50%, 0 calc(50% - 2px), 0 calc(50% + 2px), 50% 50%,
+      50% calc(50% - 2px), 50% calc(50% + 2px), 100% 50%, 100% calc(50% - 2px),
       100% calc(50% + 2px);
   }
   50% {
-    background-size:
-      8px 100%,
-      8px 4px,
-      8px 4px,
-      8px 0,
-      8px 4px,
-      8px 4px,
-      8px 0,
-      8px 4px,
-      8px 4px;
-    background-position:
-      0 50%,
-      0 calc(0% - 2px),
-      0 calc(100% + 2px),
-      50% 50%,
-      50% calc(50% - 2px),
-      50% calc(50% + 2px),
-      100% 50%,
-      100% calc(50% - 2px),
+    background-size: 8px 100%, 8px 4px, 8px 4px, 8px 0, 8px 4px, 8px 4px, 8px 0,
+      8px 4px, 8px 4px;
+    background-position: 0 50%, 0 calc(0% - 2px), 0 calc(100% + 2px), 50% 50%,
+      50% calc(50% - 2px), 50% calc(50% + 2px), 100% 50%, 100% calc(50% - 2px),
       100% calc(50% + 2px);
   }
   75% {
-    background-size:
-      8px 100%,
-      8px 4px,
-      8px 4px,
-      8px 100%,
-      8px 4px,
-      8px 4px,
-      8px 0,
-      8px 4px,
-      8px 4px;
-    background-position:
-      0 50%,
-      0 calc(0% - 2px),
-      0 calc(100% + 2px),
-      50% 50%,
-      50% calc(0% - 2px),
-      50% calc(100% + 2px),
-      100% 50%,
-      100% calc(50% - 2px),
+    background-size: 8px 100%, 8px 4px, 8px 4px, 8px 100%, 8px 4px, 8px 4px,
+      8px 0, 8px 4px, 8px 4px;
+    background-position: 0 50%, 0 calc(0% - 2px), 0 calc(100% + 2px), 50% 50%,
+      50% calc(0% - 2px), 50% calc(100% + 2px), 100% 50%, 100% calc(50% - 2px),
       100% calc(50% + 2px);
   }
   95%,
   100% {
-    background-size:
-      8px 100%,
-      8px 4px,
-      8px 4px,
-      8px 100%,
-      8px 4px,
-      8px 4px,
-      8px 100%,
-      8px 4px,
-      8px 4px;
-    background-position:
-      0 50%,
-      0 calc(0% - 2px),
-      0 calc(100% + 2px),
-      50% 50%,
-      50% calc(0% - 2px),
-      50% calc(100% + 2px),
-      100% 50%,
-      100% calc(0% - 2px),
+    background-size: 8px 100%, 8px 4px, 8px 4px, 8px 100%, 8px 4px, 8px 4px,
+      8px 100%, 8px 4px, 8px 4px;
+    background-position: 0 50%, 0 calc(0% - 2px), 0 calc(100% + 2px), 50% 50%,
+      50% calc(0% - 2px), 50% calc(100% + 2px), 100% 50%, 100% calc(0% - 2px),
       100% calc(100% + 2px);
   }
 }
