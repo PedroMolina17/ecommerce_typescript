@@ -9,7 +9,7 @@ export class ProductService {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
     private readonly prisma: PrismaClient,
-    private readonly notificationService: NotificationsService
+    private readonly notificationService: NotificationsService,
   ) {
     this.cloudinaryService = cloudinaryService;
     this.prisma = prisma;
@@ -70,7 +70,7 @@ export class ProductService {
   }
 
   async updateProduct(dataProduct: IDataProductUpdate, productId: number) {
-    const { product,updateImage } = dataProduct;
+    const { product, updateImage } = dataProduct;
 
     const existingProduct = await this.prisma.products.findUnique({
       where: {
@@ -79,13 +79,13 @@ export class ProductService {
       include: {
         ImageProduct: true,
         ProductCoverImage: true,
-      }
+      },
     });
-    
+
     if (!existingProduct) {
       throw new ClientError("Product not found", HTTP_STATUS.NOT_FOUND);
     }
-    return existingProduct
+    return existingProduct;
   }
   async deleteProduct(productId: number) {
     const existsProduct = await this.prisma.products.findUnique({
@@ -112,7 +112,7 @@ export class ProductService {
             },
           });
         }
-      })
+      }),
     );
     const deletedProduct = await this.prisma.products.delete({
       where: {

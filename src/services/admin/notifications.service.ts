@@ -12,20 +12,19 @@ export class NotificationsService {
         typeNotification: data.typeNotification,
         userId: data.userId,
         read: false,
-        message: data.message
+        message: data.message,
       },
     });
     if (!existingNotification) {
-     
       const notification = await this.prisma.notification.create({ data });
       return notification;
     }
-    
-  return existingNotification
+
+    return existingNotification;
   }
   async getNotifications() {
     const notifications = await this.prisma.notification.findMany();
-    return {notifications};
+    return { notifications };
   }
   async markNotificationReadById(id: number) {
     const notification = await this.prisma.notification.update({

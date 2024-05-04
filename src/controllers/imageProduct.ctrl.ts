@@ -7,7 +7,7 @@ import { PrismaClient } from "@prisma/client";
 type fnCtrl = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => Promise<void>;
 
 const imageProductService = new ImageProductService(new PrismaClient());
@@ -24,7 +24,7 @@ export const getImageProductById: fnCtrl = async (req, res, next) => {
 export const getAllImageProductsByProductId: fnCtrl = async (
   req,
   res,
-  next
+  next,
 ) => {
   try {
     const productId = Number(req.params.productId);
@@ -42,10 +42,21 @@ export const uploadImageProduct: fnCtrl = async (req, res, next) => {
 };
 
 export const deleteImageProduct: fnCtrl = async (req, res, next) => {
-  const imageId = Number(req.params.imageId);
-  const message = await imageProductService.deleteImageProduct(imageId);
-  sendResponse(res, HTTP_STATUS.OK, message );
   try {
+    const imageId = Number(req.params.imageId);
+    const message = await imageProductService.deleteImageProduct(imageId);
+    sendResponse(res, HTTP_STATUS.OK, message);
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+};
+
+export const deleteAllImageProductById: fnCtrl = async (req, res, next) => {
+  try {
+    const productId = Number(req.params.productId);
+    const message =
+      await imageProductService.deleteAllImageProductsByProductId(productId);
+    sendResponse(res, HTTP_STATUS.OK, message);
   } catch (error) {
     registrationError(error, res, next);
   }
