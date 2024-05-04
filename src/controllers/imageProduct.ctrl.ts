@@ -42,11 +42,22 @@ export const uploadImageProduct: fnCtrl = async (req, res, next) => {
 };
 
 export const deleteImageProduct: fnCtrl = async (req, res, next) => {
-  const imageId = Number(req.params.imageId);
+  
+  try {
+    const imageId = Number(req.params.imageId);
   const message = await imageProductService.deleteImageProduct(imageId);
   sendResponse(res, HTTP_STATUS.OK, message );
-  try {
   } catch (error) {
     registrationError(error, res, next);
   }
 };
+
+export const deleteAllImageProductById: fnCtrl = async (req, res, next) => {
+  try {
+    const productId = Number(req.params.productId);
+    const message = await imageProductService.deleteAllImageProductsByProductId(productId);
+    sendResponse(res, HTTP_STATUS.OK, message );
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+}

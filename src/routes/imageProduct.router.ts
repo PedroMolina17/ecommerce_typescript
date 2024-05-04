@@ -4,6 +4,7 @@ import { verifyJwt } from "../middlewares/verifyJwt.mdl";
 import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { ROLE } from "../constants/roleUser.constants";
 import {
+  deleteAllImageProductById,
   deleteImageProduct,
   getAllImageProductsByProductId,
   getImageProductById,
@@ -27,4 +28,5 @@ router.delete(
   verifyAuthRole([ROLE.ADMIN]),
   deleteImageProduct
 );
+router.delete("/:productId/delete-all", verifyJwt,verifyAuthRole([ROLE.ADMIN]), deleteAllImageProductById);
 export default router;

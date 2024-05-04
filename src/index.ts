@@ -37,7 +37,7 @@ app.use("/api", router);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const { statusCode, message } = err;
-  console.log("--->", err);
+ 
   sendErrorResponse(res, statusCode, message);
 });
 const server = http.createServer(app);
