@@ -29,3 +29,7 @@ http://localhost:3500/api/user/users/:name?page=2&pageSize=10 //obtener usaurios
 
 notifications
 http://localhost:3500/api/notification  //obtener toda las notifications
+
+images
+http://localhost:3500/api/imageProduct/get-all-img-product/5 //obtener toda las imagenes  por id del producto
+http://localhost:3500/api/imageProduct/image-product/7 //obtener la imagen  de un producto por id 

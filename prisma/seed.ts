@@ -23,11 +23,11 @@ export interface Product {
   images: string[];
 }
 const usersJson = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8")
+  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8"),
 );
 
 const productsJson: ListProducts = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8")
+  fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8"),
 );
 
 const administradores = [
@@ -121,7 +121,7 @@ async function main() {
         cell: string;
         location: { city: string };
       },
-      index: number
+      index: number,
     ) => {
       if (user.login.password.length < 8) {
         let acc = 1;
@@ -135,7 +135,7 @@ async function main() {
         phone: user.cell,
         address: user.location.city,
       };
-    }
+    },
   );
 
   const admins = administradores.map((admin) => ({
@@ -201,7 +201,8 @@ async function main() {
     return {
       name: product.title,
       description: product.description,
-      price: product.price,
+      salePrice: product.price,
+      purchasePrice: product.price - product.price * 0.15,
       stock: product.stock,
       status: true,
       active: true,
@@ -216,11 +217,12 @@ async function main() {
   });
 
   // create products y imagen de producto y imagen de  portada
-  for (let i:number = 0; i < listProducts.length; i++) {
+  for (let i: number = 0; i < listProducts.length; i++) {
     const {
       name,
       description,
-      price,
+      salePrice,
+      purchasePrice,
       stock,
       status,
       active,
@@ -236,7 +238,8 @@ async function main() {
       data: {
         name,
         description,
-        price,
+        salePrice,
+        purchasePrice,
         stock,
         status,
         active,
@@ -253,7 +256,7 @@ async function main() {
         imageProduct: imageCover,
       },
     });
-    for (let j:number = 0; j < images.length; j++) {
+    for (let j: number = 0; j < images.length; j++) {
       const newImage = await prisma.imageProduct.create({
         data: {
           productId: newProduct.id,

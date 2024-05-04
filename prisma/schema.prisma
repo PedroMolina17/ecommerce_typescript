@@ -59,7 +59,8 @@ model Products {
   id                      Int                       @id @default(autoincrement())
   name                    String                    @unique
   description             String
-  price                   Float
+  purchasePrice           Float
+  salePrice               Float
   stock                   Int
   status                  Boolean                   @default(true)
   active                  Boolean                   @default(true)
@@ -88,11 +89,11 @@ model ImageProduct {
 }
 
 model ProductCoverImage {
-  id            Int       @id @default(autoincrement())
-  productId     Int @unique
+  id            Int      @id @default(autoincrement())
+  productId     Int      @unique
   imageProduct  String
   publicIdImage String?
-  createAt      DateTime  @default(now())
+  createAt      DateTime @default(now())
   product       Products @relation(fields: [productId], references: [id])
 }
 
@@ -139,11 +140,11 @@ model Comment {
 }
 
 model Notification {
-  id       Int      @id @default(autoincrement())
-  userId   Int
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  message  String
-  read     Boolean  @default(false)
+  id               Int      @id @default(autoincrement())
+  userId           Int
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message          String
+  read             Boolean  @default(false)
   typeNotification String
-  createAt DateTime @default(now())
+  createAt         DateTime @default(now())
 }

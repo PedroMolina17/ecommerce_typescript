@@ -71,3 +71,4 @@ const getProductById = async (productId: number): Promise<Product> => {
 // };
 
 export { getAllProducts, createProduct, deleteProduct, getProductById };
+export { getAllProducts, createProduct, deleteProduct, getProductById };
