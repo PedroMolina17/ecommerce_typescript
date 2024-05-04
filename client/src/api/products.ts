@@ -7,6 +7,7 @@ import {
   IDeleteProduct,
   IResponseDeleteProduct,
 } from "../types/products.type";
+
 const getAllProducts = async (
   page: number = 1,
   pageSize: number = 10
@@ -70,5 +71,4 @@ const getProductById = async (productId: number): Promise<Product> => {
 //   return data;
 // };
 
-export { getAllProducts, createProduct, deleteProduct, getProductById };
 export { getAllProducts, createProduct, deleteProduct, getProductById };
