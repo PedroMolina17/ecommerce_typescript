@@ -27,7 +27,7 @@ const registrationError = (error: any, res: Response, next: NextFunction) => {
     console.error("Error personalizado:", error.message);
     return next(error);
   }
-  
+
   console.error("Error desconocido:", error);
   return res.status(500).json({ error: "Error al procesar la solicitud." });
 };

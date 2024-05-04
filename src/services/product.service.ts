@@ -8,7 +8,6 @@ export class ProductService {
     const products = await prisma.products.findMany({
       take: pageSize,
       skip: (page - 1) * pageSize,
-      
     });
 
     // Obtener el total de productos y items
@@ -49,7 +48,6 @@ export class ProductService {
       where: {
         id: productId,
       },
-      
     });
 
     if (!existingProduct) {

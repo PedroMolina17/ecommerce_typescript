@@ -3,7 +3,7 @@ import { NotificationsService } from "../../services/admin/notifications.service
 export class InventoryCheckerService {
   constructor(
     private readonly prisma: PrismaClient,
-    private readonly notificationService: NotificationsService
+    private readonly notificationService: NotificationsService,
   ) {}
 
   async checkStockProducts() {
@@ -14,18 +14,17 @@ export class InventoryCheckerService {
         },
       },
     });
-    
+
     return products;
   }
 
   async sendNotification(products: { id: number; name: string }[]) {
-  
     const notification = {
       message: `Hay ${products.length} productos con stock bajo`,
       userId: 1,
       typeNotification: "stock",
     };
-   
+
     return await this.notificationService.createNotification(notification);
   }
 }

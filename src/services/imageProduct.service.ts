@@ -9,8 +9,7 @@ export class ImageProductService {
       where: { id },
     });
     if (!productImage) {
-   
-      throw new ClientError("image not found",404);
+      throw new ClientError("image not found", 404);
     }
     await this.prisma.imageProduct.delete({
       where: { id },
