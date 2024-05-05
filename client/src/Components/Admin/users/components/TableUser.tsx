@@ -42,7 +42,7 @@ const TableUser = ({ data }: TableUserProps) => {
               src={cell.row.original.image}
               className="w-10 h-10 rounded-full"
               alt="img-user"
-            />{" "}
+            />
             <span>{cell.getValue()}</span>
           </div>
         );
@@ -97,26 +97,41 @@ const TableUser = ({ data }: TableUserProps) => {
 
   return (
     <>
-      <Table
-        tableClass="w-full rounded-md"
-        columns={columns}
-        data={data.results}
-        render={({ table }) => (
-          <>
-            <TableHeader
-              headers={table.getHeaderGroups}
-              theadClass="w-full sticky top-[108px] bg-bg before:content-[''] before:absolute before:top-0 before:left-0 before:w-full before:h-full before:border-b before:border-gray-700 text-white text-left text-xs"
-              thClass="py-4 px-2"
-              trClass=""
-            />
-            <TableBody
-              rows={table.getRowModel}
-              tbodyClass="table-body text-gray-500 text-sm"
-              tdClass="py-4 px-2"
-            />
-          </>
-        )}
-      ></Table>
+      <div className="flex flex-col sticky top-32 z-40">
+        <div className="table-header bg-bg text-white text-left text-xs ">
+          <Table
+            tableClass="w-full rounded-md"
+            columns={columns}
+            data={data.results}
+            render={({ table }) => (
+              <>
+                <TableHeader
+                  headers={table.getHeaderGroups}
+                  theadClass=""
+                  thClass="py-4 px-2"
+                  trClass=""
+                />
+              </>
+            )}
+          ></Table>
+        </div>
+      </div>
+      <div className="overflow-auto">
+        <Table
+          tableClass="w-full rounded-md"
+          columns={columns}
+          data={data.results}
+          render={({ table }) => (
+            <>
+              <TableBody
+                rows={table.getRowModel}
+                tbodyClass="table-body text-gray-500 text-sm"
+                tdClass="py-4 px-2"
+              />
+            </>
+          )}
+        ></Table>
+      </div>
       <ToastContainer />
     </>
   );

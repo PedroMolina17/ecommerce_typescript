@@ -8,13 +8,13 @@ export interface IDataProduct {
 
 export interface IDataProductUpdate {
   product: ICreateProduct;
-  idImageOlds: number[];
-  image: string[];
+  updateImage: { newImage: string; oldImageId: number }[];
 }
 export interface ICreateProduct {
   name: string;
   description: string;
-  price: number;
+  salePrice: number;
+  purchasePrice: number;
   stock: number;
   status: boolean;
   promotion?: boolean;

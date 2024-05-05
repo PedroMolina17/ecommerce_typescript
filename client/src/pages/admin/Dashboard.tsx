@@ -1,11 +1,10 @@
-import CreateProduct from "@/Components/Admin/Products/CreateProduct";
+import Product from "../../Components/Admin/Products/Product";
 import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
 import Brands from "../../Components/Admin/brand/Brands";
 import Category from "../../Components/Admin/category/Category";
 import { useSelectNavStore } from "../../Components/Admin/sideBar/store/useSelectNav";
 import Users from "../../Components/Admin/users/Users";
-
 const Dashboard = () => {
   const { selectNav } = useSelectNavStore((state) => state);
 
@@ -16,7 +15,7 @@ const Dashboard = () => {
       case "Sales":
         return <Sales />;
       case "Products":
-        return <CreateProduct />;
+        return <Product />;
       case "Brands":
         return <Brands />;
       case "Users":
@@ -28,8 +27,8 @@ const Dashboard = () => {
     }
   };
   return (
-    <section className="flex w-full  h-screen overflow-hidden  bg-darkPrimary">
-      <div className="w-full px-8">{renderContent(selectNav)}</div>
+    <section className="flex w-full  bg-darkPrimary">
+      <div className="w-full px-8 py-4">{renderContent(selectNav)}</div>
     </section>
   );
 };

@@ -8,9 +8,6 @@ export class ProductService {
     const products = await prisma.products.findMany({
       take: pageSize,
       skip: (page - 1) * pageSize,
-      include: {
-        ImageProduct: true,
-      },
     });
 
     // Obtener el total de productos y items
@@ -47,11 +44,11 @@ export class ProductService {
     };
   }
   static async getProductById(productId: number) {
-    const existingProduct = "hola"; /* await prisma.products.findUnique({
-          where: {
-            id: productId,
-          },
-        }) */
+    const existingProduct = await prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+    });
 
     if (!existingProduct) {
       throw new ClientError("product not found", HTTP_STATUS.NOT_FOUND);

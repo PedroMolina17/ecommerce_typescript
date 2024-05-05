@@ -45,7 +45,6 @@ const UserProfile: React.FC<UserProfileProps> = () => {
     onSuccess: () => {
       navigate("/admin-login");
     },
-    retry: 1,
   });
 
   const updateAdminMutation = useMutation({

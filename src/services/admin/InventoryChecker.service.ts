@@ -14,14 +14,17 @@ export class InventoryCheckerService {
         },
       },
     });
+
     return products;
   }
 
-  async sendNotification(products: any) {
-    return await this.notificationService.createNotification({
+  async sendNotification(products: { id: number; name: string }[]) {
+    const notification = {
       message: `Hay ${products.length} productos con stock bajo`,
       userId: 1,
-      typeNotification: "stock"
-    });
+      typeNotification: "stock",
+    };
+
+    return await this.notificationService.createNotification(notification);
   }
 }

@@ -10,7 +10,6 @@ import {
   //Cell,
 } from "@tanstack/react-table";
 import { Row } from "@tanstack/react-table";
-
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import { useState } from "react";
 //import { useForm } from "react-hook-form";
@@ -24,11 +23,12 @@ import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useMutation } from "@tanstack/react-query";
 import CreateProduct from "./CreateProduct";
-
+import useProductStore from "./store/ProductStore";
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
   const { openForm, setOpenForm } = useOpenFormStoreProduct();
 
+  const { operation, setOperation, setProductId } = useProductStore();
   interface ProductRow {
     id: number;
     name: string;
@@ -63,6 +63,11 @@ const ProductsTable = () => {
   const deleteProductMutation = useMutation({
     mutationFn: deleteProduct,
   });
+
+  const UpdateProductVIew = (id: number) => {
+    setOperation("UpdateProduct");
+    setProductId(id);
+  };
 
   const { data } = useQuery({
     queryKey: ["product", pagination],
@@ -106,7 +111,7 @@ const ProductsTable = () => {
         </div>
         <button
           className="bg-green-500 text-white flex items-center h-10 rounded-md px-2 gap-1"
-          onClick={() => setOpenForm("create")}
+          onClick={() => setOperation("CreateProduct")}
         >
           <IoAddCircle />
           Agregar Producto
@@ -125,7 +130,7 @@ const ProductsTable = () => {
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext(),
+                    header.getContext()
                   )}
                   {header.column.getIsSorted() !== null &&
                   header.column.getIsSorted() !== false
@@ -160,7 +165,7 @@ const ProductsTable = () => {
                         />
                       </button>
                       <button
-                        onClick={() => setOpenForm("delete")}
+                        onClick={() => UpdateProductVIew(row.original.id)}
                         className="text-yellow-500 text-2xl focus:outline-none "
                         aria-label="Eliminar producto"
                       >
@@ -187,14 +192,6 @@ const ProductsTable = () => {
             table.setPageIndex(e);
           }}
         />
-
-        {openForm.create && (
-          <div className="fixed inset-0  flex h-screen w-screen m-4 z-50 transition-opacity duration-300 bg-gray-200/75 dark:bg-gray-800/75">
-            <div className="rounded-md bg-[#111827]">
-              <CreateProduct />
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Delete after adding products */}

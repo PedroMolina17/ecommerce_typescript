@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { login } from "@/api/auth";
@@ -25,9 +27,23 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = handleSubmit(async (values) => {
-    await login(values);
-    navigate("/dashboard");
+  const loginMutation = useMutation({
+    mutationFn: (data: FormValue) => login(data),
+    onSuccess: () => {
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      toast.error("Please, check your email and password and try again.", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      });
+      console.error(error);
+    },
+  });
+
+  const onSubmit = handleSubmit((values) => {
+    loginMutation.mutate(values);
   });
 
   useEffect(() => {
@@ -42,13 +58,19 @@ const Login = () => {
             <h2 className="text-white text-3xl text-center font-bold">
               Sign In
             </h2>
+
             <p className="text-sm mt-4 text-white text-center">
               Get access to your account
             </p>
+
             <form onSubmit={onSubmit} className="flex flex-col mt-5">
               <Input
                 type="email"
-                className="bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2"
+                className={`bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2 ${
+                  errors?.password
+                    ? "focus:border-red-300 focus:ring-red-300"
+                    : "focus:ring-blue-300 focus:border-blue-300"
+                }`}
                 labelText="Email"
                 labelClass="text-white text-sm"
                 placeholder="Email"
@@ -58,7 +80,6 @@ const Login = () => {
                     message: "Please fill out this field",
                   },
                 })}
-                error={Boolean(errors?.email?.message)}
               />
               {errors.email && (
                 <span className="text-white">{errors.email.message}</span>
@@ -66,7 +87,11 @@ const Login = () => {
 
               <Input
                 type="password"
-                className="bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2"
+                className={`bg-gray-50 border border-gray-400 rounded-md block w-full py-1 px-2 outline-none focus:ring-2 ${
+                  errors?.password
+                    ? "focus:border-red-300 focus:ring-red-300"
+                    : "focus:ring-blue-300 focus:border-blue-300"
+                }`}
                 labelText="Password"
                 labelClass="text-white text-sm mt-4"
                 register={register("password", {
@@ -75,25 +100,26 @@ const Login = () => {
                     message: "Please fill out this field",
                   },
                 })}
-                error={Boolean(errors?.password?.message)}
               />
               {errors.password && (
                 <span className="text-white">{errors.password.message}</span>
               )}
 
               <button
-                className="bg-[#f97f63] rounded-3xl text-white py-2 mt-10 hover:bg-[#e6917e] hover:scale-105 duration-300"
+                className="bg-[#f97f63] rounded-md text-white py-1.5 font-semibold mt-10 hover:bg-[#e6917e] hover:scale-105 duration-300"
                 type="submit"
               >
                 Sign In
               </button>
             </form>
           </div>
-          <div className="md:block hidden">
-            <img src={Logo} alt="" className="" />
+          <div className="md:block hidden ">
+            <img src={Logo} className="rounded-l-[150px]" alt="logo" />
           </div>
         </div>
       </section>
+
+      <ToastContainer />
     </>
   );
 };
