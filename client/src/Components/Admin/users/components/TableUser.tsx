@@ -97,8 +97,8 @@ const TableUser = ({ data }: TableUserProps) => {
 
   return (
     <>
-      <div className="flex flex-col sticky top-32 z-40">
-        <div className="table-header bg-bg text-white text-left text-xs ">
+      <div className="flex flex-col sticky top-36 z-40  border-b border-slate-700">
+        <div className="table-header bg-primary text-white text-left text-xs ">
           <Table
             tableClass="w-full rounded-md"
             columns={columns}
