@@ -30,7 +30,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  }),
+  })
 );
 
 app.use("/api", router);
@@ -56,12 +56,12 @@ io.on("connection", (socket) => {
 });
 
 server.listen(ENV?.NODE_PORT, () =>
-  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`),
+  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
 );
 
 const inventoryCheckerService = new InventoryCheckerService(
   new PrismaClient(),
-  new NotificationsService(new PrismaClient()),
+  new NotificationsService(new PrismaClient())
 );
 cron.schedule("*/1 * * * *", async () => {
   try {
