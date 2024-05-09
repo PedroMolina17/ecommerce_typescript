@@ -19,7 +19,7 @@ export class ImageProductCoverService {
 
     const { public_id, secure_url } =
       await this.cloudinaryService.uploadImgProduct(image[0]);
-    await this.prisma.imageProduct.create({
+    await this.prisma.productCoverImage.create({
       data: {
         publicIdImage: public_id,
         imageProduct: secure_url,
@@ -85,7 +85,7 @@ export class ImageProductCoverService {
     }
     await Promise.all(
       imagesOldId.map(async (id, index) => {
-        const existingImg = await this.prisma.imageProduct.findUnique({
+        const existingImg = await this.prisma.productCoverImage.findUnique({
           where: { id },
         });
 
@@ -99,7 +99,7 @@ export class ImageProductCoverService {
             existingImg.publicIdImage
           );
 
-        return await this.prisma.imageProduct.update({
+        return await this.prisma.productCoverImage.update({
           where: { id: existingImg.id },
           data: {
             publicIdImage: public_id,
