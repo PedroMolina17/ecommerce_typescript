@@ -4,6 +4,8 @@ import { ERROR } from "../constants/errorName.constants";
 import CustomError from "../errors/customError.error";
 import { TokenExpiredError } from "jsonwebtoken";
 import { AUTH } from "../constants";
+import { sendResponse } from "./sendResponse.util";
+import { sendErrorResponse } from "./sendErrorResponse.util";
 
 const registrationError = (error: any, res: Response, next: NextFunction) => {
   if (error instanceof PrismaClientKnownRequestError) {
@@ -14,7 +16,8 @@ const registrationError = (error: any, res: Response, next: NextFunction) => {
 
       return res.status(401).json({ error: "Error al procesar la solicitud." });
     }
-    return res.status(500).json({ error: "Error al procesar la solicitud." });
+    /* return res.status(500).json({ error: "Error al procesar la solicitud." }); */
+    return sendErrorResponse(res, 500, "Error al procesar la solicitud." );
   }
 
   if (error instanceof CustomError && error.name === ERROR.CLIENT_ERROR) {

@@ -4,7 +4,7 @@ import fs from "fs-extra";
 export class CloudinaryService {
   constructor() {}
 
-  async uploadImgProduct(path: string, publicId?: string) {
+  async uploadImgProduct(path: string, publicId?: string |null) {
     const options = publicId ? { public_id: publicId } : { folder: "products" };
     try {
       const result = await cloudinary.uploader.upload(path, {

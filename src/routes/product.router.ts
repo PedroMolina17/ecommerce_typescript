@@ -20,18 +20,6 @@ router.post(
   "/create-product",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  upload.fields([
-    {
-      name: "image",
-    },
-    {
-      name: "productCoverImage",
-    },
-  ]),
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log("Files------>", req.files);
-    next();
-  },
   createProduct,
 );
 router.get("/:id", verifyJwt, getProductById);
