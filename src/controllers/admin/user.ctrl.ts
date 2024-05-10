@@ -3,12 +3,18 @@ import { UserService } from "../../services/user.service";
 import { sendResponse } from "../../utils/sendResponse.util";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 import registrationError from "../../utils/registrationError.util";
+import { CloudinaryService } from "../../services/cloudinary/cloudinary.service";
+import { PrismaClient } from "@prisma/client";
 type fnCtrl = (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => Promise<void>;
 
+const userService = new UserService(
+  new CloudinaryService(),
+  new PrismaClient()
+);
 const getAllUsers: fnCtrl = async (req, res, next) => {
   try {
     const { page = 1, pageSize = 10 } = req.query;
@@ -52,6 +58,7 @@ const updateUserById: fnCtrl = async (req, res, netx) => {
   }
 };
 
+
 const deleteUserById: fnCtrl = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -63,4 +70,10 @@ const deleteUserById: fnCtrl = async (req, res, next) => {
   }
 };
 
-export { getAllUsers, getUserByName, updateUserById, deleteUserById };
+export {
+  getAllUsers,
+  getUserByName,
+  updateUserById,
+  deleteUserById,
+ 
+};

@@ -1,0 +1,19 @@
+meta {
+  name: update_product_by_id
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/product/update-product/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "product": {
+      "name": "iphone y"
+    }
+  }
+}

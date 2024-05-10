@@ -22,7 +22,7 @@ export class CloudinaryService {
     }
   }
 
-  async uploadImage(pathToFile: string, publicId?: string) {
+  async uploadProfilePicture(pathToFile: string, publicId?: string|null) {
     const options = publicId
       ? { public_id: publicId }
       : { folder: "profile-picture" };

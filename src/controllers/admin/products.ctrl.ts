@@ -22,23 +22,22 @@ const notificationService = new NotificationsService(prisma);
 const productService = new ProductService(
   cloudinaryService,
   prisma,
-  notificationService,
+  notificationService
 );
 
 const getProducts = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {};
 
 const createProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const product = req.body;
-    
 
     const data = await productService.createProduct(product);
 
@@ -51,15 +50,14 @@ const createProduct = async (
 const updateProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const productId = Number(req.params.productId);
-    const product = JSON.parse(req.body.product);
-    const files = processFiles(req.files);
-    console.log("files-->", files);
-    const data = parseProduct(product);
-    sendResponse(res, HTTP_STATUS.OK, productId);
+    const product = req.body.product;
+console.log({product,productId});
+    const data = await productService.updateProduct(product, productId);
+    sendResponse(res, HTTP_STATUS.OK, {product:data});
   } catch (error) {
     registrationError(error, res, next);
   }
@@ -68,7 +66,7 @@ const updateProduct = async (
 const deleteProduct = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;

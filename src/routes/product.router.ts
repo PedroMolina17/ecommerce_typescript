@@ -20,30 +20,20 @@ router.post(
   "/create-product",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  createProduct,
+  createProduct
 );
 router.get("/:id", verifyJwt, getProductById);
 router.put(
   "/update-product/:productId",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  upload.fields([
-    {
-      name: "updateImage",
-    },
-  ]),
-  (req: Request, res: Response, next: NextFunction) => {
-    console.log("Files------>", req.files);
-
-    next();
-  },
-  updateProduct,
+  updateProduct
 );
 router.delete(
   "/delete-product/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  deleteProduct,
+  deleteProduct
 );
 
 export default router;
