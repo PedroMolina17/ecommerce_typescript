@@ -37,14 +37,8 @@ const createProduct = async (
   next: NextFunction,
 ) => {
   try {
-    const productRequest = req.body;
-    const productParse = parseProduct(productRequest);
-    const files = processFiles(req.files);
-
-    const product = {
-      product: { ...productParse },
-      ...files,
-    };
+    const product = req.body;
+    
 
     const data = await productService.createProduct(product);
 

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IDataProduct, IDataProductUpdate } from "../../types/product.type";
+import { ICreateProduct, IDataProduct, IDataProductUpdate } from "../../types/product.type";
 import ClientError from "../../errors/clientError.error";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
@@ -15,9 +15,7 @@ export class ProductService {
     this.prisma = prisma;
     this.notificationService = notificationService;
   }
-  async createProduct(dataProduct: IDataProduct) {
-    const { product, image, productCoverImage } = dataProduct;
-    console.log("--->dataProduct", dataProduct);
+  async createProduct(product:ICreateProduct) {   
     const existingProduct = await this.prisma.products.findUnique({
       where: {
         name: product.name,
@@ -39,32 +37,8 @@ export class ProductService {
       },
     });
 
-    if (image && productCoverImage) {
-      image.forEach(async (image) => {
-        const { public_id, secure_url } =
-          await this.cloudinaryService.uploadImgProduct(image);
-        await this.prisma.imageProduct.create({
-          data: {
-            imageProduct: secure_url,
-            publicIdImage: public_id,
-            productId: newProduct.id,
-          },
-        });
-      });
-
-      const { public_id, secure_url } =
-        await this.cloudinaryService.uploadImgProduct(productCoverImage[0]);
-      await this.prisma.productCoverImage.create({
-        data: {
-          imageProduct: secure_url,
-          publicIdImage: public_id,
-          productId: newProduct.id,
-        },
-      });
-    }
-
     return {
-      data: newProduct,
+      product: newProduct,
       message: "Product created",
     };
   }
