@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { ICreateProduct, IDataProduct, IDataProductUpdate } from "../../types/product.type";
+import {
+  ICreateProduct,
+  IDataProduct,
+  IDataProductUpdate,
+} from "../../types/product.type";
 import ClientError from "../../errors/clientError.error";
 import { HTTP_STATUS } from "../../constants/statusCode.constants";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
@@ -9,13 +13,13 @@ export class ProductService {
   constructor(
     private readonly cloudinaryService: CloudinaryService,
     private readonly prisma: PrismaClient,
-    private readonly notificationService: NotificationsService,
+    private readonly notificationService: NotificationsService
   ) {
     this.cloudinaryService = cloudinaryService;
     this.prisma = prisma;
     this.notificationService = notificationService;
   }
-  async createProduct(product:ICreateProduct) {   
+  async createProduct(product: ICreateProduct) {
     const existingProduct = await this.prisma.products.findUnique({
       where: {
         name: product.name,
@@ -44,22 +48,26 @@ export class ProductService {
   }
 
   async updateProduct(dataProduct: IDataProductUpdate, productId: number) {
-    const { product, updateImage } = dataProduct;
-
     const existingProduct = await this.prisma.products.findUnique({
       where: {
         id: productId,
-      },
-      include: {
-        ImageProduct: true,
-        ProductCoverImage: true,
       },
     });
 
     if (!existingProduct) {
       throw new ClientError("Product not found", HTTP_STATUS.NOT_FOUND);
     }
-    return existingProduct;
+
+    const updateProduct = await this.prisma.products.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        ...dataProduct,
+      },
+    });
+
+    return updateProduct;
   }
   async deleteProduct(productId: number) {
     const existsProduct = await this.prisma.products.findUnique({
@@ -68,6 +76,7 @@ export class ProductService {
       },
       include: {
         ImageProduct: true,
+        ProductCoverImage: true,
       },
     });
     if (!existsProduct) {
@@ -80,14 +89,24 @@ export class ProductService {
       existsProduct.ImageProduct.map(async (image) => {
         if (image.publicIdImage) {
           await this.cloudinaryService.deleteImg(image.publicIdImage);
-          await this.prisma.imageProduct.delete({
-            where: {
-              id: image.id,
-            },
-          });
         }
-      }),
+        await this.prisma.imageProduct.delete({
+          where: {
+            id: image.id,
+          },
+        });
+      })
     );
+    if (existsProduct.ProductCoverImage?.publicIdImage) {
+      await this.cloudinaryService.deleteImg(
+        existsProduct.ProductCoverImage.publicIdImage
+      );
+    }
+    await this.prisma.productCoverImage.deleteMany({
+      where: {
+        productId,
+      },
+    });
     const deletedProduct = await this.prisma.products.delete({
       where: {
         id: productId,

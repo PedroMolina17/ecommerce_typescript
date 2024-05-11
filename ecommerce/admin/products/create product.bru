@@ -1,0 +1,28 @@
+meta {
+  name: create product
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/product/create-product
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "sansumg hd max",
+    "description": "tv sansumg hd plasma",
+    "salePrice": 500,
+    "purchasePrice": 400,
+    "stock": 7,
+    "promotion": true,
+    "promotionPrice": 450,
+    "promotionDescription": "en oferta este mes",
+    "categoryId": 2,
+    "brandId": 4,
+    "active": true,
+    "status": true
+  }
+}

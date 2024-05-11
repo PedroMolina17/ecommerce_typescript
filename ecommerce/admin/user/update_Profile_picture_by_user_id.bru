@@ -1,0 +1,15 @@
+meta {
+  name: update_Profile_picture_by_user_id
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{BASE_URL}}/user/update-profile-picture/1
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  image: @file(/home/santiago/Imágenes/letter-j-s-monogram-logo-design-vector.jpg)
+}

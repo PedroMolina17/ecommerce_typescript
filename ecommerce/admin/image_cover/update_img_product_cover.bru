@@ -1,0 +1,16 @@
+meta {
+  name: update_img_product_cover
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{BASE_URL}}/imageProductCover/update-img-cover
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  imageProductCover: @file(/home/santiago/Imágenes/letter-j-s-monogram-logo-design-vector.jpg)
+  imagesOldId: [22]
+}

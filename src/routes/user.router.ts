@@ -11,18 +11,26 @@ import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { ROLE } from "../constants/roleUser.constants";
 import { upload } from "../configs/multer.config";
 import { optimizeImage } from "../utils/optimizeImage.util";
+import { updatePictureProfileUserByUserId } from "../controllers/user.ctrl";
 const router = Router();
 router.get("/users", verifyJwt, verifyAuthRole([ROLE.ADMIN]), getAllUsers);
 router.get(
   "/users/:name",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  getUserByName,
+  getUserByName
 );
 router.put(
   "/:id",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
+
+  updateUserById
+);
+router.put(
+  "/update-profile-picture/:userId",
+  verifyJwt,
+  verifyAuthRole([ROLE.USER,ROLE.ADMIN]),
   upload.single("image"),
   async (req: Request, res: Response, next: NextFunction) => {
     if (req.file) {
@@ -30,14 +38,14 @@ router.put(
         req.file?.path!,
         req.file?.filename!,
         "webp",
-        { width: 100, height: 100 },
+        { width: 100, height: 100 }
       );
       fs.unlink(req.file?.path!);
       req.body.image = imageOptimized?.imageFileToPath;
     }
     next();
   },
-  updateUserById,
+  updatePictureProfileUserByUserId
 );
 router.delete("/:id", verifyJwt, verifyAuthRole([ROLE.ADMIN]), deleteUserById);
 export default router;

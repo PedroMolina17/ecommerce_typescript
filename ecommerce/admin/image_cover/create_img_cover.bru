@@ -1,0 +1,15 @@
+meta {
+  name: create_img_cover
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/imageProductCover/22/create-img-cover
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  imageProductCover: @file(/home/santiago/Imágenes/human'.jpg)
+}

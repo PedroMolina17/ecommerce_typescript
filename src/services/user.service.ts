@@ -14,6 +14,10 @@ interface UserData {
 const prisma = new PrismaClient();
 
 export class UserService {
+  constructor(
+    private readonly cloudinaryService: CloudinaryService,
+    private readonly prisma: PrismaClient
+  ) {}
   static async createUser() {}
   static async updateUser() {}
   static async deleteUser() {}
@@ -89,7 +93,7 @@ export class UserService {
 
   static async updateUserById(
     id: IdUser,
-    userData: IUpdateUserById,
+    userData: IUpdateUserById
   ): Promise<{ message: string }> {
     const existingUser = await prisma.user.findUnique({
       where: { id },
@@ -106,28 +110,9 @@ export class UserService {
         }
         return acc;
       },
-      {},
+      {}
     );
-    if (filteredUserData.image && existingUser.image === null) {
-      /* const { public_id, secure_url } =
-        await CloudinaryService.uploadImage(
-          filteredUserData.image,
-          undefined
-        );
-      filteredUserData.image = secure_url;
-      filteredUserData.publicIdImage = public_id; */
-      console.log("----->>>>> image no existe");
-    }
-    if (filteredUserData.image && existingUser.image !== null) {
-      /* const { secure_url, public_id } =
-        await CloudinaryService.uploadImage(
-          filteredUserData.image,
-          existingUser.publicIdImage!
-        );
-      filteredUserData.image = secure_url;
-      filteredUserData.publicIdImage = public_id; */
-      console.log("----->>>>> image existe");
-    }
+    
     const updatedUser = await prisma.user.update({
       where: { id },
       data: filteredUserData,
@@ -182,5 +167,35 @@ export class UserService {
       },
       results: users,
     };
+  }
+
+  async updatePictureProfileUserByUserId(userId: number, pathToFile: string) {
+    const userExists = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!userExists) {
+      throw new ClientError("user not found", HTTP_STATUS.NOT_FOUND);
+    }
+
+    const { secure_url, public_id } =
+      await this.cloudinaryService.uploadProfilePicture(
+        pathToFile,
+        userExists.publicIdImage
+      );
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        image: secure_url,
+        publicIdImage: public_id,
+      },
+    });
+
+    return { message: "image updated" };
   }
 }
