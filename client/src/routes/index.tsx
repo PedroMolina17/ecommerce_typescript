@@ -2,14 +2,16 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
 import Login from "../Components/Admin/login/Login";
 import Dashboard from "../pages/admin/Dashboard";
-import Slider from "../Components/Slider";
 import { PageNotFound, PageNotFoundAdmin } from "../pages/admin/PageNotFound";
+import EcommerceLayout from "@/layouts/EcommerceLayout";
+import Slider from "@/Components/Slider";
 
 const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <PageNotFound />,
-    element: <Slider />,
+    element: <EcommerceLayout />,
+    children: [{ index: true, element: <Slider /> }],
   },
   { path: "/admin-login", element: <Login /> },
   {
