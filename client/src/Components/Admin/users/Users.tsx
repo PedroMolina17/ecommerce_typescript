@@ -39,9 +39,9 @@ const Users = () => {
 
   return (
     <>
-      <div className=" w-full">
-        <div className="flex flex-col w-full sticky top-16 z-50">
-          <div className="flex items-center justify-between bg-bg w-full h-16 ">
+      <div className="w-full  bg-primary px-4 py-2 rounded-md">
+        <div className="flex flex-col w-full sticky top-16 ">
+          <div className="flex items-center justify-between bg-primary w-full h-20 ">
             <h2 className="font-semibold text-white text-2xl">List of users</h2>
             <SearchInput
               register={register("search")}
@@ -50,7 +50,7 @@ const Users = () => {
           </div>
         </div>
 
-        <section className=" w-full bg-bg flex-col gap-2 ">
+        <section className=" w-full bg-primary flex-col gap-2 ">
           {data ? <TableUser data={data} /> : <TableSkeleton />}
 
           <div className="flex items-center justify-between gap-1 mb-7">

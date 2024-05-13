@@ -6,6 +6,7 @@ import {
   IResponseCreateProduct,
   IDeleteProduct,
   IResponseDeleteProduct,
+  IDUpdateProduct,
 } from "../types/products.type";
 
 const getAllProducts = async (
@@ -62,13 +63,15 @@ const getProductById = async (productId: number): Promise<Product> => {
   }
 };
 
-// const updateProduct = async ({
-//   id,
-// }: IDUpdateProduct): Promise<IResponseDeleteCategory> => {
-//   const { data }: AxiosResponse<IResponseDeleteCategory> = await api.delete(
-//     `category/delete-category/${id}`
-//   );
-//   return data;
-// };
+const updateProduct = async ({ id }: IDUpdateProduct) => {
+  const { data } = await api.put(`product/update-product/${id}`);
+  return data;
+};
 
-export { getAllProducts, createProduct, deleteProduct, getProductById };
+export {
+  getAllProducts,
+  createProduct,
+  deleteProduct,
+  getProductById,
+  updateProduct,
+};

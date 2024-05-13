@@ -1,6 +1,7 @@
 import { IResponse } from "./response.type";
 
 export interface Product {
+  product: any;
   error: boolean;
   info: Info;
   results: Result[];

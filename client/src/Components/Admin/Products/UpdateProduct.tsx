@@ -13,7 +13,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 //   IResponseCreateProduct,
 //   IcreateProduct,
 // } from "../../../types/products.type";
-import { createProduct, getProductById } from "../../../api/products";
+import {
+  createProduct,
+  getProductById,
+  updateProduct,
+} from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
@@ -26,7 +30,8 @@ const UpdateProduct = ({ productId }) => {
   interface FormularioProductoProps {
     name: string;
     categoryId: number;
-    price: number;
+    purchasePrice: number;
+    salePrice: number;
     image: string | null;
     categories: { id: number; name: string }[];
     description: string;
@@ -39,10 +44,13 @@ const UpdateProduct = ({ productId }) => {
     brands: { id: number; name: string }[];
   }
 
-  //Crear Categoria
-  const createProductMutation = useMutation({
-    mutationFn: async (data) => await createProduct(data),
-    onSuccess: (data) => console.log(data),
+  //Actualizar  Producto
+  const updateProductMutation = useMutation({
+    mutationFn: async (data: productId) => await updateProduct(productId),
+    onSuccess: (data) => {
+      console.log("Producto actualizado:", data);
+      // Aquí podrías realizar alguna acción adicional después de la actualización del producto, si es necesario
+    },
   });
 
   //Obtener product por Id
@@ -87,35 +95,58 @@ const UpdateProduct = ({ productId }) => {
     setOperation(operation);
   };
   //Enviar Datos
-  const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("categoryId", data.categoryId.toString());
-    formData.append("price", data.price.toString());
-    if (data.image) {
-      formData.append("image", data.image[0]);
+  const onSubmit = async (data) => {
+    try {
+      const {
+        name,
+        categoryId,
+        purchasePrice,
+        salePrice,
+        description,
+        stock,
+        promotionPrice,
+        promotionDescription,
+        brandId,
+      } = data;
+      const updatedData = {
+        id: productId,
+        name,
+        categoryId,
+        purchasePrice,
+        salePrice,
+        description,
+        stock,
+        promotionPrice,
+        promotionDescription,
+        brandId,
+      };
+      await updateProductMutation.mutate(data);
+      console.log("Datos actualizados:", data);
+    } catch (error) {
+      console.error("Error al actualizar el producto:", error);
     }
-    formData.append("description", data.description);
-    formData.append("stock", data.stock.toString());
-    formData.append("promotionPrice", data.promotionPrice.toString());
-    formData.append("promotionDescription", data.promotionDescription || "");
-    formData.append("brandId", data.brandId.toString());
-    // Llamar a la función de creación de producto usando la mutación de React Query
-    createProductMutation.mutate(formData);
-    reset();
   };
 
   useEffect(() => {
     if (!isLoading && productById && productById.product) {
-      reset({ name: productById.product.name });
+      reset({
+        name: productById.product.name,
+        description: productById.product.description,
+        purchasePrice: productById.product.purchasePrice,
+        salePrice: productById.product.salePrice,
+        promotionPrice: productById.product.promotionPrice,
+        categoryId: productById.product.categoryId,
+        brandId: productById.product.brandId,
+        stock: productById.product.stock,
+        promotionDescription: productById.product.promotionDescription,
+      });
     }
   }, [productById, isLoading]);
 
-  const { handleSubmit, register, reset } = useForm<FormularioProductoProps>({
-    defaultValues: {
-      name: isLoading || !productById ? "" : productById.product.name,
-    },
-  });
+  const { handleSubmit, register, reset } = useForm<FormularioProductoProps>(
+    {}
+  );
+
   const { setOpenForm } = useOpenFormStoreProduct();
 
   return isLoading ? (
@@ -168,13 +199,30 @@ const UpdateProduct = ({ productId }) => {
                 <div className="border p-4 flex flex-col gap-4 text-lg">
                   <label className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <MdOutlineAttachMoney /> Precio
+                      <MdOutlineAttachMoney /> Precio de Compra
                     </div>
                     <input
-                      {...register("price", { required: "Campo obligatorio" })}
+                      {...register("purchasePrice", {
+                        required: "Campo obligatorio",
+                      })}
                       type="number"
                       className="w-96 rounded-sm text-black p-1"
                       placeholder="$0.00"
+                      step="0.01"
+                    />
+                  </label>
+                  <label className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <MdOutlineAttachMoney /> Precio de Venta
+                    </div>
+                    <input
+                      {...register("salePrice", {
+                        required: "Campo obligatorio",
+                      })}
+                      type="number"
+                      className="w-96 rounded-sm text-black p-1"
+                      placeholder="$0.00"
+                      step="0.01"
                     />
                   </label>
                   <label className="flex items-center justify-between">
@@ -194,9 +242,7 @@ const UpdateProduct = ({ productId }) => {
                     </div>
                     <input
                       type="number"
-                      {...register("promotionPrice", {
-                        required: "Campo obligatorio",
-                      })}
+                      {...register("promotionPrice")}
                       placeholder="$0.00"
                       className="w-96 rounded-sm text-black p-1"
                     />
@@ -207,9 +253,7 @@ const UpdateProduct = ({ productId }) => {
                     </div>
                     <input
                       type="text"
-                      {...register("promotionDescription", {
-                        required: "Campo obligatorio",
-                      })}
+                      {...register("promotionDescription")}
                       placeholder="Descripcion"
                       className="w-96 rounded-sm text-black p-1"
                     />
@@ -260,7 +304,7 @@ const UpdateProduct = ({ productId }) => {
                     <option>Valor 2</option>
                   </select>
                 </label>
-              </div>{" "}
+              </div>
             </div>
             <div className="bg-darkThird p-4 rounded-md">
               <h2 className="text-3xl mb-4">Imagenes</h2>
