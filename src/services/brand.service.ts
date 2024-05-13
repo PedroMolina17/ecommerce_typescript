@@ -39,9 +39,9 @@ export class BrandService {
     };
   }
 
-  static async deleteBrand(brand: IDeleteBrand) {
+  static async deleteBrand(brandId:number) {
     await prisma.brand.delete({
-      where: { id: brand.id },
+      where: { id: brandId },
     });
     return {
       message: "brand deleted",

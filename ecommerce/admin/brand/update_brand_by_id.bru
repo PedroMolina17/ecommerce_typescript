@@ -1,0 +1,17 @@
+meta {
+  name: update_brand_by_id
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{BASE_URL}}/brand/update-brand/28
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "master cool"
+  }
+}
