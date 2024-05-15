@@ -28,6 +28,7 @@ model User {
   tokens        Token?
   comment       Comment[]
   Notification  Notification[]
+  Rating        Rating[]
 }
 
 model Admin {
@@ -69,6 +70,7 @@ model Products {
   promotionDescription    String?
   categoryId              Int
   brandId                 Int
+  rating                  Float                     @default(0)
   crateAt                 DateTime                  @default(now())
   comment                 Comment[]
   category                Category                  @relation(fields: [categoryId], references: [id])
@@ -77,6 +79,7 @@ model Products {
   ImageProduct            ImageProduct[]
 
   ProductCoverImage ProductCoverImage?
+  Rating            Rating[]
 }
 
 model ImageProduct {
@@ -135,7 +138,7 @@ model Comment {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId Int
   product   Products @relation(fields: [productId], references: [id])
-  comment   String
+  comment   String   @db.Text
   createAt  DateTime @default(now())
 }
 
@@ -147,4 +150,14 @@ model Notification {
   read             Boolean  @default(false)
   typeNotification String
   createAt         DateTime @default(now())
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  userId    Int
+  rating    Int
+  createAt  DateTime @default(now())
+  product   Products @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }

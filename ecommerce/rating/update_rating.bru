@@ -1,0 +1,18 @@
+meta {
+  name: update_rating
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/rating/update-rating
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1,
+    "rating": 5
+  }
+}

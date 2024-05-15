@@ -1,0 +1,19 @@
+meta {
+  name: create_rating
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE_URL}}/rating/create-rating
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "productId": 1,
+    "userId": 2,
+    "rating": 3
+  }
+}
