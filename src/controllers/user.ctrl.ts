@@ -6,7 +6,7 @@ import { CloudinaryService } from "../services/cloudinary/cloudinary.service";
 import { sendResponse } from "../utils/sendResponse.util";
 import registrationError from "../utils/registrationError.util";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
-type fnCtrl = (
+ type fnCtrl = (
   req: Request,
   res: Response,
   next: NextFunction

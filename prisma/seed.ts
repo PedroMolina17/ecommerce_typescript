@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import bcryp from "bcrypt";
 import fs from "fs-extra";
 import path from "path";
-
+import { RatingService } from "../src/services/rating.service";
 const prisma = new PrismaClient();
-
+const ratingService = new RatingService(prisma);
 export interface ListProducts {
   products: Product[];
 }
@@ -23,11 +23,11 @@ export interface Product {
   images: string[];
 }
 const usersJson = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8"),
+  fs.readFileSync(path.resolve(__dirname, "../users.json"), "utf-8")
 );
 
 const productsJson: ListProducts = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8"),
+  fs.readFileSync(path.resolve(__dirname, "../products.json"), "utf-8")
 );
 
 const administradores = [
@@ -121,7 +121,7 @@ async function main() {
         cell: string;
         location: { city: string };
       },
-      index: number,
+      index: number
     ) => {
       if (user.login.password.length < 8) {
         let acc = 1;
@@ -135,7 +135,7 @@ async function main() {
         phone: user.cell,
         address: user.location.city,
       };
-    },
+    }
   );
 
   const admins = administradores.map((admin) => ({
@@ -213,6 +213,7 @@ async function main() {
       brandId: brandId?.id!,
       images: product.images,
       imageCover: product.thumbnail,
+      rating: product.rating,
     };
   });
 
@@ -233,6 +234,7 @@ async function main() {
       brandId,
       images,
       imageCover,
+      rating,
     } = await listProducts[i];
     const newProduct = await prisma.products.create({
       data: {
@@ -254,6 +256,20 @@ async function main() {
       data: {
         productId: newProduct.id,
         imageProduct: imageCover,
+      },
+    });
+    const newRating = await ratingService.createRating({
+      productId: newProduct.id,
+      userId: 1,
+      rating: rating,
+    })
+  
+    const newComment = await prisma.comment.create({
+      data: {
+        productId: newProduct.id,
+        userId: 1,
+        comment:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur congue erat vel ultrices. Sed vitae pellentesque sem. Duis nibh arcu, tristique in sapien vitae, venenatis commodo urna. Cras placerat lorem posuere, sagittis libero eget, consectetur turpis. Suspendisse sed finibus arcu. Donec lorem nulla, semper ac aliquam scelerisque, vehicula quis risus. Morbi ullamcorper eros eget lacus lobortis, vel pellentesque eros consequat. Nunc vitae accumsan magna. Integer a neque dictum, mattis nibh et, sodales ipsum.",
       },
     });
     for (let j: number = 0; j < images.length; j++) {
