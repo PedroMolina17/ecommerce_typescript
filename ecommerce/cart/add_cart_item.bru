@@ -1,0 +1,21 @@
+meta {
+  name: add_cart_item
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{BASE_URL}}/cart/add-cart-item
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "cartId": 4,
+    "productId": 2,
+    "quantity": 2,
+    "unitPrice": 899,
+    "totalItemPrice": 1798
+  }
+}
