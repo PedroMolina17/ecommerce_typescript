@@ -29,6 +29,7 @@ model User {
   comment       Comment[]
   Notification  Notification[]
   Rating        Rating[]
+  Cart          Cart[]
 }
 
 model Admin {
@@ -80,6 +81,7 @@ model Products {
 
   ProductCoverImage ProductCoverImage?
   Rating            Rating[]
+  CartItem          CartItem[]
 }
 
 model ImageProduct {
@@ -160,4 +162,26 @@ model Rating {
   createAt  DateTime @default(now())
   product   Products @relation(fields: [productId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id       Int        @id @default(autoincrement())
+  userId   Int
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartItem CartItem[]
+  total    Float      @default(0)
+
+  createAt DateTime @default(now())
+}
+
+model CartItem {
+  id             Int      @id @default(autoincrement())
+  cartId         Int
+  cart           Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId      Int
+  product        Products @relation(fields: [productId], references: [id])
+  quantity       Int
+  unitPrice      Float
+  totalItemPrice Float
+  createAt       DateTime @default(now())
 }
