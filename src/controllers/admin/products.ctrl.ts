@@ -54,7 +54,7 @@ const updateProduct = async (
 ) => {
   try {
     const productId = Number(req.params.productId);
-    const product = req.body.product;
+    const product = req.body
 console.log({product,productId});
     const data = await productService.updateProduct(product, productId);
     sendResponse(res, HTTP_STATUS.OK, {product:data});

@@ -16,7 +16,7 @@ router.get(
 router.post(
   "/create-cart/:userId",
   verifyJwt,
-  verifyAuthRole([ROLE.USER, ROLE.ADMIN]),
+ 
   createCart
 );
 router.post(
