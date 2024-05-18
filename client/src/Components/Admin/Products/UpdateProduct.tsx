@@ -28,6 +28,7 @@ const UpdateProduct = ({ productId }) => {
   const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
+    id: string;
     name: string;
     categoryId: number;
     purchasePrice: number;
@@ -46,7 +47,7 @@ const UpdateProduct = ({ productId }) => {
 
   //Actualizar  Producto
   const updateProductMutation = useMutation({
-    mutationFn: async (data: productId) => await updateProduct(productId),
+    mutationFn: async (data) => await updateProduct(data),
     onSuccess: (data) => {
       console.log("Producto actualizado:", data);
       // Aquí podrías realizar alguna acción adicional después de la actualización del producto, si es necesario
@@ -108,6 +109,7 @@ const UpdateProduct = ({ productId }) => {
         promotionDescription,
         brandId,
       } = data;
+
       const updatedData = {
         id: productId,
         name,
@@ -153,10 +155,11 @@ const UpdateProduct = ({ productId }) => {
     <div>cargando</div>
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="hidden" {...register("id")} value={8} defaultValue={8} />
+
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl block my-4">Update Product</h1>
-
           <div className="flex gap-4 items-center justify-center font-bold">
             <button
               className="bg-blue-600 p-6  h-8 rounded-md flex items-center "

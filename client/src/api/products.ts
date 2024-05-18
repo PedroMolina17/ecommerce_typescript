@@ -63,9 +63,8 @@ const getProductById = async (productId: number): Promise<Product> => {
   }
 };
 
-const updateProduct = async ({ id }: IDUpdateProduct) => {
-  const { data } = await api.put(`product/update-product/${id}`);
-  return data;
+const updateProduct = async (data: IDUpdateProduct) => {
+  await api.put(`product/update-product/${data.id}`, data);
 };
 
 export {
