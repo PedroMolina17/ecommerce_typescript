@@ -5,7 +5,17 @@ meta {
 }
 
 put {
-  url: {{BASE_URL}}/order/update-order-item/1
-  body: none
+  url: {{BASE_URL}}/order/update-order-item/3
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "orderId": 2,
+    "productId": 4,
+    "quantity": 5,
+    "unitPrice": 300,
+    "totalItemPrice": 1500
+  }
 }
