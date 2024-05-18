@@ -1,0 +1,18 @@
+meta {
+  name: update_comment
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{BASE_URL}}/comment/update-comment
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "commentId": 31,
+    "comment": "la calidad del producto es muy bueno"
+  }
+}

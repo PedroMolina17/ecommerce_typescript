@@ -28,6 +28,8 @@ model User {
   tokens        Token?
   comment       Comment[]
   Notification  Notification[]
+  Rating        Rating[]
+  Cart          Cart[]
 }
 
 model Admin {
@@ -69,6 +71,7 @@ model Products {
   promotionDescription    String?
   categoryId              Int
   brandId                 Int
+  rating                  Float                     @default(0)
   crateAt                 DateTime                  @default(now())
   comment                 Comment[]
   category                Category                  @relation(fields: [categoryId], references: [id])
@@ -77,6 +80,8 @@ model Products {
   ImageProduct            ImageProduct[]
 
   ProductCoverImage ProductCoverImage?
+  Rating            Rating[]
+  CartItem          CartItem[]
 }
 
 model ImageProduct {
@@ -135,7 +140,7 @@ model Comment {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   productId Int
   product   Products @relation(fields: [productId], references: [id])
-  comment   String
+  comment   String   @db.Text
   createAt  DateTime @default(now())
 }
 
@@ -147,4 +152,36 @@ model Notification {
   read             Boolean  @default(false)
   typeNotification String
   createAt         DateTime @default(now())
+}
+
+model Rating {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  userId    Int
+  rating    Int
+  createAt  DateTime @default(now())
+  product   Products @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id       Int        @id @default(autoincrement())
+  userId   Int
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartItem CartItem[]
+  total    Float      @default(0)
+
+  createAt DateTime @default(now())
+}
+
+model CartItem {
+  id             Int      @id @default(autoincrement())
+  cartId         Int
+  cart           Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId      Int
+  product        Products @relation(fields: [productId], references: [id])
+  quantity       Int
+  unitPrice      Float
+  totalItemPrice Float
+  createAt       DateTime @default(now())
 }

@@ -13,11 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 //   IResponseCreateProduct,
 //   IcreateProduct,
 // } from "../../../types/products.type";
-import {
-  createProduct,
-  getProductById,
-  updateProduct,
-} from "../../../api/products";
+import { createProduct, getProductById } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
@@ -45,13 +41,10 @@ const UpdateProduct = ({ productId }) => {
     brands: { id: number; name: string }[];
   }
 
-  //Actualizar  Producto
-  const updateProductMutation = useMutation({
-    mutationFn: async (data) => await updateProduct(data),
-    onSuccess: (data) => {
-      console.log("Producto actualizado:", data);
-      // Aquí podrías realizar alguna acción adicional después de la actualización del producto, si es necesario
-    },
+  //Crear Categoria
+  const createProductMutation = useMutation({
+    mutationFn: async (data) => await createProduct(data),
+    onSuccess: (data) => console.log(data),
   });
 
   //Obtener product por Id
@@ -109,7 +102,6 @@ const UpdateProduct = ({ productId }) => {
         promotionDescription,
         brandId,
       } = data;
-
       const updatedData = {
         id: productId,
         name,
