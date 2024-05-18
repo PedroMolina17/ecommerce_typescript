@@ -1,0 +1,21 @@
+meta {
+  name: update_order_item_by_id
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{BASE_URL}}/order/update-order-item/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "orderId": 2,
+    "productId": 4,
+    "quantity": 5,
+    "unitPrice": 300,
+    "totalItemPrice": 1500
+  }
+}
