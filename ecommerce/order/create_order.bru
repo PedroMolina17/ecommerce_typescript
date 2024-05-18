@@ -1,0 +1,15 @@
+meta {
+  name: create_order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/order/create-order
+  body: json
+  auth: none
+}
+
+body:json {
+  {"userId":1}
+}
