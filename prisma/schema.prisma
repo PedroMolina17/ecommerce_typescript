@@ -196,6 +196,8 @@ model Order {
   createAt  DateTime    @default(now())
   OrderItem OrderItem[]
   Payment   Payment[]
+
+  
 }
 
 model OrderItem {

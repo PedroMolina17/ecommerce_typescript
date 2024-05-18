@@ -3,6 +3,7 @@ import {
   IOrder,
   IOrderItem,
   IOrderRepository,
+  IUpdateOrder,
 } from "./types/order.repository.interface";
 
 export class OrderRepository implements IOrderRepository {
@@ -29,11 +30,14 @@ export class OrderRepository implements IOrderRepository {
       where: {
         userId: userId,
       },
+      include: {
+        OrderItem: true,
+      },
     });
     return orders;
   }
 
-  async updateOrder(order: IOrder): Promise<IOrder> {
+  async updateOrder(order: IUpdateOrder): Promise<IOrder> {
     const newOrder = await this.prisma.order.update({
       where: {
         id: order.id,
@@ -55,23 +59,13 @@ export class OrderRepository implements IOrderRepository {
   async addOrderItem(
     orderItem: Omit<IOrderItem, "id" | "createAt">
   ): Promise<IOrderItem> {
-    const existingItem = await this.getOrderItemsByOrderIdAndProductId(
-      orderItem.orderId,
-      orderItem.productId
-    );
-    if (existingItem) {
-      const newItem = {
-        ...orderItem,
-        id: existingItem.id,
-        createAt: existingItem.createAt,
-      };
-      return await this.updateOrderItem(newItem);
-    }
-    return await this.prisma.orderItem.create({
+    const newOrderItem = await this.prisma.orderItem.create({
       data: orderItem,
     });
+
+    return newOrderItem;
   }
-  async updateOrderItem(orderItem: OrderItem): Promise<IOrderItem> {
+  async updateOrderItem(orderItem: Partial<IOrderItem>): Promise<IOrderItem> {
     return await this.prisma.orderItem.update({
       where: {
         id: orderItem.id,
@@ -88,6 +82,34 @@ export class OrderRepository implements IOrderRepository {
       where: {
         orderId: orderId,
         productId: productId,
+      },
+    });
+  }
+
+  async getAllOrderItemsByOrderId(orderId: number): Promise<IOrderItem[]> {
+    return await this.prisma.orderItem.findMany({
+      where: {
+        orderId: orderId,
+      },
+    });
+  }
+
+  async getOrderByUserIdAndOrderId(userId: number, orderId: number) {
+    return await this.prisma.order.findFirst({
+      where: {
+        userId: userId,
+        id: orderId,
+      },
+      include: {
+        OrderItem: true,
+      },
+    });
+  }
+
+  async getOrderItemById(orderItemId: number): Promise<IOrderItem | null> {
+    return await this.prisma.orderItem.findUnique({
+      where: {
+        id: orderItemId,
       },
     });
   }
