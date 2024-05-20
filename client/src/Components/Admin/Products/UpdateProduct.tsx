@@ -13,11 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 //   IResponseCreateProduct,
 //   IcreateProduct,
 // } from "../../../types/products.type";
-import {
-  createProduct,
-  getProductById,
-  updateProduct,
-} from "../../../api/products";
+import { createProduct, getProductById } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
@@ -28,6 +24,7 @@ const UpdateProduct = ({ productId }) => {
   const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
+    id: string;
     name: string;
     categoryId: number;
     purchasePrice: number;
@@ -44,13 +41,10 @@ const UpdateProduct = ({ productId }) => {
     brands: { id: number; name: string }[];
   }
 
-  //Actualizar  Producto
-  const updateProductMutation = useMutation({
-    mutationFn: async (data: productId) => await updateProduct(productId),
-    onSuccess: (data) => {
-      console.log("Producto actualizado:", data);
-      // Aquí podrías realizar alguna acción adicional después de la actualización del producto, si es necesario
-    },
+  //Crear Categoria
+  const createProductMutation = useMutation({
+    mutationFn: async (data) => await createProduct(data),
+    onSuccess: (data) => console.log(data),
   });
 
   //Obtener product por Id
@@ -153,10 +147,11 @@ const UpdateProduct = ({ productId }) => {
     <div>cargando</div>
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="hidden" {...register("id")} value={8} defaultValue={8} />
+
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl block my-4">Update Product</h1>
-
           <div className="flex gap-4 items-center justify-center font-bold">
             <button
               className="bg-blue-600 p-6  h-8 rounded-md flex items-center "
