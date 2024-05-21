@@ -5,7 +5,14 @@ meta {
 }
 
 put {
-  url: http://localhost:3500/api/product/8
-  body: none
+  url: http://localhost:3500/api/product/update-product/1
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "name":"Iphone 9",
+    "categoryId": 8
+  }
 }

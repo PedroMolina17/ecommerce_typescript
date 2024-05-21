@@ -105,7 +105,7 @@ const UpdateProduct = ({ productId }) => {
       const updatedData = {
         id: parseInt(productId, 10),
         name,
-        categoryId,
+        categoryId: parseInt(categoryId, 10),
         purchasePrice,
         salePrice,
         description,
@@ -269,7 +269,6 @@ const UpdateProduct = ({ productId }) => {
                       required: "Campo obligatorio",
                     })}
                     className="h-8 text-darkPrimary"
-                    defaultValue=""
                   >
                     <option value="">Seleccione una categoría</option>
                     {categories.map((category) => (
