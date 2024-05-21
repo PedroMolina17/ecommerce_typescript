@@ -150,6 +150,8 @@ const UpdateProduct = ({ productId }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" {...register("id")} value={8} defaultValue={8} />
 
+      <input type="hidden" {...register("id")} value={8} defaultValue={8} />
+
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl block my-4">Update Product</h1>
