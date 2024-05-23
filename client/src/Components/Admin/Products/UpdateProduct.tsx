@@ -13,7 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 //   IResponseCreateProduct,
 //   IcreateProduct,
 // } from "../../../types/products.type";
-import { createProduct, getProductById } from "../../../api/products";
+import { updateProduct, getProductById } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
@@ -24,7 +24,7 @@ const UpdateProduct = ({ productId }) => {
   const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
-    id: string;
+    id: number;
     name: string;
     categoryId: number;
     purchasePrice: number;
@@ -42,9 +42,9 @@ const UpdateProduct = ({ productId }) => {
   }
 
   //Crear Categoria
-  const createProductMutation = useMutation({
-    mutationFn: async (data) => await createProduct(data),
-    onSuccess: (data) => console.log(data),
+  const updateProductMutation = useMutation({
+    mutationFn: async (data) => await updateProduct(data),
+    onSuccess: (data) => console.log(data.id + 8),
   });
 
   //Obtener product por Id
@@ -103,9 +103,9 @@ const UpdateProduct = ({ productId }) => {
         brandId,
       } = data;
       const updatedData = {
-        id: productId,
+        id: parseInt(productId, 10),
         name,
-        categoryId,
+        categoryId: parseInt(categoryId, 10),
         purchasePrice,
         salePrice,
         description,
@@ -133,6 +133,7 @@ const UpdateProduct = ({ productId }) => {
         brandId: productById.product.brandId,
         stock: productById.product.stock,
         promotionDescription: productById.product.promotionDescription,
+        id: productById.product.id,
       });
     }
   }, [productById, isLoading]);
@@ -147,6 +148,8 @@ const UpdateProduct = ({ productId }) => {
     <div>cargando</div>
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="hidden" {...register("id")} value={8} defaultValue={8} />
+
       <input type="hidden" {...register("id")} value={8} defaultValue={8} />
 
       <div className="flex text-darkSecondary flex-col">
@@ -268,7 +271,6 @@ const UpdateProduct = ({ productId }) => {
                       required: "Campo obligatorio",
                     })}
                     className="h-8 text-darkPrimary"
-                    defaultValue=""
                   >
                     <option value="">Seleccione una categoría</option>
                     {categories.map((category) => (
