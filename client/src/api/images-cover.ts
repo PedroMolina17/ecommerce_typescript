@@ -15,4 +15,4 @@ const imageCoverById = async (id: number): Promise<imageCover> => {
   }
 };
 
-export default imageCoverById;
+export { imageCoverById };

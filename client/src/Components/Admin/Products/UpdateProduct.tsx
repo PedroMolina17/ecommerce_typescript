@@ -7,6 +7,7 @@ import {
 } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import { getAllCategory } from "../../../api/category";
+import { imageCoverById } from "../../../api/images-cover";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
 // import {
@@ -52,6 +53,13 @@ const UpdateProduct = ({ productId }) => {
     queryKey: ["productById"],
     queryFn: () => getProductById(productId),
   });
+
+  //Obtener imageCover por Id
+  const { data: imageCoverData, isLoading: imageCoverLoading } = useQuery({
+    queryKey: ["imageCover"],
+    queryFn: () => imageCoverById(22),
+  });
+  const imageCover = imageCoverData?.imageProductCovers || [];
 
   //Obtener Categoria
   const { data: categoriesData } = useQuery({
@@ -306,6 +314,20 @@ const UpdateProduct = ({ productId }) => {
             <div className="bg-darkThird p-4 rounded-md">
               <h2 className="text-3xl mb-4">Imagenes</h2>
               <div className="flex flex-col gap-8 my-8">
+                <div className="grid grid-cols-3">
+                  {imageCoverLoading ? (
+                    <div>Cargando</div>
+                  ) : (
+                    imageCover.map((image) => (
+                      <img
+                        key={image.id}
+                        src={image.imageProduct}
+                        alt={image.name}
+                        className="h-24 border col-span-3 border-darkPrimary"
+                      />
+                    ))
+                  )}
+                </div>
                 <label className="flex flex-col gap-2">
                   Imagen de Portada
                   <button
