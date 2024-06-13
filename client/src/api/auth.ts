@@ -14,8 +14,9 @@ async function logout() {
 }
 
 async function checkAuth(): Promise<IResponseAuth> {
-  const result: AxiosResponse<IResponseAuth> =
-    await api.get("/auth/check-admin");
+  const result: AxiosResponse<IResponseAuth> = await api.get(
+    "/auth/check-admin"
+  );
   return result.data;
 }
 
