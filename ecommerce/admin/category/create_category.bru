@@ -1,0 +1,15 @@
+meta {
+  name: create_category
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/category/create-category
+  body: json
+  auth: none
+}
+
+body:json {
+  {"name":"Dsico Duro"}
+}

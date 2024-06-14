@@ -25,8 +25,9 @@ const createBrand: fnCtrl = async (req, res, next) => {
 
 const updateBrand: fnCtrl = async (req, res, next) => {
   try {
-    const brand = req.body as IUpdateBrand;
-    const data = await BrandService.updateBrand(brand);
+    const id = Number(req.params.id);
+    const {name} = req.body 
+    const data = await BrandService.updateBrand({name,id});
     sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);
@@ -35,8 +36,8 @@ const updateBrand: fnCtrl = async (req, res, next) => {
 
 const deleteBrand: fnCtrl = async (req, res, next) => {
   try {
-    const brand = req.body as IDeleteBrand;
-    const data = await BrandService.deleteBrand(brand);
+    const id = Number(req.params.id); 
+    const data = await BrandService.deleteBrand(id);
     sendResponse(res, HTTP_STATUS.OK, { message: data.message });
   } catch (error) {
     registrationError(error, res, next);

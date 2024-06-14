@@ -6,10 +6,7 @@ export interface IDataProduct {
   productCoverImage: string[];
 }
 
-export interface IDataProductUpdate {
-  product: ICreateProduct;
-  updateImage: { newImage: string; oldImageId: number }[];
-}
+export interface IDataProductUpdate extends ICreateProduct {}
 export interface ICreateProduct {
   name: string;
   description: string;

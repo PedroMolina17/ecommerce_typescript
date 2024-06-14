@@ -1,0 +1,15 @@
+meta {
+  name: create_brand
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/brand/create-brand
+  body: json
+  auth: none
+}
+
+body:json {
+  {"name":"teros"}
+}

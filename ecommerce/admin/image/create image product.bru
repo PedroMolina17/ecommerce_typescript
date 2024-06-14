@@ -1,0 +1,16 @@
+meta {
+  name: create image product
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE_URL}}/imageProduct/31/create-image
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  imageProducts: @file(C:\Users\Usuario\Downloads\436151219_1009940107356765_5294674327928589696_n.jpg|C:\Users\Usuario\Downloads\444480478_7626995094061966_8753960092855975856_n.jpg)
+  productId: 
+}

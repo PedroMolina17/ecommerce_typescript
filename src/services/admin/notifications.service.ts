@@ -15,6 +15,7 @@ export class NotificationsService {
         message: data.message,
       },
     });
+    console.log("--->",data)
     if (!existingNotification) {
       const notification = await this.prisma.notification.create({ data });
       return notification;

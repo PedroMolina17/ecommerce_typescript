@@ -1,0 +1,16 @@
+meta {
+  name: update_imageProduct
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{BASE_URL}}/imageProduct/update-image
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  imagesOldId: [7,8]
+  imageProducts: @file(/home/santiago/Imágenes/human'.jpg|/home/santiago/Imágenes/descargaUpdate1.jpeg)
+}
