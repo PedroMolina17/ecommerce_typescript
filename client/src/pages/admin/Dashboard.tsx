@@ -1,3 +1,4 @@
+
 import Product from "../../Components/Admin/Products/Product";
 import Sales from "../../Components/Admin/Sales/Sales";
 import Suppliers from "../../Components/Admin/Suppliers";
