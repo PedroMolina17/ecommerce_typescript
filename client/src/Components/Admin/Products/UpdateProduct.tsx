@@ -57,7 +57,7 @@ const UpdateProduct = ({ productId }) => {
   //Obtener imageCover por Id
   const { data: imageCoverData, isLoading: imageCoverLoading } = useQuery({
     queryKey: ["imageCover"],
-    queryFn: () => imageCoverById(22),
+    queryFn: () => imageCoverById(productId),
   });
   const imageCover = imageCoverData?.imageProductCovers || [];
 
