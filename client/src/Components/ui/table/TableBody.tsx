@@ -8,9 +8,9 @@ interface TableBodyProps {
 }
 const TableBody = ({ rows, tbodyClass, trClass, tdClass }: TableBodyProps) => {
   return (
-    <tbody className={`${tbodyClass}`}>
+    <tbody className={`${tbodyClass} text-lg`}>
       {rows().rows.map((row: any) => (
-        <tr key={row.id} className={`${trClass}`}>
+        <tr key={row.id} className={`${trClass} h-16 text-center`}>
           {row.getVisibleCells().map((cell: any) => (
             <td key={cell.id} className={`${tdClass}`}>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}

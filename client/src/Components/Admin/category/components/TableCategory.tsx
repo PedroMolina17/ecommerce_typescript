@@ -55,8 +55,8 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
 
   return (
     <div className="w-full overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="  text-xs border-b border-gray-700 text-gray-700 uppercase dark:text-gray-400">
+      <table className="w-full text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead className="  text-xs border-b border-gray-700 text-gray-700 uppercase dark:text-gray-400 ">
           <tr className="">
             {columns &&
               columns.map((col) => (
@@ -64,13 +64,13 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                   key={col.accessorKey}
                   scope="col"
                   className={`${
-                    col.accessorKey === "id" && "text-center w-14  "
-                  } ${col.accessorKey === "name" && " "} ${
+                    col.accessorKey === "id" && "text-center w-14 text-sm  "
+                  } ${col.accessorKey === "name" && "text-sm "} ${
                     col.accessorKey === "createAt" &&
-                    "whitespace-nowrap w-72 text-left  "
+                    "whitespace-nowrap w-72 text-left text-sm   "
                   } ${
                     col.accessorKey === "action" && "w-14 text-center px-4"
-                  } py-4  text-white font-medium  leading-4 uppercase shadow-md `}
+                  } py-4  text-white font-medium  leading-4 uppercase shadow-md text-sm  `}
                 >
                   {col.header}
                 </th>
@@ -85,7 +85,7 @@ const TableCategory = ({ data }: ITableCategoryProps) => {
                   columns.map((col: ITableColumns) => (
                     <td
                       key={col.accessorKey}
-                      className={` ${
+                      className={`h-16 ${
                         col.accessorKey === "createAt" &&
                         " whitespace-nowrap px-0 text-left"
                       } ${col.accessorKey === "id" && "text-center "} ${

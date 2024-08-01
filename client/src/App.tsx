@@ -34,7 +34,7 @@ function App() {
               </>
             }
           />
-          <Route path="/admin/*" element={<AdminLayout />} />{" "}
+          <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/adminLogin/*" element={<Login />} />
         </Routes>
       </Router>

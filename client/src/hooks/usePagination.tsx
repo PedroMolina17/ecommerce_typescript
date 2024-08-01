@@ -14,7 +14,7 @@ const usePagination = () => {
           pageSize,
         });
       },
-    [setPagination],
+    [setPagination]
   );
   return { pagination, handlePagination, setPagination };
 };

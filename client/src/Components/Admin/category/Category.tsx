@@ -35,31 +35,33 @@ const Category = () => {
     filterData &&
     filterData.slice(
       (pagination.pageIndex - 1) * 10,
-      pagination.pageIndex * 10,
+      pagination.pageIndex * 10
     );
 
   return (
-    <div className="relative flex flex-col gap-3">
-      <div className="sticky top-16 bg-bg z-20">
-        <h2 className=" font-semibold text-white text-2xl mb-2 mt-3">
-          Categories
-        </h2>
+    <div className="w-full bg-primary px-4 py-2 rounded-md ">
+      <div className="  flex flex-col w-full sticky top-16 ">
+        <div className="sticky top-16 bg-primary z-20">
+          <div className="flex items-center h-20 justify-between">
+            <h2 className="font-semibold text-white text-2xl ">Categories</h2>{" "}
+            <SearchInput
+              type="search"
+              placeholder="Search category..."
+              register={register("category")}
+            />
+          </div>
 
-        <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
-          <SearchInput
-            type="search"
-            placeholder="Search category..."
-            register={register("category")}
-          />
-          <button
-            onClick={() => {
-              setOpenForm("create");
-            }}
-            className="py-1 px-3 rounded-md bg-primary text-white flex items-center space-x-1"
-          >
-            <CiCirclePlus className="text-xl" />
-            <span>Create Category</span>
-          </button>
+          <div className=" py-1 px-0 flex justify-end  rounded-md ">
+            <button
+              onClick={() => {
+                setOpenForm("create");
+              }}
+              className="py-1 px-3 rounded-md bg-primary text-white flex items-center space-x-1 border"
+            >
+              <CiCirclePlus className="text-xl" />
+              <span>Create Category</span>
+            </button>
+          </div>
         </div>
       </div>
 

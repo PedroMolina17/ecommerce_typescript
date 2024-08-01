@@ -36,7 +36,7 @@ const TableBrands = ({ data }: ITableBrandsProps) => {
     },
   ];
   return (
-    <div className="w-full overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="w-full overflow-x-auto shadow-md sm:rounded-lg bg-primary">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="  text-xs border-b border-gray-700 text-gray-700 uppercase dark:text-gray-400">
           <tr className="">
@@ -59,10 +59,10 @@ const TableBrands = ({ data }: ITableBrandsProps) => {
               ))}
           </tr>
         </thead>
-        <tbody className="table-body">
+        <tbody className="table-body text-base">
           {data &&
             data.map((row: ITableRow) => (
-              <tr key={row.id} className="">
+              <tr key={row.id} className="h-16">
                 {columns &&
                   columns.map((col: ITableColumns) => (
                     <td
