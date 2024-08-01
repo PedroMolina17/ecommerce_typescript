@@ -23,6 +23,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { useMutation } from "@tanstack/react-query";
 import CreateProduct from "./CreateProduct";
+import { MdPersonSearch } from "react-icons/md";
+
 import useProductStore from "./store/ProductStore";
 const ProductsTable = () => {
   const [sorting, setSorting] = useState<ColumnSort[]>([]);
@@ -96,32 +98,37 @@ const ProductsTable = () => {
   });
 
   return (
-    <div className="mx-2">
-      <h2 className="text-3xl font-bold text-slate-600">Lista de Productos</h2>
-      <div className="flex justify-between items-center ">
-        <div className="flex items-center w-96 focus-within:border-2 gap-5 px-4  my-4 rounded-md focus-within:border-[#139dba] bg-[#ffffff] border">
-          <FaSearch className="text-[#139dba]" />
+    <div className="mx-2 bg-primary rounded-md px-4 py-6">
+      <div className="flex justify-between items-center">
+        <h2 className="font-semibold text-white text-2xl">List of Products</h2>
+        <div className="flex items-center  focus-within:border-2 gap-2 px-2.5  rounded-md py-1  bg-[#111827] border border-slate-600">
+          <MdPersonSearch className="text-[#139dba] text-xl font-1bold" />
           <input
             type="text"
-            placeholder="Buscar Producto"
+            placeholder="Search Product..."
             value={filtering}
-            className="outline-none  bg-transparent w-full py-2"
+            className="outline-none bg-transparent w-full  text-sm text-gray-500"
             onChange={(e) => setFiltering(e.target.value)}
           ></input>
         </div>
+      </div>
+      <div className="flex justify-end items-center my-4 ">
         <button
-          className="bg-green-500 text-white flex items-center h-10 rounded-md px-2 gap-1"
+          className=" text-white flex items-center h-10 rounded-md px-2 gap-1 border"
           onClick={() => setOperation("CreateProduct")}
         >
           <IoAddCircle />
-          Agregar Producto
+          Create Product
         </button>
       </div>
 
       <table className="w-full">
         <thead className=" text-slate-600  bg-slate-200 font-bold">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="bg-[#139dba] text-white">
+            <tr
+              key={headerGroup.id}
+              className="bg-[#1e1e35] text-white border-b border-slate-700"
+            >
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
@@ -144,14 +151,21 @@ const ProductsTable = () => {
             </tr>
           ))}
         </thead>
-        <tbody className="table-body text-slate-700 font-normal text-sm">
+        <tbody className="table-body text-slate-400 font-normal text-md">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell, index) => (
-                <td key={cell.id} className="text-center p-3">
+                <td key={cell.id} className="text-center p-3 h-16">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}{" "}
                   {index === columns.length - 1 && (
-                    <div>
+                    <div className="flex gap-2 items-center justify-center">
+                      <button
+                        onClick={() => UpdateProductVIew(row.original.id)}
+                        className="text-blue-500 hover:text-blue-600 text-2xl focus:outline-none "
+                        aria-label="Eliminar producto"
+                      >
+                        <CiEdit className="text-xl" />
+                      </button>
                       <button
                         onClick={() => setOpenForm("delete")}
                         className="text-red-500 text-2xl focus:outline-none "
@@ -163,13 +177,6 @@ const ProductsTable = () => {
                             deleteProductMutation.mutate(row.original.id)
                           }
                         />
-                      </button>
-                      <button
-                        onClick={() => UpdateProductVIew(row.original.id)}
-                        className="text-yellow-500 text-2xl focus:outline-none "
-                        aria-label="Eliminar producto"
-                      >
-                        <CiEdit className="text-xl" />
                       </button>
                     </div>
                   )}
@@ -193,9 +200,6 @@ const ProductsTable = () => {
           }}
         />
       </div>
-
-      {/* Delete after adding products */}
-      <div className="h-[500px]" />
     </div>
   );
 };

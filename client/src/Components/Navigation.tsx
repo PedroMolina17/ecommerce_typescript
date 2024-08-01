@@ -26,7 +26,7 @@ const Navigation = () => {
         {
           email: username,
           password,
-        },
+        }
       );
       console.log("Login successful:", response.data);
     } catch (error) {

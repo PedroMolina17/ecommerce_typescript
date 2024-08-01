@@ -123,7 +123,7 @@ const UpdateProduct = ({ productId }) => {
         brandId,
       };
       await updateProductMutation.mutate(data);
-      console.log("Datos actualizados:", data);
+      toggleView("ViewProduct");
     } catch (error) {
       console.error("Error al actualizar el producto:", error);
     }

@@ -32,32 +32,34 @@ const Brand = () => {
     filterData &&
     filterData.slice(
       (pagination.pageIndex - 1) * 10,
-      pagination.pageIndex * 10,
+      pagination.pageIndex * 10
     );
 
   return (
-    <div className="relative flex flex-col gap-3">
-      <div className="sticky top-16 bg-bg z-20">
-        <h2 className="font-semibold text-white text-2xl mt-3">Brands</h2>
-
-        <div className="bg-bg py-1 px-0 flex justify-between shadow-md rounded-md">
+    <div className="relative flex flex-col gap-3 bg-primary px-4 py-2 rounded-md">
+      <div className="sticky top-16  z-20">
+        <div className="flex justify-between items-center h-16">
+          <h2 className="font-semibold text-white text-2xl mt-3">Brands</h2>
           <SearchInput
             type="search"
             placeholder="Search brand..."
             register={register("brand")}
           />
+        </div>
+
+        <div className="flex justify-end shadow-md rounded-md">
           <button
             onClick={() => {
               setOpenForm("create");
             }}
-            className="py-1 px-3 rounded-md bg-primary text-white"
+            className="py-1 px-3 rounded-md bg-primary text-white border"
           >
             Create new brand
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col    rounded-md shadow-md">
+      <div className="flex flex-col    rounded-md ">
         <div className="  flex flex-col justify-center items-center">
           {paginateData ? (
             <TableBrands data={paginateData} />

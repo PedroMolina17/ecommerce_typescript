@@ -3,15 +3,29 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Login from "../Components/Admin/login/Login";
 import Dashboard from "../pages/admin/Dashboard";
 import { PageNotFound, PageNotFoundAdmin } from "../pages/admin/PageNotFound";
+
 import EcommerceLayout from "@/layouts/EcommerceLayout";
 import Slider from "@/Components/Slider";
-
+import SingUp from "@/Components/SingUp";
+import Blogs from "@/Components/Blogs";
+import Acessories from "@/Components/Acessories";
+import Deals from "@/Components/Deals";
+import Electronic from "@/Components/Electronic";
+import Cellphones from "@/Components/Cellphones";
 const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <PageNotFound />,
     element: <EcommerceLayout />,
-    children: [{ index: true, element: <Slider /> }],
+    children: [
+      { index: true, element: <Slider /> },
+      { path: "signup", element: <SingUp /> },
+      { path: "blogs", element: <Blogs /> },
+      { path: "accesories", element: <Acessories /> },
+      { path: "deals", element: <Deals /> },
+      { path: "electronics", element: <Electronic /> },
+      { path: "cellphones", element: <Cellphones /> },
+    ],
   },
   { path: "/admin-login", element: <Login /> },
   {

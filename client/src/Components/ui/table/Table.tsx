@@ -19,7 +19,7 @@ const Table = ({ columns, data, render, tableClass }: TableUserProps) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-  return <table className={`${tableClass}`}>{render({ table })}</table>;
+  return <table className={`${tableClass} text-md`}>{render({ table })}</table>;
 };
 
 export default Table;

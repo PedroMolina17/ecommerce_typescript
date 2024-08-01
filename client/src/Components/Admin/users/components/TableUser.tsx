@@ -98,7 +98,7 @@ const TableUser = ({ data }: TableUserProps) => {
   return (
     <>
       <div className="flex flex-col sticky top-36 z-40  border-b border-slate-700">
-        <div className="table-header bg-primary text-white text-left text-xs ">
+        <div className="table-header bg-primary text-white text-left  ">
           <Table
             tableClass="w-full rounded-md"
             columns={columns}
@@ -108,7 +108,7 @@ const TableUser = ({ data }: TableUserProps) => {
                 <TableHeader
                   headers={table.getHeaderGroups}
                   theadClass=""
-                  thClass="py-4 px-2"
+                  thClass="py-4 "
                   trClass=""
                 />
               </>
@@ -126,7 +126,7 @@ const TableUser = ({ data }: TableUserProps) => {
               <TableBody
                 rows={table.getRowModel}
                 tbodyClass="table-body text-gray-500 text-sm"
-                tdClass="py-4 px-2"
+                tdClass="py-4 "
               />
             </>
           )}
