@@ -14,7 +14,7 @@ import { verifyAuthRole } from "../middlewares/verifyAuthRole.mdt";
 import { verifyJwt } from "../middlewares/verifyJwt.mdl";
 import { ROLE } from "../constants/roleUser.constants";
 const router = Router();
-router.get("/products", verifyJwt, getAllProductsPaginated);
+router.get("/products", getAllProductsPaginated);
 
 router.post(
   "/create-product",

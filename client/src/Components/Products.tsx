@@ -1,6 +1,8 @@
 import { IoIosStar } from "react-icons/io";
 import { IoIosStarHalf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { useProduct } from "../hooks/useProducts";
+import { useEffect } from "react";
 interface Product {
   id: number;
   nombre: string;
@@ -11,6 +13,16 @@ interface Product {
 }
 
 const Products = () => {
+  const { useGetAllProducts } = useProduct();
+  const { data: dataProducts, isLoading: isLoadingProducts } =
+    useGetAllProducts();
+
+  useEffect(() => {
+    if (!isLoadingProducts && dataProducts) {
+      console.log(dataProducts);
+    }
+  }, [isLoadingProducts, dataProducts]);
+
   const products: Product[] = [
     {
       id: 1,
