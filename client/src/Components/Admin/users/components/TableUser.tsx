@@ -97,26 +97,29 @@ const TableUser = ({ data }: TableUserProps) => {
 
   return (
     <>
-      <div className="flex flex-col sticky top-36 z-40  border-b border-slate-700">
-        <div className="table-header bg-primary text-white text-left  ">
+      <div className="flex flex-col sticky top-36 z-10 border-b border-slate-700">
+        <div className="bg-primary text-white text-center">
           <Table
-            tableClass="w-full rounded-md"
+            tableClass="rounded-md w-full"
             columns={columns}
             data={data.results}
             render={({ table }) => (
               <>
                 <TableHeader
                   headers={table.getHeaderGroups}
-                  theadClass=""
-                  thClass="py-4 "
-                  trClass=""
+                  thClass="py-4 border-b border-slate-700"
+                />
+                <TableBody
+                  rows={table.getRowModel}
+                  tbodyClass="text-gray-500 text-sm"
+                  tdClass="py-4"
                 />
               </>
             )}
           ></Table>
         </div>
       </div>
-      <div className="overflow-auto">
+      {/* <div className="">
         <Table
           tableClass="w-full rounded-md"
           columns={columns}
@@ -125,13 +128,13 @@ const TableUser = ({ data }: TableUserProps) => {
             <>
               <TableBody
                 rows={table.getRowModel}
-                tbodyClass="table-body text-gray-500 text-sm"
-                tdClass="py-4 "
+                tbodyClass="text-gray-500 text-sm"
+                tdClass="py-4 border border-green-500 text-center"
               />
             </>
           )}
         ></Table>
-      </div>
+      </div> */}
       <ToastContainer />
     </>
   );

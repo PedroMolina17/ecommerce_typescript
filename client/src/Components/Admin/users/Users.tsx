@@ -39,7 +39,7 @@ const Users = () => {
 
   return (
     <>
-      <div className="w-full  bg-primary px-4 py-2 rounded-md">
+      <div className="w-full bg-primary px-4 py-2 rounded-md">
         <div className="flex flex-col w-full sticky top-16 ">
           <div className="flex items-center justify-between bg-primary w-full h-20 ">
             <h2 className="font-semibold text-white text-2xl">List of users</h2>
@@ -68,6 +68,8 @@ const Users = () => {
                   users
                 </span>
                 <ResponsivePagination
+                  className="flex bg-[#111827]"
+                  activeItemClassName="bg-[#272743]"
                   current={pagination.pageIndex}
                   total={Math.ceil(data.info.count! / pagination.pageSize)}
                   onPageChange={(page) => {
