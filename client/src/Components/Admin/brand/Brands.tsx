@@ -69,6 +69,8 @@ const Brand = () => {
           <div className="m-2 w-full flex justify-center mt-4 mb-10">
             {paginateData && (
               <ResponsivePagination
+                className="flex bg-[#111827]"
+                activeItemClassName="bg-[#272743]"
                 current={pagination.pageIndex}
                 onPageChange={(page) => {
                   handlePagination({ ...pagination, pageIndex: page });

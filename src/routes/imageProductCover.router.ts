@@ -14,16 +14,10 @@ import { upload } from "../configs/multer.config";
 
 const router = Router();
 
-router.get(
-  "/get-all-img-cover",
-  verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
-  getAllImageProductCovers
-);
+router.get("/get-all-img-cover", getAllImageProductCovers);
 router.get(
   "/:productId/get-all-img-cover",
-  verifyJwt,
-  verifyAuthRole([ROLE.ADMIN, ROLE.USER]),
+
   getAllImageProductCoverByProductId
 );
 router.post(
