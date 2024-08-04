@@ -193,6 +193,8 @@ const ProductsTable = () => {
           users
         </span>
         <ResponsivePagination
+          className="flex bg-[#111827]"
+          activeItemClassName="bg-[#272743]"
           current={pagination.pageIndex}
           total={Math.ceil((data?.info.count ?? 0) / pagination.pageSize)}
           onPageChange={(e) => {
