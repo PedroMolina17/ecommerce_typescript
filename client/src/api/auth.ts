@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import { api } from "./axios.config";
-
 import { ILogin, IResponseAuth } from "../types/auth.type";
 
 async function login(user: ILogin) {
@@ -14,8 +13,9 @@ async function logout() {
 }
 
 async function checkAuth(): Promise<IResponseAuth> {
-  const result: AxiosResponse<IResponseAuth> =
-    await api.get("/auth/check-admin");
+  const result: AxiosResponse<IResponseAuth> = await api.get(
+    "/auth/check-admin"
+  );
   return result.data;
 }
 
