@@ -43,5 +43,3 @@ export const getAllImageProductCoverByProductId: fnCtrl = async (
     registrationError(error, res, next);
   }
 };
-
-

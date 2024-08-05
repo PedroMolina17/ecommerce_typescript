@@ -15,11 +15,7 @@ import { upload } from "../configs/multer.config";
 const router = Router();
 
 router.get("/get-all-img-cover", getAllImageProductCovers);
-router.get(
-  "/:productId/get-all-img-cover",
-
-  getAllImageProductCoverByProductId
-);
+router.get("/:productId/get-all-img-cover", getAllImageProductCoverByProductId);
 router.post(
   "/:productId/create-img-cover",
   upload.fields([{ name: "imageProductCover" }]),
@@ -28,7 +24,7 @@ router.post(
   createImageProductCover
 );
 router.put(
-  "/update-img-cover",
+  "/:productId/update-img-cover",
   upload.fields([{ name: "imageProductCover" }]),
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),

@@ -1,3 +1,4 @@
+import { ImageProductCoverService } from "./admin/imageProductCover.service";
 import { PrismaClient } from "@prisma/client";
 import ClientError from "../errors/clientError.error";
 import { HTTP_STATUS } from "../constants/statusCode.constants";
@@ -8,6 +9,9 @@ export class ProductService {
     const products = await prisma.products.findMany({
       take: pageSize,
       skip: (page - 1) * pageSize,
+      include: {
+        ProductCoverImage: true,
+      },
     });
 
     // Obtener el total de productos y items

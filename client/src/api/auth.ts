@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import { api } from "./axios.config";
-
 import { ILogin, IResponseAuth } from "../types/auth.type";
 
 async function login(user: ILogin) {

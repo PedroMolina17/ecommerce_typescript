@@ -54,11 +54,19 @@ const updateProduct = async (
 ) => {
   try {
     const productId = Number(req.params.productId);
-    const product = req.body
-console.log({product,productId});
+    const product = req.body;
+    if (product.brandId) {
+      product.brandId = Number(product.brandId);
+    }
+    if (product.categoryId) {
+      product.categoryId = Number(product.categoryId);
+    }
+
+    console.log({ product, productId });
     const data = await productService.updateProduct(product, productId);
-    sendResponse(res, HTTP_STATUS.OK, {product:data});
+    sendResponse(res, HTTP_STATUS.OK, { product: data });
   } catch (error) {
+    console.error("Error:", error);
     registrationError(error, res, next);
   }
 };

@@ -79,35 +79,45 @@ export class ImageProductCoverService {
     return { message: `all images associated with id:${productId} deleted` };
   }
 
-  async updateImageProductCover(data: string[], imagesOldId: number[]) {
-    if (imagesOldId.length === 0 || data.length === 0) {
-      throw new ClientError("images not found", 404);
+  async updateImageProductCover(
+    productId: number,
+    data: string,
+    imageId: number
+  ) {
+    // Verifica que el producto exista
+    const productExists = await this.prisma.products.findUnique({
+      where: { id: productId },
+    });
+
+    if (!productExists) {
+      throw new ClientError("Product not found", HTTP_STATUS.NOT_FOUND);
     }
-    await Promise.all(
-      imagesOldId.map(async (id, index) => {
-        const existingImg = await this.prisma.productCoverImage.findUnique({
-          where: { id },
-        });
 
-        if (!existingImg) {
-          throw new ClientError("image not found", HTTP_STATUS.NOT_FOUND);
-        }
+    // Verifica que la imagen a actualizar exista
+    const existingImg = await this.prisma.productCoverImage.findUnique({
+      where: { id: imageId },
+    });
 
-        const { public_id, secure_url } =
-          await this.cloudinaryService.uploadImgProduct(
-            data[index],
-            existingImg.publicIdImage
-          );
+    if (!existingImg) {
+      throw new ClientError("Image not found", HTTP_STATUS.NOT_FOUND);
+    }
 
-        return await this.prisma.productCoverImage.update({
-          where: { id: existingImg.id },
-          data: {
-            publicIdImage: public_id,
-            imageProduct: secure_url,
-          },
-        });
-      })
-    );
-    return { message: "image updated" };
+    // Subir nueva imagen a Cloudinary
+    const { public_id, secure_url } =
+      await this.cloudinaryService.uploadImgProduct(
+        data,
+        existingImg.publicIdImage
+      );
+
+    // Actualizar imagen en la base de datos
+    await this.prisma.productCoverImage.update({
+      where: { id: existingImg.id },
+      data: {
+        publicIdImage: public_id,
+        imageProduct: secure_url,
+      },
+    });
+
+    return { message: "Image updated successfully" };
   }
 }
