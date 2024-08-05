@@ -2,8 +2,8 @@ import { IoIosStar } from "react-icons/io";
 import { IoIosStarHalf } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../hooks/useProducts";
-import { useImageCover } from "@/hooks/useImageCover";
 import { useEffect, useState } from "react";
+import { useCart } from "@/hooks/useCart";
 interface Product {
   id: number;
   nombre: string;
@@ -15,25 +15,13 @@ interface Product {
 
 const Products = () => {
   const { useGetAllProducts } = useProduct();
-  const { useGetImageCoverById } = useImageCover();
   const [products, setProducts] = useState([]);
-
   const { data: dataProducts, isLoading: isLoadingProducts } =
     useGetAllProducts();
-
+  const { addCartMutation } = useCart();
   useEffect(() => {
     if (!isLoadingProducts && dataProducts) {
       setProducts(dataProducts.results);
-
-      dataProducts.results.forEach((product) => {
-        if (product.ProductCoverImage) {
-          console.log(
-            `Product ID: ${product.id}, Image URL: ${product.ProductCoverImage.imageProduct}`
-          );
-        } else {
-          console.log(`Product ID: ${product.id} has no cover image.`);
-        }
-      });
     }
   }, [isLoadingProducts, dataProducts]);
   const renderStars = (rating: number) => {
@@ -54,6 +42,25 @@ const Products = () => {
     return stars;
   };
   const navigate = useNavigate();
+  const handleAddToCart = (product: Product) => {
+    const cartItemData = {
+      cartId: 1,
+      productId: product.id,
+      quantity: 1,
+      unitPrice: product.salePrice,
+      totalItemPrice: product.salePrice * 1,
+    };
+    console.log(cartItemData);
+    addCartMutation.mutate(cartItemData, {
+      onSuccess: () => {
+        console.log(cartItemData);
+      },
+      onError: (error) => {
+        console.error("Error adding product to cart:", error);
+        alert("Failed to add product to cart.");
+      },
+    });
+  };
 
   const navigateToProductDetails = (productId: number) => {
     navigate(`/electronics/${productId.toString()}`);
@@ -88,7 +95,7 @@ const Products = () => {
               </button>
               <button
                 className="py-2 text-center bg-[#139dba] rounded-md min-w-8 "
-                onClick={() => console.log(product.id)}
+                onClick={() => handleAddToCart(product)}
               >
                 Add Cart
               </button>

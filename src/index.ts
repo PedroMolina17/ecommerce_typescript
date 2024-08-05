@@ -16,10 +16,10 @@ import { NotificationsService } from "./services/admin/notifications.service";
 export const ENV =
   process.env.NODE_ENV === "DEVELOPMENT"
     ? dotenv.config({
-        path: path.resolve(__dirname, "../environments/.env.development"),
+        path: path.resolve(__dirname, "../.env.development"),
       }).parsed
     : dotenv.config({
-        path: path.resolve(__dirname, "../environments/.env.production"),
+        path: path.resolve(__dirname, "../.env.production"),
       }).parsed;
 
 const app = express();
@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ENV?.URL_FRONTEND,
     credentials: true,
   })
 );
@@ -43,7 +43,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 const server = http.createServer(app);
 export const io = new SocketServer(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ENV?.URL_FRONTEND,
     credentials: true,
   },
 });

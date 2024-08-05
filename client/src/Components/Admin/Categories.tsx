@@ -20,6 +20,7 @@ type Category = {
 const Categories: React.FC = () => {
   const { handleSubmit, register, reset } = useForm<FormValues>();
   const [categories, setCategories] = useState<Category[]>([]);
+  const url = import.meta.env.VITE_URL_FRONTEND;
 
   useEffect(() => {
     fetchCategories();
@@ -27,11 +28,11 @@ const Categories: React.FC = () => {
 
   const fetchCategories = () => {
     axios
-      .get("http://localhost:3500/api/category/categories")
+      .get(`${url}/api/category/categories`)
       .then((response) => {
         const responseData = response.data;
         const sortedCategories = responseData.data.sort(
-          (a: Category, b: Category) => a.id - b.id,
+          (a: Category, b: Category) => a.id - b.id
         );
         setCategories(sortedCategories);
       })
@@ -41,8 +42,8 @@ const Categories: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:3500/api/category/create-category",
-        data,
+        `${url}/api/category/create-category`,
+        data
       );
       console.log("Server response:", response.data);
       toast.success("Categoria añadida");
@@ -57,9 +58,7 @@ const Categories: React.FC = () => {
 
   const handleDelete = async (categoryId: number) => {
     try {
-      await axios.delete(
-        `http://localhost:3500/api/category/delete-category/${categoryId}`,
-      );
+      await axios.delete(`${url}/api/category/delete-category/${categoryId}`);
       toast.success("Categoria eliminada");
       fetchCategories();
     } catch (error) {

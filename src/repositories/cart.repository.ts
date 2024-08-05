@@ -14,7 +14,11 @@ export class CartRepository implements ICartRespository {
         userId: userId,
       },
       include: {
-        cartItem: true,
+        cartItem: {
+          include: {
+            product: true,
+          },
+        },
       },
     });
   }

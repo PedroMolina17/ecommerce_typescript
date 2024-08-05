@@ -30,11 +30,11 @@ export const createCart: fnCtrl = async (req, res, next) => {
 };
 
 export const addCartItem: fnCtrl = async (req, res, next) => {
-    try {
-        const item = req.body as Omit<ICartItem, "id">;
-        const cartItem = await cartService.addCartItem(item);
-        sendResponse(res, HTTP_STATUS.OK, cartItem);
-    } catch (error) {
-        registrationError(error, res, next);
-    }
-}
+  try {
+    const item = req.body as Omit<ICartItem, "id">;
+    const cartItem = await cartService.addCartItem(item);
+    sendResponse(res, HTTP_STATUS.OK, cartItem);
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+};

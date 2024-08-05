@@ -13,17 +13,7 @@ export const useProduct = () => {
       queryFn: () => getAllProducts(),
     });
 
-  //   const useGetProductById = (id) =>
-  //     useQuery({
-  //       queryKey: ["products"],
-  //       queryFn: () => getProductById(id),
-  //     });
-
   return {
-    // addProductMutation,
     useGetAllProducts,
-    // useGetProductById,
-    // deleteProductMutation,
-    // updateProductMutation,
   };
 };
