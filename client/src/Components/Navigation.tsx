@@ -26,7 +26,8 @@ const Navigation = () => {
   const [menuMobile, setMenuMobile] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
   const { useGetCart } = useCart();
-  const { data: dataCart } = useGetCart(3);
+  const [userId, setUserId] = useState<string | null>(null);
+  const { data: dataCart } = useGetCart(Number(userId));
 
   const { register, handleSubmit } = useForm<FormValue>({
     defaultValues: { email: "vitor.dupuis@example.com", password: "figoncjd" },
@@ -64,50 +65,11 @@ const Navigation = () => {
       console.error(error);
     },
   });
+  const firstCart = dataCart ? dataCart.userCart[0] : null;
 
   const onSubmit = handleSubmit((values) => {
     loginMutation.mutate(values);
   });
-
-  const renderFirstCartItems = () => {
-    if (!dataCart || !dataCart.userCart || dataCart.userCart.length === 0) {
-      return <p>No items in the cart</p>;
-    }
-
-    const firstCart = dataCart.userCart[0];
-    if (!firstCart.cartItem || firstCart.cartItem.length === 0) {
-      return <p>No items in the first cart</p>;
-    }
-
-    // Group items by productId
-    const groupedItems = firstCart.cartItem.reduce((acc, item) => {
-      const existingItem = acc.find((i) => i.productId === item.productId);
-      if (existingItem) {
-        existingItem.quantity += item.quantity;
-        existingItem.totalItemPrice += item.totalItemPrice; // Accumulate total item price
-      } else {
-        acc.push({
-          ...item,
-          quantity: item.quantity,
-          totalItemPrice: item.totalItemPrice, // Store total item price
-        });
-      }
-      return acc;
-    }, [] as typeof firstCart.cartItem);
-
-    return (
-      <div>
-        {groupedItems.map((item, index) => (
-          <li key={index} className="flex gap-2">
-            <p>
-              {item.quantity} x {item.product.name}
-            </p>
-            <p>${item.totalItemPrice.toFixed(2)}</p>
-          </li>
-        ))}
-      </div>
-    );
-  };
 
   useEffect(() => {
     const userCookie = Cookies.get("accessToken");
@@ -116,6 +78,7 @@ const Navigation = () => {
       try {
         const decodedToken: any = jwtDecode(userCookie);
         setUserName(decodedToken.user.userName || "User");
+        setUserId(decodedToken.user.id || "id");
       } catch (error) {
         console.error("Error al decodificar el token", error);
         setUserName(null);
@@ -263,8 +226,24 @@ const Navigation = () => {
             <label className="flex flex-col justify-center items-center gap-2">
               <p className="text-[#139dba] font-bold">Comprar</p>
             </label>
-            {userName ? (
-              <div>{renderFirstCartItems()}</div>
+            {userId ? (
+              firstCart ? (
+                <div>
+                  {firstCart.cartItem.length > 0 ? (
+                    firstCart.cartItem.map((item) => (
+                      <div key={item.id} className="flex justify-between gap-2">
+                        <p> {item.quantity}</p>
+                        <p>{item.product.name}</p>
+                        <p>{item.unitPrice}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No items in this cart.</p>
+                  )}
+                </div>
+              ) : (
+                <p>No cart available.</p>
+              )
             ) : (
               <p>Please log in</p>
             )}

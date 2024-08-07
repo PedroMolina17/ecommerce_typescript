@@ -12,7 +12,7 @@ import { setCookies } from "../../../utils/setCookies.util";
 type AuthFunction = (
   req: CustomRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => Promise<any>;
 
 const registerAdmin: AuthFunction = async (req, res, next) => {

@@ -17,7 +17,7 @@ router.get(
   "/check-admin",
   verifyJwt,
   verifyAuthRole([ROLE.ADMIN]),
-  checkAuthAdmin,
+  checkAuthAdmin
 );
 router.post("/register", validateFieldRegister, register);
 router.post("/register-admin", validateFieldRegister, registerAdmin);
