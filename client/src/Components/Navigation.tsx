@@ -25,7 +25,7 @@ const Navigation = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>("Home");
   const [menuMobile, setMenuMobile] = useState(true);
   const [userName, setUserName] = useState<string | null>(null);
-  const { useGetCart } = useCart();
+  const { useGetCart, updateCartMutation } = useCart();
   const [userId, setUserId] = useState<string | null>(null);
   const { data: dataCart } = useGetCart(Number(userId));
 
@@ -36,6 +36,22 @@ const Navigation = () => {
 
   const openMenu = (menu: string) => {
     setMenuOpen((prevMenu) => (prevMenu === menu ? null : menu));
+  };
+
+  const IncrementhandleUpdateToCart = (product: any) => {
+    const cartItemData: any = {
+      id: product.id,
+      quantity: product.quantity + 1,
+    };
+    updateCartMutation.mutate(cartItemData);
+  };
+
+  const DecreasehandleUpdateToCart = (product: any) => {
+    const cartItemData: any = {
+      id: product.id,
+      quantity: product.quantity - 1,
+    };
+    updateCartMutation.mutate(cartItemData);
   };
 
   const loginMutation = useMutation({
@@ -86,7 +102,7 @@ const Navigation = () => {
     } else {
       setUserName(null);
     }
-  }, []);
+  }, [dataCart]);
 
   return (
     <>
@@ -228,14 +244,32 @@ const Navigation = () => {
             </label>
             {userId ? (
               firstCart ? (
-                <div>
+                <div className="flex flex-col gap-2">
                   {firstCart.cartItem.length > 0 ? (
                     firstCart.cartItem.map((item) => (
-                      <div key={item.id} className="flex justify-between gap-2">
-                        <p> {item.quantity}</p>
-                        <p>{item.product.name}</p>
-                        <p>{item.unitPrice}</p>
-                      </div>
+                      <table>
+                        <div
+                          key={item.id}
+                          className="flex justify-between gap-2"
+                        >
+                          <thead> a</thead>
+                          <button
+                            className="text-white p-2 bg-green-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
+                            onClick={() => IncrementhandleUpdateToCart(item)}
+                          >
+                            +
+                          </button>
+                          <p> {item.quantity}</p>
+                          <button
+                            className="text-white p-2 bg-red-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
+                            onClick={() => DecreasehandleUpdateToCart(item)}
+                          >
+                            -
+                          </button>
+                          <p>{item.product.name}</p>
+                          <p>{item.unitPrice}</p>
+                        </div>
+                      </table>
                     ))
                   ) : (
                     <p>No items in this cart.</p>

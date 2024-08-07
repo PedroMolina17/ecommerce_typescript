@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useProduct } from "../hooks/useProducts";
 import { useEffect, useState } from "react";
 import { useCart } from "@/hooks/useCart";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+
 interface Product {
   id: number;
   nombre: string;
@@ -14,10 +17,16 @@ interface Product {
 }
 
 const Products = () => {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const { useGetCart } = useCart();
   const { useGetAllProducts } = useProduct();
   const [products, setProducts] = useState([]);
   const { data: dataProducts, isLoading: isLoadingProducts } =
     useGetAllProducts();
+  const { data: dataCart } = useGetCart(Number(userId));
+  const firstCart = dataCart ? dataCart.userCart[0].id : null;
+  console.log(firstCart);
   const { addCartMutation } = useCart();
   useEffect(() => {
     if (!isLoadingProducts && dataProducts) {
@@ -41,25 +50,34 @@ const Products = () => {
 
     return stars;
   };
+
+  useEffect(() => {
+    const userCookie = Cookies.get("accessToken");
+    console.log(userCookie);
+    if (userCookie) {
+      try {
+        const decodedToken: any = jwtDecode(userCookie);
+        setUserName(decodedToken.user.userName || "User");
+        setUserId(decodedToken.user.id || "id");
+      } catch (error) {
+        console.error("Error al decodificar el token", error);
+        setUserName(null);
+      }
+    } else {
+      setUserName(null);
+    }
+  }, []);
+
   const navigate = useNavigate();
   const handleAddToCart = (product: Product) => {
     const cartItemData = {
-      cartId: 1,
+      cartId: firstCart,
       productId: product.id,
       quantity: 1,
       unitPrice: product.salePrice,
       totalItemPrice: product.salePrice * 1,
     };
-    console.log(cartItemData);
-    addCartMutation.mutate(cartItemData, {
-      onSuccess: () => {
-        console.log(cartItemData);
-      },
-      onError: (error) => {
-        console.error("Error adding product to cart:", error);
-        alert("Failed to add product to cart.");
-      },
-    });
+    addCartMutation.mutate(cartItemData);
   };
 
   const navigateToProductDetails = (productId: number) => {

@@ -38,3 +38,13 @@ export const addCartItem: fnCtrl = async (req, res, next) => {
     registrationError(error, res, next);
   }
 };
+
+export const updateCartItem: fnCtrl = async (req, res, next) => {
+  try {
+    const item = req.body;
+    const cartItem = await cartService.updateCartItem(item);
+    sendResponse(res, HTTP_STATUS.OK, cartItem);
+  } catch (error) {
+    registrationError(error, res, next);
+  }
+};

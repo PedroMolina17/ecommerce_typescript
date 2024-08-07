@@ -29,6 +29,18 @@ const createCart = async (dataProduct: any) => {
   }
 };
 
+const updateCart = async (dataProduct: any) => {
+  try {
+    const { data } = await api.put("cart/update-cart-item", dataProduct);
+    return data;
+  } catch (error) {
+    console.error("Error al crear el producto:", error);
+    throw new Error(
+      "Error al crear el producto. Inténtalo de nuevo más tarde."
+    );
+  }
+};
+
 const deleteProduct = async (
   row: IDeleteProduct
 ): Promise<IResponseDeleteProduct> => {
@@ -56,7 +68,18 @@ const getCart = async (id: number) => {
 };
 
 const updateProduct = async (data: IDUpdateProduct) => {
-  await api.put(`product/update-product/${data.id}`, data);
+  try {
+    await api.put(`product/update-product/${data.id}`, data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export { getAllProducts, createCart, deleteProduct, getCart, updateProduct };
+export {
+  getAllProducts,
+  createCart,
+  deleteProduct,
+  getCart,
+  updateProduct,
+  updateCart,
+};
