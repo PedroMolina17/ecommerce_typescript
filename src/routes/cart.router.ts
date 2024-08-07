@@ -3,6 +3,7 @@ import {
   createCart,
   getCartByUserId,
   addCartItem,
+  updateCartItem,
 } from "../controllers/cart.ctrl";
 import { verifyAuthRole, verifyJwt } from "../middlewares/index";
 import { ROLE } from "../constants/roleUser.constants";
@@ -24,5 +25,11 @@ router.post(
   verifyJwt,
   // verifyAuthRole([ROLE.USER]),
   addCartItem
+);
+router.put(
+  "/update-cart-item",
+  // verifyJwt,
+  // verifyAuthRole([ROLE.USER]),
+  updateCartItem
 );
 export default router;
