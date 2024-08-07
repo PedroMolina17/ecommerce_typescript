@@ -11,6 +11,7 @@ export interface ILoginAdmin extends ILoginUser {}
 export interface ILoginUser {
   email: string;
   password: string;
+  userName?: string;
 }
 
 export interface AuthResult {
@@ -25,6 +26,7 @@ export interface DecodedTokenUser {
 }
 export interface User {
   id: number;
+  userName?: string;
 }
 export interface DecodeTokenAdmin {
   user: UserAdmin;

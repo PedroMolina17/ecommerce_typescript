@@ -59,7 +59,7 @@ export class AuthService {
 
     const isPasswordValid = await bcryp.compare(
       user.password,
-      existingUser.password!,
+      existingUser.password!
     );
 
     if (!isPasswordValid) {
@@ -71,14 +71,14 @@ export class AuthService {
       ACCESS_SECRET_TOKEN!,
       {
         expiresIn: "24h",
-      },
+      }
     );
     const refreshToken = jwt.sign(
       { user: { id: existingUser.id, role: existingUser.role } },
       REFRESH_SECRET_TOKEN!,
       {
         expiresIn: "7d",
-      },
+      }
     );
     const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const existingToken = await prisma.token.findFirst({
@@ -136,26 +136,28 @@ export class AuthService {
 
     return await this.generateAuthTokens(newUser, "register success");
   }
+
   static async login(user: ILoginUser) {
     const existingUser = await prisma.user.findUnique({
       where: { email: user.email },
+      select: { id: true, password: true, userName: true },
     });
 
     if (!existingUser) {
       throw new ClientError("user not found", HTTP_STATUS.NOT_FOUND);
     }
-
     const isPasswordValid = await bcryp.compare(
       user.password,
-      existingUser.password!,
+      existingUser.password!
     );
 
     if (!isPasswordValid) {
       throw new ClientError("password not valid", HTTP_STATUS.UNAUTHORIZED);
     }
-    const { id } = existingUser;
-    return await this.generateAuthTokens({ id }, "login success");
+    const { id, userName } = existingUser;
+    return await this.generateAuthTokens({ id, userName }, "login success");
   }
+
   private static async generateAuthTokens(user: User, message: string) {
     const accessToken = jwt.sign({ user }, ACCESS_SECRET_TOKEN!, {
       expiresIn: "24h",

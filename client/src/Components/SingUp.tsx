@@ -25,18 +25,15 @@ const SingUp = () => {
     formState: { errors },
   } = useForm<FormData>();
   console.log(errors);
-
+  const url = import.meta.env.VITE_URL_FRONTEND;
   const onSubmit = async (data: FormData) => {
     console.log(data);
     try {
-      const response = await axios.post(
-        "http://localhost:3500/api/auth/register",
-        {
-          userName: data.userName,
-          email: data.email,
-          password: data.password,
-        },
-      );
+      const response = await axios.post(`${url}/api/auth/register`, {
+        userName: data.userName,
+        email: data.email,
+        password: data.password,
+      });
 
       console.log("Registro exitoso:", response.data);
     } catch (error) {

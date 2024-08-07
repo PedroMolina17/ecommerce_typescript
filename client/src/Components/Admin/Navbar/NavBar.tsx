@@ -20,13 +20,14 @@ type Notification = {
 const NavBar: React.FC<NavBarProps> = () => {
   const [notification, setNotification] = useState<Notification[]>([]);
   const [darkMode, setDarkMode] = useState(false);
+  const url = import.meta.env.VITE_URL_FRONTEND;
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
   useEffect(() => {
-    const socket = io("http://localhost:3500");
+    const socket = io(`${url}`);
 
     socket.on("connect", () => {
       console.log("Connection established.");

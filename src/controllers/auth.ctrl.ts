@@ -11,7 +11,7 @@ import { AUTH } from "../constants";
 type AuthFunction = (
   req: CustomRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => Promise<any>;
 
 export const register: AuthFunction = async (req, res, next) => {
@@ -32,9 +32,12 @@ export const login: AuthFunction = async (req, res, next) => {
     const data = await AuthService.login(user);
 
     setCookies(res, data);
-    console.log(res.getHeader("Set-Cookie"));
 
-    sendResponse(res, HTTP_STATUS.OK, { message: data.message });
+    sendResponse(res, HTTP_STATUS.OK, {
+      message: data.message,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
   } catch (error) {
     registrationError(error, res, next);
   }

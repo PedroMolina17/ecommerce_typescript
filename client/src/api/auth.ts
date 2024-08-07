@@ -7,6 +7,11 @@ async function login(user: ILogin) {
   return result;
 }
 
+async function loginUser(user: ILogin) {
+  const result = await api.post("/auth/login", user);
+  return result;
+}
+
 async function logout() {
   const result = await api.post("/auth/logout-admin");
   return result.data;
@@ -19,4 +24,4 @@ async function checkAuth(): Promise<IResponseAuth> {
   return result.data;
 }
 
-export { checkAuth, login, logout };
+export { checkAuth, login, logout, loginUser };

@@ -29,6 +29,7 @@ interface FormularioProductoState {
 
 const FormularioProducto: React.FC<FormularioProductoProps> = () => {
   const { register, handleSubmit } = useForm<FormularioProductoState>();
+  const url = import.meta.env.VITE_URL_FRONTEND;
 
   const [state, setState] = useState<FormularioProductoState>({
     name: "",
@@ -51,9 +52,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
   useEffect(() => {
     const obtenerCategorias = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3500/api/category/categories",
-        );
+        const response = await axios.get(`${url}/api/category/categories`);
         console.log(response);
 
         if (response.data && Array.isArray(response.data.data)) {
@@ -64,7 +63,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
         } else {
           console.error(
             "La respuesta del servidor no es un array:",
-            response.data,
+            response.data
           );
         }
       } catch (error) {
@@ -75,9 +74,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
     // funcion que me va a obtener las marcas
     const obtenerMarcas = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3500/api/brand/brands",
-        );
+        const response = await axios.get(`${url}/api/brand/brands`);
 
         if (response.data && Array.isArray(response.data.data)) {
           setState((prevState) => ({
@@ -87,7 +84,7 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
         } else {
           console.error(
             "La respuesta del servidor no es un array:",
-            response.data,
+            response.data
           );
         }
       } catch (error) {
@@ -109,12 +106,12 @@ const FormularioProducto: React.FC<FormularioProductoProps> = () => {
       "name" in data.image
         ? (data.image as File).name
         : typeof data.image === "string"
-          ? data.image
-          : null;
+        ? data.image
+        : null;
     try {
       const response = await axios.post(
-        "http://localhost:3500/api/product/create-product",
-        data,
+        `${url}/api/product/create-product`,
+        data
       );
 
       console.log("Respuesta del servidor:", response.data);

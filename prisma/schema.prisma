@@ -172,8 +172,7 @@ model Cart {
   user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   cartItem CartItem[]
   total    Float      @default(0)
-
-  createAt DateTime @default(now())
+  createAt DateTime   @default(now())
 }
 
 model CartItem {
@@ -186,6 +185,8 @@ model CartItem {
   unitPrice      Float
   totalItemPrice Float
   createAt       DateTime @default(now())
+
+  @@unique([cartId, productId])
 }
 
 model Order {

@@ -10,7 +10,7 @@ const router = Router();
 router.get(
   "/get-cart/:userId",
   verifyJwt,
-  verifyAuthRole([ROLE.USER, ROLE.ADMIN]),
+  // verifyAuthRole([ROLE.USER]),
   getCartByUserId
 );
 router.post(
@@ -22,7 +22,7 @@ router.post(
 router.post(
   "/add-cart-item",
   verifyJwt,
-  verifyAuthRole([ROLE.USER, ROLE.ADMIN]),
+  // verifyAuthRole([ROLE.USER]),
   addCartItem
 );
 export default router;

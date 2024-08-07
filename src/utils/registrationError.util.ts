@@ -16,8 +16,7 @@ const registrationError = (error: any, res: Response, next: NextFunction) => {
 
       return res.status(401).json({ error: "Error al procesar la solicitud." });
     }
-    /* return res.status(500).json({ error: "Error al procesar la solicitud." }); */
-    return sendErrorResponse(res, 500, "Error al procesar la solicitud." );
+    return sendErrorResponse(res, 500, "Error al procesar la solicitud.");
   }
 
   if (error instanceof CustomError && error.name === ERROR.CLIENT_ERROR) {

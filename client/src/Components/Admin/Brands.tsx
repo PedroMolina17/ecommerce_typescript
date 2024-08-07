@@ -9,13 +9,11 @@ type FormValues = {
 
 const Brands: React.FC = () => {
   const { handleSubmit, register, reset } = useForm<FormValues>();
+  const url = import.meta.env.VITE_URL_FRONTEND;
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3500/api/brand/create-brand",
-        data,
-      );
+      const response = await axios.post(`${url}/api/brand/create-brand`, data);
       console.log(response);
       toast.success("Producto añadido!");
       reset();
