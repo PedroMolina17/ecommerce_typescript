@@ -25,8 +25,7 @@ const Products = () => {
   const { data: dataProducts, isLoading: isLoadingProducts } =
     useGetAllProducts();
   const { data: dataCart } = useGetCart(Number(userId));
-  const firstCart = dataCart ? dataCart.userCart[0].id : null;
-  console.log(firstCart);
+  const firstCart = dataCart ? dataCart.userCart[0]?.id : null;
   const { addCartMutation } = useCart();
   useEffect(() => {
     if (!isLoadingProducts && dataProducts) {
@@ -53,7 +52,6 @@ const Products = () => {
 
   useEffect(() => {
     const userCookie = Cookies.get("accessToken");
-    console.log(userCookie);
     if (userCookie) {
       try {
         const decodedToken: any = jwtDecode(userCookie);
@@ -89,14 +87,14 @@ const Products = () => {
       <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-2 mt-16">
         {products.map((product) => (
           <div key={product.id} className="col-span-1 border rounded-md">
-            <div className="border-b-4">
+            <div className="border-b-4 flex justify-center items-center ">
               <img
                 src={
                   product.ProductCoverImage?.imageProduct ||
                   "fallback-image-url"
                 }
                 alt={product.name}
-                className="rounded-md"
+                className="rounded-md  h-40 object-contain "
               />
             </div>
             <div className="flex flex-col gap-2 pt-2">

@@ -36,6 +36,7 @@ const UpdateProduct = ({ productId }) => {
     status: boolean;
     promotion: boolean;
     promotionPrice: number;
+    imageProductCover: string | null;
     promotionDescription?: string;
     brandId: number;
     brands: { id: number; name: string }[];
@@ -114,7 +115,8 @@ const UpdateProduct = ({ productId }) => {
         promotionDescription,
         brandId,
       };
-      await updateProductMutation.mutate(data);
+      updateProductMutation.mutate(data);
+
       toggleView("ViewProduct");
     } catch (error) {
       console.error("Error al actualizar el producto:", error);
@@ -134,9 +136,16 @@ const UpdateProduct = ({ productId }) => {
         stock: productById.product.stock,
         promotionDescription: productById.product.promotionDescription,
         id: productById.product.id,
+        imageProductCover: productById.product.ProductCoverImage.imageProduct,
       });
     }
   }, [productById, isLoading]);
+
+  if (productById && productById.product) {
+    console.log(productById.product.ProductCoverImage.imageProduct);
+  } else {
+    console.log("El objeto no está definido o no tiene la estructura esperada");
+  }
 
   const { handleSubmit, register, reset } = useForm<FormularioProductoProps>(
     {}
@@ -149,12 +158,18 @@ const UpdateProduct = ({ productId }) => {
   ) : (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" {...register("id")} value={8} defaultValue={8} />
-
       <input type="hidden" {...register("id")} value={8} defaultValue={8} />
 
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl block my-4">Update Product</h1>
+          <div className="flex gap-2">
+            <h1 className="text-4xl block my-4">Update Product</h1>
+            <img
+              src={productById?.product.ProductCoverImage.imageProduct}
+              alt="Preview"
+              className="h-24 border border-darkPrimary object-contain opacity-75"
+            />
+          </div>
           <div className="flex gap-4 items-center justify-center font-bold">
             <button
               className="bg-blue-600 p-6  h-8 rounded-md flex items-center "
@@ -338,7 +353,9 @@ const UpdateProduct = ({ productId }) => {
                   >
                     {previewImage ? (
                       <img
-                        src={previewImage}
+                        src={
+                          productById?.product.ProductCoverImage.imageProduct
+                        }
                         alt="Preview"
                         className="h-24 border border-darkPrimary"
                       />

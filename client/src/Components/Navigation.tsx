@@ -24,6 +24,7 @@ const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>("Home");
   const [menuMobile, setMenuMobile] = useState(true);
+  const [numberProducts, setNumberProducts] = useState<number>(0);
   const [userName, setUserName] = useState<string | null>(null);
   const { useGetCart, updateCartMutation } = useCart();
   const [userId, setUserId] = useState<string | null>(null);
@@ -42,6 +43,7 @@ const Navigation = () => {
     const cartItemData: any = {
       id: product.id,
       quantity: product.quantity + 1,
+      totalItemPrice: (product.quantity + 1) * product.unitPrice,
     };
     updateCartMutation.mutate(cartItemData);
   };
@@ -50,6 +52,7 @@ const Navigation = () => {
     const cartItemData: any = {
       id: product.id,
       quantity: product.quantity - 1,
+      totalItemPrice: (product.quantity - 1) * product.unitPrice,
     };
     updateCartMutation.mutate(cartItemData);
   };
@@ -89,7 +92,8 @@ const Navigation = () => {
 
   useEffect(() => {
     const userCookie = Cookies.get("accessToken");
-    console.log(userCookie);
+    firstCart && setNumberProducts(firstCart.cartItem.length);
+
     if (userCookie) {
       try {
         const decodedToken: any = jwtDecode(userCookie);
@@ -170,7 +174,7 @@ const Navigation = () => {
             >
               <PiShoppingCartSimpleLight />
               <p className="absolute bg-[#139dba] flex justify-center items-center  rounded-full bottom-3/4 left-3/4 text-sm w-6 h-6 text-white">
-                0
+                {numberProducts && numberProducts}
               </p>
             </div>
           </div>
@@ -178,7 +182,7 @@ const Navigation = () => {
         {/* User Open*/}
         {menuOpen === "user" && (
           <form onSubmit={onSubmit}>
-            <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
+            <div className="absolute bg-white p-4 rounded-md shadow-md top-full right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
               <label className="flex flex-col justify-center items-center gap-2">
                 <p className="text-[#139dba] font-bold">Ingrese su Usuario</p>
                 <input
@@ -238,48 +242,109 @@ const Navigation = () => {
         )}
         {/* Shop Open*/}
         {menuOpen === "shop" && (
-          <div className="absolute bg-white p-4 rounded-md shadow-md top-full  right-0 mx-2 w-96 border flex flex-col gap-5 justify-center items-center z-10">
-            <label className="flex flex-col justify-center items-center gap-2">
-              <p className="text-[#139dba] font-bold">Comprar</p>
-            </label>
+          <div className="absolute text-sm max-md:text-xs  bg-white p-4 rounded-md shadow-md top-full right-0 mx-2  border flex flex-col gap-5 justify-center items-center z-10">
             {userId ? (
               firstCart ? (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 ">
                   {firstCart.cartItem.length > 0 ? (
-                    firstCart.cartItem.map((item) => (
-                      <table>
-                        <div
-                          key={item.id}
-                          className="flex justify-between gap-2"
-                        >
-                          <thead> a</thead>
-                          <button
-                            className="text-white p-2 bg-green-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
-                            onClick={() => IncrementhandleUpdateToCart(item)}
+                    <table className="min-w-full divide-y divide-gray-200 max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:fixed max-md:bg-white">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th
+                            scope="col"
+                            className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           >
-                            +
-                          </button>
-                          <p> {item.quantity}</p>
-                          <button
-                            className="text-white p-2 bg-red-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
-                            onClick={() => DecreasehandleUpdateToCart(item)}
+                            Producto
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           >
-                            -
-                          </button>
-                          <p>{item.product.name}</p>
-                          <p>{item.unitPrice}</p>
-                        </div>
-                      </table>
-                    ))
+                            Cantidad
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider max-md:hidden"
+                          >
+                            Precio
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Total
+                          </th>
+                          <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Acciones
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {firstCart.cartItem.map((item) => (
+                          <tr key={item.id}>
+                            <td className="px-6 py-4 whitespace-nowrap max-md:flex max-md:flex-col">
+                              <p> {item.product.name}</p>{" "}
+                              <p className="md:hidden">$/{item.unitPrice}</p>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap ">
+                              <p>{item.quantity}</p>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
+                              $/{item.unitPrice}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              $/{item.quantity * item.unitPrice}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap flex gap-2">
+                              <button
+                                className="text-white p-2 bg-green-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
+                                onClick={() =>
+                                  IncrementhandleUpdateToCart(item)
+                                }
+                              >
+                                +
+                              </button>
+                              <button
+                                className="text-white p-2 bg-red-400 rounded-md text-center font-bold h-6 flex items-center justify-center"
+                                onClick={() => DecreasehandleUpdateToCart(item)}
+                              >
+                                -
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tfoot className="bg-gray-50">
+                        <tr>
+                          <td
+                            colSpan="3"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          >
+                            Total General
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {firstCart.cartItem.reduce(
+                              (total, item) =>
+                                total + item.quantity * item.unitPrice,
+                              0
+                            )}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap"></td>
+                        </tr>
+                      </tfoot>
+                    </table>
                   ) : (
-                    <p>No items in this cart.</p>
+                    <p>No hay artículos en este carrito.</p>
                   )}
                 </div>
               ) : (
-                <p>No cart available.</p>
+                <p>No hay carrito disponible.</p>
               )
             ) : (
-              <p>Please log in</p>
+              <p>Por favor, inicia sesión.</p>
             )}
             <Link
               to={"../Shop"}
@@ -298,8 +363,8 @@ const Navigation = () => {
               <IoMdMenu
                 className="text-3xl"
                 onClick={() => setMenuMobile(false)}
-              />{" "}
-              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>{" "}
+              />
+              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>
             </div>
           </>
         ) : (
@@ -308,16 +373,20 @@ const Navigation = () => {
               <IoClose
                 className="text-3xl"
                 onClick={() => setMenuMobile(true)}
-              />{" "}
-              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>{" "}
+              />
+              <img src="images/logo-Celeste.png" alt="Logo" width={80}></img>
             </div>
           </>
         )}
         <div className="flex text-3xl gap-2">
           <div className="relative">
-            <PiShoppingCartSimpleLight />
+            <PiShoppingCartSimpleLight
+              onClick={() => {
+                openMenu("shop");
+              }}
+            />
             <p className="absolute bottom-2/4 left-3/4 bg-[#139dba] text-sm rounded-full h-5 w-5 flex justify-center items-center opacity-90 text-white">
-              0
+              {numberProducts && numberProducts}
             </p>
           </div>
           <div>
