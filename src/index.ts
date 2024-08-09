@@ -1,4 +1,3 @@
-// Importaciones
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import dotenv from "dotenv";
@@ -13,14 +12,12 @@ import cron from "node-cron";
 import { InventoryCheckerService } from "./services/admin/InventoryChecker.service";
 import { PrismaClient } from "@prisma/client";
 import { NotificationsService } from "./services/admin/notifications.service";
-export const ENV =
-  process.env.NODE_ENV === "DEVELOPMENT"
-    ? dotenv.config({
-        path: path.resolve(__dirname, "../.env.development"),
-      }).parsed
-    : dotenv.config({
-        path: path.resolve(__dirname, "../.env.production"),
-      }).parsed;
+
+dotenv.config({
+  path: path.resolve(__dirname, "../.env"),
+});
+
+const ENV = process.env;
 
 const app = express();
 app.use(express.json());
@@ -28,7 +25,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: ENV?.URL_FRONTEND,
+    origin: ENV.URL_FRONTEND,
     credentials: true,
   })
 );
@@ -37,13 +34,13 @@ app.use("/api", router);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const { statusCode, message } = err;
-
   sendErrorResponse(res, statusCode, message);
 });
+
 const server = http.createServer(app);
 export const io = new SocketServer(server, {
   cors: {
-    origin: ENV?.URL_FRONTEND,
+    origin: ENV.URL_FRONTEND,
     credentials: true,
   },
 });
@@ -55,14 +52,15 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(ENV?.NODE_PORT, () =>
-  console.log(`Servidor corriendo en el puerto ${ENV?.NODE_PORT}`)
+server.listen(ENV.NODE_PORT, () =>
+  console.log(`Servidor corriendo en el puerto ${ENV.NODE_PORT}`)
 );
 
 const inventoryCheckerService = new InventoryCheckerService(
   new PrismaClient(),
   new NotificationsService(new PrismaClient())
 );
+
 cron.schedule("*/1 * * * *", async () => {
   try {
     // Verificar el stock de los productos
@@ -71,7 +69,6 @@ cron.schedule("*/1 * * * *", async () => {
       const notification = await inventoryCheckerService.sendNotification(
         productos
       );
-
       io.emit("notification", notification);
     }
   } catch (error) {

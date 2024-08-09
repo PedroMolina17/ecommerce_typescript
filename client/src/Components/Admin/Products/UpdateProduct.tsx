@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { getAllCategory } from "../../../api/category";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useImageCover } from "@/hooks/useImageCover";
+
 // import {
 //   IResponseCreateProduct,
 //   IcreateProduct,
@@ -20,7 +22,7 @@ import useProductStore from "./store/ProductStore";
 
 const UpdateProduct = ({ productId }) => {
   const queryClient = useQueryClient();
-
+  const { updateImageCoverMutation } = useImageCover();
   const { operation, setOperation } = useProductStore();
 
   interface FormularioProductoProps {
@@ -36,9 +38,10 @@ const UpdateProduct = ({ productId }) => {
     status: boolean;
     promotion: boolean;
     promotionPrice: number;
-    imageProductCover: string | null;
     promotionDescription?: string;
     brandId: number;
+    imageProductCover: any;
+    imageId: any;
     brands: { id: number; name: string }[];
   }
 
@@ -102,8 +105,11 @@ const UpdateProduct = ({ productId }) => {
         promotionPrice,
         promotionDescription,
         brandId,
+        imageProductCover,
+        imageId,
       } = data;
-      const updatedData = {
+
+      const updatedDataProduct: any = {
         id: parseInt(productId, 10),
         name,
         categoryId: parseInt(categoryId, 10),
@@ -115,8 +121,14 @@ const UpdateProduct = ({ productId }) => {
         promotionDescription,
         brandId,
       };
-      updateProductMutation.mutate(data);
 
+      const updatedImageData: any = new FormData();
+      updatedImageData.append("imageProductCover", imageProductCover[0]);
+      updatedImageData.append("imageId", imageId);
+
+      updateProductMutation.mutate(updatedDataProduct);
+
+      updateImageCoverMutation.mutate(updatedImageData);
       toggleView("ViewProduct");
     } catch (error) {
       console.error("Error al actualizar el producto:", error);
@@ -135,17 +147,11 @@ const UpdateProduct = ({ productId }) => {
         brandId: productById.product.brandId,
         stock: productById.product.stock,
         promotionDescription: productById.product.promotionDescription,
+        imageId: productById?.product?.ProductCoverImage?.id,
         id: productById.product.id,
-        imageProductCover: productById.product.ProductCoverImage.imageProduct,
       });
     }
   }, [productById, isLoading]);
-
-  if (productById && productById.product) {
-    console.log(productById.product.ProductCoverImage.imageProduct);
-  } else {
-    console.log("El objeto no está definido o no tiene la estructura esperada");
-  }
 
   const { handleSubmit, register, reset } = useForm<FormularioProductoProps>(
     {}
@@ -165,7 +171,7 @@ const UpdateProduct = ({ productId }) => {
           <div className="flex gap-2">
             <h1 className="text-4xl block my-4">Update Product</h1>
             <img
-              src={productById?.product.ProductCoverImage.imageProduct}
+              src={productById?.product?.ProductCoverImage?.imageProduct}
               alt="Preview"
               className="h-24 border border-darkPrimary object-contain opacity-75"
             />
@@ -345,7 +351,10 @@ const UpdateProduct = ({ productId }) => {
                     ></input>
                   </button>
                 </label>
-                <label className="flex flex-col gap-2">
+                <input className="hidden" {...register("imageId")}></input>
+                <input type="file" {...register("imageProductCover")}></input>
+
+                {/* <label className="flex flex-col gap-2">
                   Imagen de Exibhicion
                   <button
                     className="text-darkPrimary flex text-4xl justify-center items-center border h-24 border-darkPrimary"
@@ -369,7 +378,7 @@ const UpdateProduct = ({ productId }) => {
                       onChange={handleFileChange}
                     ></input>
                   </button>
-                </label>
+                </label> */}
               </div>
             </div>
           </div>

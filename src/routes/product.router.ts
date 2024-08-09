@@ -22,7 +22,7 @@ router.post(
   verifyAuthRole([ROLE.ADMIN]),
   createProduct
 );
-router.get("/:id", verifyJwt, getProductById);
+router.get("/:id", getProductById);
 router.put(
   "/update-product/:productId",
   verifyJwt,

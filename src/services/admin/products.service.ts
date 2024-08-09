@@ -30,6 +30,7 @@ export class ProductService {
       throw new ClientError("Product already exists", HTTP_STATUS.CONFLICT);
     }
 
+    // Crear el nuevo producto
     const newProduct = await this.prisma.products.create({
       data: {
         ...product,
@@ -43,7 +44,7 @@ export class ProductService {
 
     return {
       product: newProduct,
-      message: "Product created",
+      message: "Product created successfully",
     };
   }
 

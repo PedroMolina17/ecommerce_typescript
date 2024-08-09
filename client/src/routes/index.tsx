@@ -12,6 +12,7 @@ import Acessories from "@/Components/Acessories";
 import Deals from "@/Components/Deals";
 import Electronic from "@/Components/Electronic";
 import Cellphones from "@/Components/Cellphones";
+import ElectronicDetails from "@/Components/ElectronicDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
       { path: "deals", element: <Deals /> },
       { path: "electronics", element: <Electronic /> },
       { path: "cellphones", element: <Cellphones /> },
+      { path: "electronics", element: <Electronic /> },
+      { path: "electronics/:id", element: <ElectronicDetails /> },
     ],
   },
   { path: "/admin-login", element: <Login /> },

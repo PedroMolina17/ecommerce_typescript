@@ -14,25 +14,26 @@ import { useMutation } from "@tanstack/react-query";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { useCart } from "../hooks/useCart";
-
+import { useImageCover } from "../hooks/useImageCover";
+import { useCart } from "@/hooks/useCart";
 interface FormValue {
   email: string;
   password: string;
 }
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<string>("Home");
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>("");
   const [menuMobile, setMenuMobile] = useState(true);
   const [numberProducts, setNumberProducts] = useState<number>(0);
   const [userName, setUserName] = useState<string | null>(null);
   const { useGetCart, updateCartMutation } = useCart();
   const [userId, setUserId] = useState<string | null>(null);
   const { data: dataCart } = useGetCart(Number(userId));
-
+  const { updateImageCoverMutation } = useImageCover();
   const { register, handleSubmit } = useForm<FormValue>({
     defaultValues: { email: "vitor.dupuis@example.com", password: "figoncjd" },
   });
+
   const navigate = useNavigate();
 
   const openMenu = (menu: string) => {
@@ -234,7 +235,7 @@ const Navigation = () => {
             </label>
             <Link
               to={"../Likes"}
-              className="text-white p-2 bg-[#139dba] rounded-md text-center font-bold w-80  "
+              className="text-white p-2 bg-[#139dba] rounded-md text-center font-bold w-80"
             >
               Ver
             </Link>

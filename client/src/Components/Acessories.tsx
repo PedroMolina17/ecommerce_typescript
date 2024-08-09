@@ -1,5 +1,5 @@
 const Acessories = () => {
-  return <div>Acessories</div>;
+  return <div className="h-screen bg-white">Acessories</div>;
 };
 
 export default Acessories;

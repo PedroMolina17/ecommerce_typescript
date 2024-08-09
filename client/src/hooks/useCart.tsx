@@ -3,6 +3,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { getCart, updateCart, createCart } from "../api/cart";
+import toast from "react-hot-toast";
+
 export const useCart = () => {
   const queryClient = useQueryClient();
 
@@ -16,6 +18,7 @@ export const useCart = () => {
     mutationFn: (data) => createCart(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
+      toast.success("Producto Añadido");
     },
   });
 

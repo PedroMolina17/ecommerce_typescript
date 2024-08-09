@@ -1,5 +1,7 @@
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+
 interface NavBarProps {
   selectedMenuItem: string;
   setSelectedMenuItem: (item: string) => void;
@@ -9,25 +11,36 @@ const NavBar: React.FC<NavBarProps> = ({
   selectedMenuItem,
   setSelectedMenuItem,
 }) => {
+  const location = useLocation();
+
+  const handleMenuClick = (menuItem: string) => {
+    setSelectedMenuItem(menuItem);
+    localStorage.setItem("selectedMenuItem", menuItem);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <div className="flex mx-28 my-4 max-md:hidden">
-      <ul className="flex gap-4 font-semibold ">
+      <ul className="flex gap-4 font-semibold">
         <Link
-          to={"/"}
-          onClick={() => setSelectedMenuItem("Home")}
+          to="/"
+          onClick={() => handleMenuClick("Home")}
           className={
-            selectedMenuItem === "Home"
-              ? "text-[#139dba] border-t-2 border-[#139dba] "
+            isActive("/") || selectedMenuItem === "Home"
+              ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
         >
           Home
         </Link>
         <Link
-          to={"/electronics"}
-          onClick={() => setSelectedMenuItem("Electronica")}
+          to="/electronics"
+          onClick={() => handleMenuClick("Electronica")}
           className={
-            selectedMenuItem === "Electronica"
+            isActive("/electronics") || selectedMenuItem === "Electronica"
               ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
@@ -35,10 +48,10 @@ const NavBar: React.FC<NavBarProps> = ({
           Electronica
         </Link>
         <Link
-          to={"/deals"}
-          onClick={() => setSelectedMenuItem("Ofertas")}
+          to="/deals"
+          onClick={() => handleMenuClick("Ofertas")}
           className={
-            selectedMenuItem === "Ofertas"
+            isActive("/deals") || selectedMenuItem === "Ofertas"
               ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
@@ -46,33 +59,33 @@ const NavBar: React.FC<NavBarProps> = ({
           Ofertas de hoy
         </Link>
         <Link
-          to={"/cellphones"}
-          onClick={() => setSelectedMenuItem("Celulares")}
+          to="/cellphones"
+          onClick={() => handleMenuClick("Celulares")}
           className={
-            selectedMenuItem === "Celulares"
-              ? "text-[#139dba] border-t-2 [#139dba] border-[#139dba] "
+            isActive("/cellphones") || selectedMenuItem === "Celulares"
+              ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
         >
           Celulares
         </Link>
         <Link
-          to={"/accesories"}
-          onClick={() => setSelectedMenuItem("accesories")}
+          to="/accesories"
+          onClick={() => handleMenuClick("accesories")}
           className={
-            selectedMenuItem === "accesories"
-              ? "text-[#139dba] border-t-2 border-[#139dba] "
+            isActive("/accesories") || selectedMenuItem === "accesories"
+              ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
         >
           Accesorios
         </Link>
         <Link
-          to={"/blogs"}
-          onClick={() => setSelectedMenuItem("Blog")}
+          to="/blogs"
+          onClick={() => handleMenuClick("Blog")}
           className={
-            selectedMenuItem === "Blog"
-              ? "text-[#139dba] border-t-2 border-[#139dba] "
+            isActive("/blogs") || selectedMenuItem === "Blog"
+              ? "text-[#139dba] border-t-2 border-[#139dba]"
               : ""
           }
         >
@@ -82,8 +95,10 @@ const NavBar: React.FC<NavBarProps> = ({
     </div>
   );
 };
+
 NavBar.propTypes = {
   selectedMenuItem: PropTypes.string.isRequired,
   setSelectedMenuItem: PropTypes.func.isRequired,
 };
+
 export default NavBar;

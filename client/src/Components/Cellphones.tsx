@@ -1,5 +1,5 @@
 const Cellphones = () => {
-  return <div>Cellphones</div>;
+  return <div className="h-screen bg-white">Cellphones</div>;
 };
 
 export default Cellphones;

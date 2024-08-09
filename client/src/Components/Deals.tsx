@@ -1,5 +1,5 @@
 const Deals = () => {
-  return <div>Deals</div>;
+  return <div className="h-screen bg-white">Deals</div>;
 };
 
 export default Deals;

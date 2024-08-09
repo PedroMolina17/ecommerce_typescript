@@ -5,6 +5,8 @@ import { useProduct } from "../hooks/useProducts";
 import { useEffect, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import { jwtDecode } from "jwt-decode";
+import toast, { Toaster } from "react-hot-toast";
+
 import Cookies from "js-cookie";
 
 interface Product {
@@ -84,17 +86,17 @@ const Products = () => {
 
   return (
     products && (
-      <div className="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-2 mt-16">
+      <div className="grid grid-cols-4 gap-y-12 max-md:grid-cols-2 max-sm:grid-cols-1 gap-2 mt-16">
         {products.map((product) => (
-          <div key={product.id} className="col-span-1 border rounded-md">
-            <div className="border-b-4 flex justify-center items-center ">
+          <div key={product.id} className="col-span-1 border rounded-md group">
+            <div className="border-b-4 flex justify-center items-center  ">
               <img
                 src={
                   product.ProductCoverImage?.imageProduct ||
                   "fallback-image-url"
                 }
                 alt={product.name}
-                className="rounded-md  h-40 object-contain "
+                className="rounded-md h-40 object-contain transition-transform transform group-hover:scale-110 group-hover:-translate-y-8"
               />
             </div>
             <div className="flex flex-col gap-2 pt-2">
@@ -110,9 +112,10 @@ const Products = () => {
                 Ver Mas
               </button>
               <button
-                className="py-2 text-center bg-[#139dba] rounded-md min-w-8 "
+                className="py-2 text-center bg-[#139dba] rounded-md min-w-8 transition-transform"
                 onClick={() => handleAddToCart(product)}
               >
+                <Toaster position="top-right" reverseOrder={true} />
                 Add Cart
               </button>
             </div>

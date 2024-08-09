@@ -2,7 +2,6 @@ import { AxiosResponse } from "axios";
 import { Product } from "../types/products.type";
 import { api } from "./axios.config";
 import {
-  ICreateProduct,
   IResponseCreateProduct,
   IDeleteProduct,
   IResponseDeleteProduct,
@@ -24,13 +23,19 @@ const getAllImageCover = async () => {
   return data;
 };
 
-const createProduct = async (
-  dataProduct: ICreateProduct
-): Promise<IResponseCreateProduct> => {
+const createImageCover = async (id: number, dataImage: any) => {
+  const { data }: AxiosResponse = await api.post(
+    `imageProductCover/${id}/create-img-cover`,
+    dataImage
+  );
+  return data;
+};
+
+const updateImageCover = async (dataImage: any) => {
   try {
-    const { data }: AxiosResponse<IResponseCreateProduct> = await api.post(
-      "product/create-product",
-      dataProduct
+    const { data }: AxiosResponse<IResponseCreateProduct> = await api.put(
+      "/imageProductCover/1/update-img-cover",
+      dataImage
     );
     return data;
   } catch (error) {
@@ -76,8 +81,9 @@ const updateProduct = async (data: IDUpdateProduct) => {
 export {
   getAllImageCover,
   getImageCoverById,
-  createProduct,
+  updateImageCover,
   deleteProduct,
   getProductById,
   updateProduct,
+  createImageCover,
 };

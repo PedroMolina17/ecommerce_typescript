@@ -17,16 +17,19 @@ import { createProduct } from "../../../api/products";
 import { getAllBrands } from "../../../api/brands";
 import { useOpenFormStoreProduct } from "./store/ActionStore";
 import useProductStore from "./store/ProductStore";
+import { useImageCover } from "@/hooks/useImageCover";
 const CreateProduct = () => {
   const { handleSubmit, register, reset } = useForm<FormularioProductoProps>();
   const { setOpenForm } = useOpenFormStoreProduct();
   const queryClient = useQueryClient();
   const { operation, setOperation } = useProductStore();
+  const { createImageCoverMutation } = useImageCover();
 
   interface FormularioProductoProps {
+    id: number;
     name: string;
     categoryId: number;
-    price: number;
+    price: any;
     image: string | null;
     categories: { id: number; name: string }[];
     description: string;
@@ -35,6 +38,9 @@ const CreateProduct = () => {
     promotion: boolean;
     promotionPrice: number;
     promotionDescription?: string;
+    imageProductCover: any;
+    purchasePrice: any;
+    saleprice: any;
     brandId: number;
     brands: { id: number; name: string }[];
   }
@@ -65,6 +71,10 @@ const CreateProduct = () => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+  interface CreateImageCoverPayload {
+    id: number; // Product ID
+    imageData: File; // Image file
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -81,25 +91,41 @@ const CreateProduct = () => {
   };
   //Enviar Datos
   const onSubmit: SubmitHandler<FormularioProductoProps> = async (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("categoryId", data.categoryId.toString());
-    formData.append("price", data.price.toString());
-    if (data.image) {
-      formData.append("image", data.image[0]);
+    const productData = {
+      name: data.name,
+      description: data.description,
+      salePrice: parseFloat(data.price),
+      purchasePrice: 500,
+      stock: parseInt(data.stock, 10),
+      promotion: data.promotion,
+      promotionPrice: parseFloat(data.promotionPrice),
+      promotionDescription: data.promotionDescription || "",
+      categoryId: parseInt(data.categoryId, 10),
+      brandId: parseInt(data.brandId, 10),
+      active: true,
+      status: true,
+    };
+    createProductMutation.mutate(productData);
+
+    if (data.image && data.image[0]) {
+      const formData = new FormData();
+      formData.append("imageProductCover", data.image[0]);
+
+      const imageCoverPayload = {
+        id: data.id,
+        data: formData,
+      };
+
+      createImageCoverMutation.mutate(imageCoverPayload);
+      reset();
+    } else {
+      console.log("No file selected.");
     }
-    formData.append("description", data.description);
-    formData.append("stock", data.stock.toString());
-    formData.append("promotionPrice", data.promotionPrice.toString());
-    formData.append("promotionDescription", data.promotionDescription || "");
-    formData.append("brandId", data.brandId.toString());
-    // Llamar a la función de creación de producto usando la mutación de React Query
-    createProductMutation.mutate(formData);
-    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="hidden" {...register("id")}></input>
       <div className="flex text-darkSecondary flex-col">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl block my-4">Add Product</h1>
@@ -288,6 +314,10 @@ const CreateProduct = () => {
                       onChange={handleFileChange}
                     ></input>
                   </button>
+                  <input
+                    type="file"
+                    {...register("image", { required: true })}
+                  />
                 </label>
               </div>
             </div>

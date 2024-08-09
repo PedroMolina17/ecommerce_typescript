@@ -16,7 +16,6 @@ const Electronic = () => {
               <li>Accesorios de computadoras</li>
             </ul>
           </div>
-
           <div className="bg-white shadow-md  mt-10 rounded-md">
             <p className="border-b-2 p-2 mx-4 font-bold">Filtrar</p>
             <ul className="text-slate-500 flex  flex-col gap-3 m-2 mx-4">
